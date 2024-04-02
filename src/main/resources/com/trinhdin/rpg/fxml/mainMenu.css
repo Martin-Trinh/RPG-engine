@@ -1,0 +1,9 @@
+.menuItem{
+    -fx-background-color: silver;
+}
+.menuPane{
+    -fx-background-color: lightYellow;
+}
+#errorMsg{
+    -fx-text-fill: red;
+}
