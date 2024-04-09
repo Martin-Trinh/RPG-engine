@@ -1,5 +1,6 @@
 package com.trinhdin.rpg.controller;
 
+import com.trinhdin.rpg.view.GameScreen;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -55,5 +56,7 @@ public class gameConfigMenu extends menuController implements Initializable {
         System.out.println("Strength: " + strengthInput.getValue());
         System.out.println("Inteligence: " + inteligenceInput.getValue());
         System.out.println("Agility : " + agilityInput.getValue());
+        // render game screen
+        GameScreen gameScreen = new GameScreen(stage);
     }
 }
