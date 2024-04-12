@@ -43,7 +43,7 @@ public class menuController {
     }
 
     public void newGameAction(ActionEvent event) throws IOException {
-        switchToScene(event, "GameConfiguration.fxml");
+        switchToScene(event, "HeroConfig.fxml");
 
     }
     public void returnToMenu(ActionEvent event) throws IOException {

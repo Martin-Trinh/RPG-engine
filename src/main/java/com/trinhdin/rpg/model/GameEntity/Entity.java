@@ -1,4 +1,6 @@
-package com.trinhdin.rpg.model;
+package com.trinhdin.rpg.model.GameEntity;
+
+import com.trinhdin.rpg.model.Position;
 
 public abstract class Entity {
     protected Position pos;
@@ -6,10 +8,8 @@ public abstract class Entity {
     protected int height;
     protected String name;
 
-    public Entity(Position pos, int width, int height, String name) {
+    public Entity(Position pos, String name) {
         this.pos = pos;
-        this.width = width;
-        this.height = height;
         this.name = name;
     }
     protected void loadEntity(String imageFileName){

@@ -1,20 +1,21 @@
 package com.trinhdin.rpg.model.GameEntity.Item;
 
-import com.trinhdin.rpg.model.Entity;
+import com.trinhdin.rpg.model.GameEntity.Entity;
+import com.trinhdin.rpg.model.GameEntity.Character.Hero;
+import com.trinhdin.rpg.model.Position;
 
-public class Item extends Entity {
+public abstract class Item extends Entity {
     private String name;
-    private String description;
-    private int value;
+    private String description = "";
     private int weight;
 
-    public Item(String name, String description, int value, int weight) {
+    public Item(Position pos, String name, int weight) {
+        super(pos, name);
         this.name = name;
-        this.description = description;
-        this.value = value;
         this.weight = weight;
     }
 
+    public abstract void use(Hero hero);
     public String getName() {
         return name;
     }
@@ -22,10 +23,10 @@ public class Item extends Entity {
     public String getDescription() {
         return description;
     }
-
-    public int getValue() {
-        return value;
+    public void setDescription(String description) {
+        this.description = description;
     }
+
 
     public int getWeight() {
         return weight;

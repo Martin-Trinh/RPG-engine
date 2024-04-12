@@ -43,9 +43,29 @@
                   <Spinner fx:id="agilityInput" layoutX="154.0" layoutY="11.0" prefHeight="25.0" prefWidth="83.0" />
                </children>
             </Pane>
-            <Pane prefHeight="45.0" prefWidth="279.0">
+            <Pane prefHeight="42.0" prefWidth="279.0">
                <children>
-                  <Text fx:id="errorMsg" fill="#e12d2d" layoutX="44.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="190.20001220703114" />
+                  <Label layoutX="14.0" layoutY="11.0" prefHeight="26.0" prefWidth="76.0" style="-fx-background-color: lightyellow;" text="Armor">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </Label>
+                  <Spinner fx:id="armorInput" layoutX="154.0" layoutY="11.0" prefHeight="25.0" prefWidth="83.0" />
+               </children>
+            </Pane>
+            <Pane prefHeight="42.0" prefWidth="279.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="11.0" prefHeight="26.0" prefWidth="76.0" style="-fx-background-color: lightyellow;" text="Magic armor">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </Label>
+                  <Spinner fx:id="magicArmorInput" layoutX="154.0" layoutY="11.0" prefHeight="25.0" prefWidth="83.0" />
+               </children>
+            </Pane>
+            <Pane prefHeight="34.0" prefWidth="279.0">
+               <children>
+                  <Text fx:id="errorMsg" layoutX="83.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" />
                </children>
             </Pane>
          </children>
@@ -64,5 +84,6 @@
             </Label>
          </children>
       </Pane>
+      <Pane prefHeight="200.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

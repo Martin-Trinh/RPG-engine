@@ -1,18 +1,37 @@
-# Herní engine - RPG
-
-Tento RPG umožní hráči ovládat vlastního hrdinu v konfigurovatelném světě. Hrdina prochází mapou, sbírá předměty pro zvýšení své energie a života, a další předměty, které mu pomáhají porazit příšery. Kromě toho se ve hře vyskytují NPC postavy, s nimiž může hrdina komunikovat a plnit jejich úkoly. Po splnění úkolu hrdina získá klíč k odemčení brány do dalšího levelu. Na cestě se může setkat s příšerami, které musí porazit, aby splnil úkoly. Mimo příšery se na mapě nacházejí neživé překážky, které hrdina musí překonat pomocí speciálních předmětů (například žebřík, bomba).
-
-## Konfigurace mapy
-
-- Hra umožňuje hráči vybrat mapu (levely), na které jsou umístěny předměty, překážky a NPC postavy. Tyto prvky se načítají ze souboru.
-## Konfigurace hrdiny a postavy
-
-- Hráč si vybere typ hrdiny (válečník, mág, lučištník, atd.), kterého poté může dále konfigurovat.
-- Hráč má možnost nastavit vlastnosti svého hrdiny, jako je síla, obrana, energie, a další, pomocí konfiguračního souboru.
-- Lze také nakonfigurovat předměty, překážky a předměty z souboru.
-## Interakce ve hře
-
-- Implementace soubojového systému s příšerami, který se odehrává v novém okně.
-- Hráč má možnost překonávání překážek pomocí speciálních pomůcek, které získává během dialogu s NPC postavami. Například použití vody k uhašení ohně na cestě, stavění mostu ze železa přes lávové pole, atd.
-- Hrdina může interagovat s dalšími předměty pomocí některých sebraných předmětů, například otevření dveří klíčem nebo rozbíjení truhly palicí.
-- Hrdina může vytvářet nové předměty z sebraných surovin, jako je výroba lampy ze žárovky a baterie, pečení chleba z pšenice, vody a ohně, a podobně.
+~~# Game menu navigation
+## Main menu
+* **New game** - Navigate to the hero configuration menu
+    * Select the hero class from the list `Hero type`
+    * Configure hero stats by increasing or decreasing the values
+    * Start the game by clicking the `Start Game` button
+* **Load game** - Navigate to the load game menu
+    * Enter the name of the saved game file and click the `Load Game` button
+* **Exit** - Close the game app
+# In game menu
+Press `ESC` to open the in game menu
+* **Save game** - Navigate to the save game menu
+  * Enter the name of the save file and click the `Save` button
+* **Resume** - Resume the game
+* **Quit game** - Quit game to and navigate to main menu without saving
+# In game key controls
+Game communicate with player through game log window, where messages are displayed.
+* Use `WASD` to move the hero
+* Press `E` to interact with the game entity.
+* Interactions:
+  * Open gate when the hero has the key in inventory.
+  * Get through obstacles when the hero has the required item in inventory.
+  * Pick up the item when the hero is near the item.
+  * Talk to the NPC when the hero is near the NPC.
+    Press `Space` to continue the conversation.
+  * Enter the combat when the hero is near the monster.
+* Press `Tab` to open the inventory view.
+  * `Arrow keys` to navigate through the items in inventory.
+  * Press `E` to use the item.
+  * Press `D` to drop the item.
+* Press `C` to open the character view.
+  * `Arrow keys` to navigate through the character equipments.
+  * Press `E` to unequip the item.
+* Use the skills in combat:
+  * Press `1` to use the first skill (primary attack).
+  * Press `2` to use the second skill (support skill).
+  * Press `3` to use the third skill (ultimate).~~

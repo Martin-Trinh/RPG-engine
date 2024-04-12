@@ -27,6 +27,10 @@ public class gameConfigMenu extends menuController implements Initializable {
     private Spinner<Integer> inteligenceInput;
     @FXML
     private Spinner<Integer> agilityInput;
+    @FXML
+    private Spinner<Integer> armorInput;
+    @FXML
+    private Spinner<Integer> magicArmorInput;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -42,12 +46,18 @@ public class gameConfigMenu extends menuController implements Initializable {
         SpinnerValueFactory<Integer> strengthFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,10);
         SpinnerValueFactory<Integer> inteligenceFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,10);
         SpinnerValueFactory<Integer> agilityFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,10);
+        SpinnerValueFactory<Integer> armorFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,10);
+        SpinnerValueFactory<Integer> magicArmorFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,10);
         strengthFactory.setValue(1);
         inteligenceFactory.setValue(1);
         agilityFactory.setValue(1);
+        magicArmorFactory.setValue(1);
+        armorFactory.setValue(1);
         strengthInput.setValueFactory(strengthFactory);
         inteligenceInput.setValueFactory(inteligenceFactory);
         agilityInput.setValueFactory(agilityFactory);
+        armorInput.setValueFactory(armorFactory);
+        magicArmorInput.setValueFactory(magicArmorFactory);
     }
     public void startGame(){
         if(heroType.getValue() == null){
@@ -56,7 +66,9 @@ public class gameConfigMenu extends menuController implements Initializable {
         System.out.println("Strength: " + strengthInput.getValue());
         System.out.println("Inteligence: " + inteligenceInput.getValue());
         System.out.println("Agility : " + agilityInput.getValue());
+        System.out.println("Armor: " + armorInput.getValue());
+        System.out.println("Magic Armor: " + magicArmorInput.getValue());
         // render game screen
-        GameScreen gameScreen = new GameScreen(stage);
+//        GameScreen gameScreen = new GameScreen(stage);
     }
 }
