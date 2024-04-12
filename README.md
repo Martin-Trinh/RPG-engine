@@ -1,4 +1,4 @@
-~~# Game menu navigation
+# Game menu navigation
 ## Main menu
 * **New game** - Navigate to the hero configuration menu
     * Select the hero class from the list `Hero type`
@@ -34,4 +34,6 @@ Game communicate with player through game log window, where messages are display
 * Use the skills in combat:
   * Press `1` to use the first skill (primary attack).
   * Press `2` to use the second skill (support skill).
-  * Press `3` to use the third skill (ultimate).~~
+  * Press `3` to use the third skill (ultimate).
+
+

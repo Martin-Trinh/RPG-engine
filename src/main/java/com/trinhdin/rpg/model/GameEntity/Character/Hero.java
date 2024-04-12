@@ -4,12 +4,14 @@ import com.trinhdin.rpg.model.GameEntity.Ability.Ability;
 import com.trinhdin.rpg.model.GameEntity.Item.Inventory;
 import com.trinhdin.rpg.model.GameEntity.Item.Item;
 import com.trinhdin.rpg.model.Position;
+import com.trinhdin.rpg.model.Quest;
 
 import java.util.ArrayList;
 
 public class Hero extends Character {
     Inventory inventory = new Inventory();
     ArrayList<Ability> abilities = new ArrayList<>();
+    ArrayList<Quest> quests = new ArrayList<>();
     int exp = 0;
     int nextLevelExp = 100;
     int level = 1;
@@ -36,7 +38,12 @@ public class Hero extends Character {
     public void dropItem(int index) {
         inventory.removeItem(index);
     }
-
+    public void addQuest(Quest quest) {
+        quests.add(quest);
+    }
+    public void completeQuest(int index) {
+        quests.get(index).complete();
+    }
     public void gainExp(int exp) {
         this.exp += exp;
         if (this.exp >= nextLevelExp) {

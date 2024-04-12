@@ -31,4 +31,6 @@ public abstract class Item extends Entity {
     public int getWeight() {
         return weight;
     }
+
+    public abstract void use();
 }

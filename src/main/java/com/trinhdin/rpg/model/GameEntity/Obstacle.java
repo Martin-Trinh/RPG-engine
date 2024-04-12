@@ -10,4 +10,6 @@ public class Obstacle extends Entity {
         super(pos, name);
         this.resolveItem = resolveItem;
     }
+
+    public void applyItem() {}
 }
