@@ -2,7 +2,6 @@ package com.trinhdin.rpg.controller;
 
 import com.trinhdin.rpg.App;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -19,11 +18,11 @@ public class menuController {
     protected Parent root;
 
     private void switchToScene(ActionEvent event, String path) throws  IOException{
-        FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/" + path));
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("/fxml/" + path));
         root = loader.load();
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
-         String css = App.class.getResource("fxml/mainMenu.css").toExternalForm();
+         String css = App.class.getResource("/fxml/mainMenu.css").toExternalForm();
         scene.getStylesheets().add(css);
         stage.setScene(scene);
         stage.show();

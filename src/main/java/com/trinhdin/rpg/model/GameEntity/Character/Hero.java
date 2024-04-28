@@ -3,8 +3,8 @@ package com.trinhdin.rpg.model.GameEntity.Character;
 import com.trinhdin.rpg.model.GameEntity.Ability.Ability;
 import com.trinhdin.rpg.model.GameEntity.Item.Inventory;
 import com.trinhdin.rpg.model.GameEntity.Item.Item;
-import com.trinhdin.rpg.model.Position;
 import com.trinhdin.rpg.model.Quest;
+import javafx.geometry.Point2D;
 
 import java.util.ArrayList;
 
@@ -16,8 +16,8 @@ public class Hero extends Character {
     int nextLevelExp = 100;
     int level = 1;
 
-    public Hero(Position pos, String name, int speed, Stat stat) {
-        super(pos, name, speed, stat);
+    public Hero(Point2D pos, String name,String fileName, int speed, Stat stat) {
+        super(pos, name, fileName, speed, stat);
     }
 
     public void addAbility(Ability ability) {

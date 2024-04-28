@@ -1,8 +1,8 @@
 package com.trinhdin.rpg.model.GameEntity;
 
 import com.trinhdin.rpg.model.GameEntity.Item.Item;
-import com.trinhdin.rpg.model.Position;
 import com.trinhdin.rpg.model.Quest;
+import javafx.geometry.Point2D;
 
 import java.util.ArrayList;
 
@@ -11,8 +11,8 @@ public class NPC extends Entity {
     private int dialogueIndex = 0;
     Quest questForHero;
     Item itemForHero;
-    public NPC(Position pos, String name, ArrayList<String> dialogues, Quest questForHero, Item itemForHero){
-        super(pos, name);
+    public NPC(Point2D pos, String name, String fileName, ArrayList<String> dialogues, Quest questForHero, Item itemForHero){
+        super(pos, name, fileName);
         this.questForHero = questForHero;
         this.dialogues = dialogues;
         this.itemForHero = itemForHero;

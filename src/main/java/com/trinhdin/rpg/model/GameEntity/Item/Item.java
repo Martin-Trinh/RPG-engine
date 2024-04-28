@@ -2,16 +2,15 @@ package com.trinhdin.rpg.model.GameEntity.Item;
 
 import com.trinhdin.rpg.model.GameEntity.Entity;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
-import com.trinhdin.rpg.model.Position;
+import javafx.geometry.Point2D;
 
 public abstract class Item extends Entity {
-    private String name;
-    private String description = "";
-    private int weight;
+    protected String description = "";
+    protected int weight;
 
-    public Item(Position pos, String name, int weight) {
-        super(pos, name);
-        this.name = name;
+    public Item(Point2D pos, String name, String fileName, String description, int weight) {
+        super(pos, name, fileName);
+        this.description = description;
         this.weight = weight;
     }
 
@@ -32,5 +31,4 @@ public abstract class Item extends Entity {
         return weight;
     }
 
-    public abstract void use();
 }

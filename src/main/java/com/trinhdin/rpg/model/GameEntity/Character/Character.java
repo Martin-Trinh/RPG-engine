@@ -2,7 +2,8 @@ package com.trinhdin.rpg.model.GameEntity.Character;
 
 import com.trinhdin.rpg.model.GameEntity.Entity;
 import com.trinhdin.rpg.model.MoveDirection;
-import com.trinhdin.rpg.model.Position;
+import javafx.geometry.Point2D;
+import javafx.scene.shape.Rectangle;
 
 public class Character extends Entity {
     protected int speed;
@@ -10,13 +11,18 @@ public class Character extends Entity {
     protected Stat stat;
     protected int currentHealth;
     protected int currentMana;
+    protected int boundOffset = 8;
 
-    public Character(Position pos, String name, int speed, Stat stat) {
-        super(pos, name);
+    public int getBoundOffset() {
+        return boundOffset;
+    }
+
+    public Character(Point2D pos, String name, String fileName, int speed, Stat stat) {
+        super(pos, name, fileName);
         this.speed = speed;
         this.stat = stat;
-        currentHealth = stat.getMaxHealth();
-        currentMana = stat.getMaxMana();
+        this.currentHealth = stat.getMaxHealth();
+        this.currentMana = stat.getMaxMana();
     }
 
     public int getSpeed() {
@@ -27,16 +33,20 @@ public class Character extends Entity {
     }
 
     public void moveUp() {
-        this.pos.setY(this.pos.getY() - speed);
+        direction = MoveDirection.UP;
+        pos = pos.add(0, -speed);
     }
     public void moveDown() {
-        this.pos.setY(this.pos.getY() + speed);
+        direction = MoveDirection.DOWN;
+        pos = pos.add(0, speed);
     }
     public void moveLeft() {
-        this.pos.setX(this.pos.getX() - speed);
+        direction = MoveDirection.LEFT;
+        pos = pos.add(-speed, 0);
     }
     public void moveRight() {
-        this.pos.setX(this.pos.getX() + speed);
+        direction = MoveDirection.RIGHT;
+        pos = pos.add(speed, 0);
     }
 
 

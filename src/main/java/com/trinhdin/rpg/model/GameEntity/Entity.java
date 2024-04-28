@@ -1,33 +1,36 @@
 package com.trinhdin.rpg.model.GameEntity;
 
-import com.trinhdin.rpg.model.Position;
+import javafx.geometry.Point2D;
 
-public abstract class Entity {
-    protected Position pos;
-    protected int width;
-    protected int height;
+public class Entity {
+    protected Point2D pos;
+    static protected final int WIDTH = 20;
+    static protected final int HEIGHT = 20;
+    protected String fileName;
     protected String name;
 
-    public Entity(Position pos, String name) {
+    public Entity(Point2D pos, String name, String fileName) {
         this.pos = pos;
         this.name = name;
+        this.fileName = fileName;
     }
-    protected void loadEntity(String imageFileName){
-        //TODO
-    }
-
-    public Position getPos() {
+    public Point2D getPos() {
         return pos;
     }
-    public int getWidth() {
-        return width;
+    static public int getWidth() {
+        return WIDTH;
     }
 
-    public int getHeight() {
-        return height;
+    static public int getHeight() {
+        return HEIGHT;
+    }
+
+    public String getFileName() {
+        return fileName;
     }
 
     public String getName() {
         return name;
     }
+
 }

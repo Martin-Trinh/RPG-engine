@@ -1,16 +1,14 @@
 package com.trinhdin.rpg.model.GameEntity.Character;
 
 import com.trinhdin.rpg.model.GameEntity.Ability.Ability;
-import com.trinhdin.rpg.model.Position;
-
-import java.util.ArrayList;
+import javafx.geometry.Point2D;
 
 public class Monster extends Character{
     private int expWorth;
     Ability ability;
 
-    public Monster(Position pos, String name, int speed, Stat stat, int expWorth, int level, Ability ability) {
-        super(pos, name, speed, stat);
+    public Monster(Point2D pos, String name, String fileName, int speed, Stat stat, int expWorth, int level, Ability ability) {
+        super(pos, name, fileName, speed, stat);
         this.expWorth = expWorth * level;
         this.ability = ability;
         int levelCount = level - 1;
