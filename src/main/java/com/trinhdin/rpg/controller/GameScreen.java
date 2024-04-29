@@ -18,13 +18,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.util.Scanner;
 
 public class GameScreen {
     private Scene scene;
@@ -36,9 +33,11 @@ public class GameScreen {
     Hero hero;
     private final String prefixImgPath = "file:src/main/resources/img/";
     public void createHero(){
-        Point2D pos = new Point2D(1, 1);
+        Point2D pos = new Point2D(Entity.getWidth(), Entity.getHeight());
+//        Point2D pos = new Point2D(1, 1);
+
         Stat stat = new Stat(10, 10, 10, 10, 10, 10, 10);
-        hero = new Hero(pos, "Knight", prefixImgPath + "Knight/knight_run_anim_f0.png", 1, stat);
+        hero = new Hero(pos, "Knight", prefixImgPath + "Knight/knight_run_anim_f0.png", 2, stat);
         map.addMapEntity(pos, hero);
     }
     public GameScreen(Stage stage) {
@@ -86,13 +85,11 @@ public class GameScreen {
 
     public void drawTile(Tile tile) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        Image img = new Image(tile.getFileName());
-        gc.drawImage(img, tile.getPos().getX() * Entity.getWidth(), tile.getPos().getY() * Entity.getHeight(), Entity.getWidth(), Entity.getHeight());
+        gc.drawImage(tile.getImage(), tile.getPos().getX() * Entity.getWidth(), tile.getPos().getY() * Entity.getHeight() , Entity.getWidth(), Entity.getHeight());
     }
     public void drawCharacter(Entity character) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        Image img = new Image(character.getFileName());
-        gc.drawImage(img, character.getPos().getX() * Entity.getWidth(), character.getPos().getY() * Entity.getHeight(), Entity.getWidth(), Entity.getHeight());
+        gc.drawImage(character.getImage(), character.getPos().getX(), character.getPos().getY(), Entity.getWidth(), Entity.getHeight());
     }
 
     public void renderMap() {
@@ -103,52 +100,64 @@ public class GameScreen {
         map.getEntities().values().forEach(this::drawCharacter);
     }
 
-
     public void addKeyListener() {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.RIGHT && !isHeroCollide(MoveDirection.RIGHT)) {
+                if (keyEvent.getCode() == KeyCode.RIGHT && !isCharacterCollide(MoveDirection.RIGHT)) {
                     hero.moveRight();
-                } else if (keyEvent.getCode() == KeyCode.LEFT && !isHeroCollide(MoveDirection.LEFT)) {
+                } else if (keyEvent.getCode() == KeyCode.LEFT && !isCharacterCollide(MoveDirection.LEFT)) {
                     hero.moveLeft();
-                } else if (keyEvent.getCode() == KeyCode.UP && !isHeroCollide(MoveDirection.UP)) {
+                } else if (keyEvent.getCode() == KeyCode.UP && !isCharacterCollide(MoveDirection.UP)) {
                     hero.moveUp();
-                } else if (keyEvent.getCode() == KeyCode.DOWN && !isHeroCollide(MoveDirection.DOWN)) {
+                } else if (keyEvent.getCode() == KeyCode.DOWN && !isCharacterCollide(MoveDirection.DOWN)) {
                     hero.moveDown();
                 }
             }
         });
     }
 
-    public boolean isHeroCollide(MoveDirection direction) {
-        Tile tile;
+    public boolean isCharacterCollide(MoveDirection direction) throws IllegalStateException {
+        Point2D newPos;
         switch (direction) {
             case UP:
-                tile = map.getTileMap().get(hero.getPos().add(0, -1));
-                return isCollideWithTile(tile);
+                newPos = hero.getPos().add(0, -hero.getSpeed());
+                break;
             case DOWN:
-                tile = map.getTileMap().get(hero.getPos().add(0, 1));
-                return isCollideWithTile(tile);
+                newPos = hero.getPos().add(0, hero.getSpeed());
+                break;
             case LEFT:
-                tile = map.getTileMap().get(hero.getPos().add(-1, 0));
-                return isCollideWithTile(tile);
+                newPos = hero.getPos().add(-hero.getSpeed(), 0);
+                break;
             case RIGHT:
-                tile = map.getTileMap().get(hero.getPos().add(1, 0));
-                return isCollideWithTile(tile);
+                newPos = hero.getPos().add(hero.getSpeed(), 0);
+                break;
             default:
-                return true;
+                throw new IllegalStateException("Unexpected value: " + direction);
         }
+        return calculateCollision(newPos, direction);
     }
-    public Rectangle getEntityBound(Entity entity) {
-        return new Rectangle(entity.getPos().getX(), entity.getPos().getY(), Entity.getWidth(), Entity.getHeight());
-    }
-    public boolean isCollideWithTile(Tile tile) {
-        if (tile.isCollision()) {
-            Rectangle heroBound = getEntityBound(hero);
-            Rectangle tileBound = getEntityBound(tile);
-            return heroBound.intersects(tileBound.getBoundsInLocal());
+
+    public boolean calculateCollision(Point2D newPos, MoveDirection direction) {
+        int leftX = (int) ((newPos.getX() + Character.getBoundOffset()) / Entity.getWidth());
+        int topY = (int) ((newPos.getY() + Character.getBoundOffset()) / Entity.getHeight());
+        int rightX = (int) ((newPos.getX() + Entity.getWidth() - Character.getBoundOffset()) / Entity.getWidth());
+        int bottomY = (int) ((newPos.getY() + Entity.getHeight() - Character.getBoundOffset()) / Entity.getHeight());
+        Tile tile1 = null, tile2 = null;
+        System.out.println(hero.getPos());
+        if(direction == MoveDirection.UP){
+            tile1 = map.getTileMap().get(new Point2D(leftX, topY));
+            tile2 = map.getTileMap().get(new Point2D(rightX, topY));
+        }else if(direction == MoveDirection.DOWN){
+            tile1 = map.getTileMap().get(new Point2D(leftX, bottomY));
+            tile2 = map.getTileMap().get(new Point2D(rightX, bottomY));
+        }else if(direction == MoveDirection.LEFT){
+            tile1 = map.getTileMap().get(new Point2D(leftX, topY));
+            tile2 = map.getTileMap().get(new Point2D(leftX, bottomY));
+        }else if(direction == MoveDirection.RIGHT){
+            tile1 = map.getTileMap().get(new Point2D(rightX, topY));
+            tile2 = map.getTileMap().get(new Point2D(rightX, bottomY));
         }
-        return false;
+        return (tile1 != null && tile1.isCollision()) || (tile2 != null && tile2.isCollision());
     }
 }

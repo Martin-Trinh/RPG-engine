@@ -16,7 +16,7 @@ public class Hero extends Character {
     int nextLevelExp = 100;
     int level = 1;
 
-    public Hero(Point2D pos, String name,String fileName, int speed, Stat stat) {
+    public Hero(Point2D pos, String name,String fileName, double speed, Stat stat) {
         super(pos, name, fileName, speed, stat);
     }
 

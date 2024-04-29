@@ -6,18 +6,18 @@ import javafx.geometry.Point2D;
 import javafx.scene.shape.Rectangle;
 
 public class Character extends Entity {
-    protected int speed;
+    protected double speed;
     protected MoveDirection direction;
     protected Stat stat;
     protected int currentHealth;
     protected int currentMana;
-    protected int boundOffset = 8;
+    static protected int boundOffset = 4;
 
-    public int getBoundOffset() {
+   static public int getBoundOffset() {
         return boundOffset;
     }
 
-    public Character(Point2D pos, String name, String fileName, int speed, Stat stat) {
+    public Character(Point2D pos, String name, String fileName, double speed, Stat stat) {
         super(pos, name, fileName);
         this.speed = speed;
         this.stat = stat;
@@ -25,7 +25,7 @@ public class Character extends Entity {
         this.currentMana = stat.getMaxMana();
     }
 
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
     }
     public MoveDirection getDirection() {

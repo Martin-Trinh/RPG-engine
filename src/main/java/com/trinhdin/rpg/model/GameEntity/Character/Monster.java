@@ -7,7 +7,7 @@ public class Monster extends Character{
     private int expWorth;
     Ability ability;
 
-    public Monster(Point2D pos, String name, String fileName, int speed, Stat stat, int expWorth, int level, Ability ability) {
+    public Monster(Point2D pos, String name, String fileName, double speed, Stat stat, int expWorth, int level, Ability ability) {
         super(pos, name, fileName, speed, stat);
         this.expWorth = expWorth * level;
         this.ability = ability;
