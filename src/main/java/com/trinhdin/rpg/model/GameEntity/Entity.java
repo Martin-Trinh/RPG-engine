@@ -4,9 +4,9 @@ import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 
 public class Entity {
+    static protected final int HEIGHT = 32;
+    static protected final int WIDTH = 32;
     protected Point2D pos;
-    static protected final int WIDTH = 20;
-    static protected final int HEIGHT = 20;
     protected String fileName;
     protected String name;
     protected Image image;
@@ -17,11 +17,11 @@ public class Entity {
         this.fileName = fileName;
         this.image = new Image(fileName);
     }
-    public Point2D getPos() {
-        return pos;
-    }
     static public int getWidth() {
         return WIDTH;
+    }
+    public Point2D getPos() {
+        return pos;
     }
 
     static public int getHeight() {

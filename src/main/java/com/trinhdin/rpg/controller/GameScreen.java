@@ -1,7 +1,7 @@
 package com.trinhdin.rpg.controller;
 
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
-import com.trinhdin.rpg.model.GameEntity.Character.Stat;
+import com.trinhdin.rpg.model.GameEntity.Character.Monster;
 import com.trinhdin.rpg.model.GameEntity.Character.Character;
 import com.trinhdin.rpg.model.GameEntity.Entity;
 import com.trinhdin.rpg.model.GameEntity.Tile;
@@ -18,7 +18,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -27,21 +26,16 @@ public class GameScreen {
     private Scene scene;
     private Canvas canvas;
     private Group root;
-    private final int WIN_HEIGHT = 600;
-    private final int WIN_WIDTH = 900;
+    private final int WIN_HEIGHT = 400;
+    private final int WIN_WIDTH = 600;
     private Map map;
-    Hero hero;
-    private final String prefixImgPath = "file:src/main/resources/img/";
-    public void createHero(){
-        Point2D pos = new Point2D(Entity.getWidth(), Entity.getHeight());
-//        Point2D pos = new Point2D(1, 1);
-
-        Stat stat = new Stat(10, 10, 10, 10, 10, 10, 10);
-        hero = new Hero(pos, "Knight", prefixImgPath + "Knight/knight_run_anim_f0.png", 2, stat);
-        map.addMapEntity(pos, hero);
-    }
+    private final Hero hero;
+    private int animationTick = 0;
+    private int animationIndex = 0;
+    private int animationSpeed = 6;
     public GameScreen(Stage stage) {
         configureMap();
+        hero  = map.getHero();
         createHero();
         canvas = new Canvas(map.getWidth(), map.getHeight() );
         root = new Group();
@@ -50,13 +44,23 @@ public class GameScreen {
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
         addKeyListener();
-        new AnimationTimer() {
-            public void handle(long currentNanoTime) {
-                //clear canvas
-                gc.clearRect(0, 0, map.getWidth(), map.getHeight());
-                onUpdate();
+        AnimationTimer animationTimer = new AnimationTimer() {
+            long lastFrameTime = 0;
+            final int FPS = 60;
+            final double timePerFrame = 1000_000_000.0 / FPS;
+            @Override
+            public void handle(long now) {
+                if(now - lastFrameTime >= timePerFrame){
+                    //clear canvas
+                    gc.clearRect(0, 0, map.getWidth(), map.getHeight());
+
+                    onUpdate();
+                    // update last frame time
+                    lastFrameTime = now;
+                }
             }
-        }.start();
+        };
+        animationTimer.start();
         stage.setScene(scene);
         stage.show();
     }
@@ -71,8 +75,10 @@ public class GameScreen {
     public void onUpdate() {
         // render map
         renderMap();
+        // render enemies, items, etc.
+        renderEntities();
         // render hero
-        drawCharacter(hero);
+        drawHero();
     }
 
     public void renderEntity(Entity entity) {
@@ -82,14 +88,44 @@ public class GameScreen {
         imageView.setY(entity.getPos().getY() * Entity.getHeight());
         root.getChildren().add(imageView);
     }
-
-    public void drawTile(Tile tile) {
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.drawImage(tile.getImage(), tile.getPos().getX() * Entity.getWidth(), tile.getPos().getY() * Entity.getHeight() , Entity.getWidth(), Entity.getHeight());
+    public void createHero(){
+        double screenX = WIN_WIDTH/2.0 - Entity.getWidth()/2.0;
+        double screenY = WIN_HEIGHT/2.0 - Entity.getHeight()/2.0;
+        Point2D screenPos = new Point2D(screenX, screenY);
+        hero.setScreenPos(screenPos);
     }
-    public void drawCharacter(Entity character) {
+    public void animate(){
+        animationTick++;
+        if(animationTick >= animationSpeed){
+            animationTick = 0;
+            animationIndex++;
+            if(animationIndex >= 4){
+                animationIndex = 0;
+            }
+        }
+    }
+    public void drawTile(Entity entity) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.drawImage(character.getImage(), character.getPos().getX(), character.getPos().getY(), Entity.getWidth(), Entity.getHeight());
+        double entityX = entity.getPos().getX()* Entity.getWidth();
+        double entityY = entity.getPos().getY()* Entity.getWidth();
+        double screenTileX = entityX - hero.getPos().getX() + hero.getScreenPos().getX();
+        double screenTileY = entityY - hero.getPos().getY() + hero.getScreenPos().getY();
+        if( screenTileX + Entity.getWidth() >= 0 &&
+            screenTileX - Entity.getWidth() <= WIN_WIDTH &&
+            screenTileY + Entity.getHeight() >= 0 &&
+            screenTileY - Entity.getHeight() <= WIN_HEIGHT)
+        {
+            if(entity instanceof Monster)
+                gc.drawImage(entity.getImage(), 0, 0, 16, 16, screenTileX, screenTileY, Entity.getWidth(), Entity.getHeight());
+            else
+                gc.drawImage(entity.getImage(), screenTileX, screenTileY , Entity.getWidth(), Entity.getHeight());
+
+        }
+    }
+    public void drawHero() {
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        System.out.println(hero.getImage().getWidth() + " " + hero.getImage().getHeight());
+        gc.drawImage(hero.getImage(),0,0, 16, 16, hero.getScreenPos().getX(), hero.getScreenPos().getY(), Entity.getWidth(), Entity.getHeight());
     }
 
     public void renderMap() {
@@ -97,7 +133,7 @@ public class GameScreen {
     }
 
     public void renderEntities() {
-        map.getEntities().values().forEach(this::drawCharacter);
+        map.getEntities().values().forEach(this::drawTile);
     }
 
     public void addKeyListener() {
@@ -105,12 +141,16 @@ public class GameScreen {
             @Override
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.RIGHT && !isCharacterCollide(MoveDirection.RIGHT)) {
+                    hero.setMoving(true);
                     hero.moveRight();
                 } else if (keyEvent.getCode() == KeyCode.LEFT && !isCharacterCollide(MoveDirection.LEFT)) {
+                    hero.setMoving(true);
                     hero.moveLeft();
                 } else if (keyEvent.getCode() == KeyCode.UP && !isCharacterCollide(MoveDirection.UP)) {
+                    hero.setMoving(true);
                     hero.moveUp();
                 } else if (keyEvent.getCode() == KeyCode.DOWN && !isCharacterCollide(MoveDirection.DOWN)) {
+                    hero.setMoving(true);
                     hero.moveDown();
                 }
             }
@@ -144,7 +184,6 @@ public class GameScreen {
         int rightX = (int) ((newPos.getX() + Entity.getWidth() - Character.getBoundOffset()) / Entity.getWidth());
         int bottomY = (int) ((newPos.getY() + Entity.getHeight() - Character.getBoundOffset()) / Entity.getHeight());
         Tile tile1 = null, tile2 = null;
-        System.out.println(hero.getPos());
         if(direction == MoveDirection.UP){
             tile1 = map.getTileMap().get(new Point2D(leftX, topY));
             tile2 = map.getTileMap().get(new Point2D(rightX, topY));

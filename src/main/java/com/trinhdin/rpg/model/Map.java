@@ -1,5 +1,8 @@
 package com.trinhdin.rpg.model;
 
+import com.trinhdin.rpg.model.GameEntity.Character.Hero;
+import com.trinhdin.rpg.model.GameEntity.Character.Monster;
+import com.trinhdin.rpg.model.GameEntity.Character.Stat;
 import com.trinhdin.rpg.model.GameEntity.Entity;
 import com.trinhdin.rpg.model.GameEntity.Tile;
 import javafx.geometry.Point2D;
@@ -13,6 +16,7 @@ import java.util.Scanner;
 public class Map {
     private HashMap<Point2D, Tile> tiles = new HashMap<>();
     private HashMap<Point2D, Entity> entities = new HashMap<>();
+    private Hero hero;
     private int width;
     private int height;
     private final String prefixImgPath = "file:src/main/resources/img/";
@@ -51,7 +55,7 @@ public class Map {
                 for (int i = 0; i < line.length(); i++) {
                     Point2D pos = new Point2D(i, lineCnt);
                     char c = line.charAt(i);
-                    loadCharToTile(pos, c);
+                    loadCharToEntity(pos, c);
                 }
 //                System.out.println(line);
             }
@@ -63,17 +67,29 @@ public class Map {
             throw new IOException("File not found");
         }
     }
-    public void loadCharToTile(Point2D pos, char c){
-        switch (c){
-            case '#':
+    public void loadCharToEntity(Point2D pos, char c){
+        Stat stat = new Stat(10, 10, 10, 10, 10, 10, 10);
+        if(c == '#'){
                 Tile wall = new Tile(pos, "wall", prefixImgPath + "wall.png", true);
                 tiles.put(pos, wall);
-                break;
-            case ' ':
-                break;
-            default:
-                Tile floor = new Tile(pos, "floor", prefixImgPath + "floor_5.png", false);
-                tiles.put(pos, floor);
+        }else if(c == ' '){
+
+        }else{
+            Tile floor = new Tile(pos, "floor", prefixImgPath + "floor_5.png", false);
+            tiles.put(pos, floor);
+            switch (c){
+                case '@':
+                    hero = new Hero(pos.multiply(Entity.getWidth()), "Knight", prefixImgPath + "Heroes/knight_run.png", 2, stat);
+                    break;
+                case 'X':
+                    Monster monster = new Monster(pos, "Goblin", prefixImgPath + "Monster/goblin_run.png", 1, stat, 10, 1);
+                    entities.put(pos, monster);
+                    break;
+                default:
+            }
         }
+    }
+    public Hero getHero() {
+        return hero;
     }
 }

@@ -16,10 +16,17 @@ public class Hero extends Character {
     int nextLevelExp = 100;
     int level = 1;
 
+    private Point2D screenPos;
     public Hero(Point2D pos, String name,String fileName, double speed, Stat stat) {
         super(pos, name, fileName, speed, stat);
     }
 
+    public void setScreenPos(Point2D screenPos) {
+        this.screenPos = screenPos;
+    }
+    public Point2D getScreenPos() {
+        return screenPos;
+    }
     public void addAbility(Ability ability) {
         abilities.add(ability);
     }
