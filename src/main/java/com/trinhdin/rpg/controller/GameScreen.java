@@ -124,7 +124,6 @@ public class GameScreen {
     }
     public void drawHero() {
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        System.out.println(hero.getImage().getWidth() + " " + hero.getImage().getHeight());
         gc.drawImage(hero.getImage(),0,0, 16, 16, hero.getScreenPos().getX(), hero.getScreenPos().getY(), Entity.getWidth(), Entity.getHeight());
     }
 
@@ -141,16 +140,12 @@ public class GameScreen {
             @Override
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.RIGHT && !isCharacterCollide(MoveDirection.RIGHT)) {
-                    hero.setMoving(true);
                     hero.moveRight();
                 } else if (keyEvent.getCode() == KeyCode.LEFT && !isCharacterCollide(MoveDirection.LEFT)) {
-                    hero.setMoving(true);
                     hero.moveLeft();
                 } else if (keyEvent.getCode() == KeyCode.UP && !isCharacterCollide(MoveDirection.UP)) {
-                    hero.setMoving(true);
                     hero.moveUp();
                 } else if (keyEvent.getCode() == KeyCode.DOWN && !isCharacterCollide(MoveDirection.DOWN)) {
-                    hero.setMoving(true);
                     hero.moveDown();
                 }
             }

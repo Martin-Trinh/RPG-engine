@@ -12,7 +12,6 @@ public class Character extends Entity {
     protected int currentHealth;
     protected int currentMana;
     static protected int boundOffset = 4;
-    private boolean isMoving = false;
 
 
    static public int getBoundOffset() {
@@ -48,9 +47,6 @@ public class Character extends Entity {
     public void moveRight() {
         direction = MoveDirection.RIGHT;
         pos = pos.add(speed, 0);
-    }
-    public void setMoving(boolean moving) {
-        isMoving = moving;
     }
 
     public void setCurrentHealth(int amount){

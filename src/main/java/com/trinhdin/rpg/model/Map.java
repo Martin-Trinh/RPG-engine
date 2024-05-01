@@ -4,6 +4,10 @@ import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Character.Monster;
 import com.trinhdin.rpg.model.GameEntity.Character.Stat;
 import com.trinhdin.rpg.model.GameEntity.Entity;
+import com.trinhdin.rpg.model.GameEntity.Item.Consumable;
+import com.trinhdin.rpg.model.GameEntity.Item.Equipment;
+import com.trinhdin.rpg.model.GameEntity.NPC;
+import com.trinhdin.rpg.model.GameEntity.Obstacle;
 import com.trinhdin.rpg.model.GameEntity.Tile;
 import javafx.geometry.Point2D;
 
@@ -27,6 +31,7 @@ public class Map {
     public int getHeight() {
         return height;
     }
+    public Hero getHero() {return hero;}
     public HashMap<Point2D, Tile> getTileMap() {
         return tiles;
     }
@@ -85,11 +90,25 @@ public class Map {
                     Monster monster = new Monster(pos, "Goblin", prefixImgPath + "Monster/goblin_run.png", 1, stat, 10, 1);
                     entities.put(pos, monster);
                     break;
+                case 'p':
+                    Consumable potion = new Consumable(pos, "Potion", prefixImgPath + "Item/potion.png", "Health Potion", 10, 10, 0);
+                    entities.put(pos, potion);
+                    break;
+                case 'e':
+                    Equipment sword = new Equipment(pos, "Sword", prefixImgPath + "Item/sword.png", "Sword", 10, stat);
+                    entities.put(pos, sword);
+                    break;
+                case '-':
+                    Obstacle gate = new Obstacle(pos, "Gate", prefixImgPath + "Obstacle/gate.png", true,null, "Locked gate");
+                    entities.put(pos, gate);
+                    break;
+                case '?':
+                    NPC monk = new NPC(pos, "Monk", prefixImgPath + "NPC/monk.png", null, null, null);
+                    entities.put(pos, monk);
+                    break;
                 default:
             }
         }
     }
-    public Hero getHero() {
-        return hero;
-    }
+
 }
