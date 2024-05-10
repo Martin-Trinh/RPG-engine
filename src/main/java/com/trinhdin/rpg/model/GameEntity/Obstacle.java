@@ -4,19 +4,26 @@ import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Item.Item;
 import javafx.geometry.Point2D;
 
-public class Obstacle extends Tile {
+public class Obstacle extends Tile implements Interactable{
     private Item resolveItem;
-    private String description;
 
-    public Obstacle(Point2D pos, String name, String fileName, boolean collision, Item resolveItem, String description) {
+    public Obstacle(Point2D pos, String name, String fileName, boolean collision, Item resolveItem) {
         super(pos, name, fileName, collision);
         this.resolveItem = resolveItem;
-        this.description = description;
-    }
-    public String getDescription() {
-        return description;
     }
     public void resolveObstacle() {
         collision = false;
+    }
+
+    @Override
+    public boolean interact(Hero hero) {
+      Item item = hero.getInventory().findItem(resolveItem.getName());
+        if(item != null){
+            resolveObstacle();
+            hero.getInventory().removeItem(item);
+            return true;
+        }
+        System.out.println("You need " + resolveItem.getName() + " to resolve this obstacle");
+        return false;
     }
 }

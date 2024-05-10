@@ -2,9 +2,10 @@ package com.trinhdin.rpg.model.GameEntity.Character;
 
 import com.trinhdin.rpg.model.GameEntity.Ability.Ability;
 import com.trinhdin.rpg.model.GameEntity.Ability.AttackType;
+import com.trinhdin.rpg.model.GameEntity.Interactable;
 import javafx.geometry.Point2D;
 
-public class Monster extends Character{
+public class Monster extends Character {
     private int expWorth;
     private int level;
     Ability ability;
@@ -29,6 +30,7 @@ public class Monster extends Character{
                                 defaultMagicArmor*level);
         stat.modifyStat(levelStat);
     }
+
     public void setAbility(Ability ability) {
         this.ability = ability;
     }
@@ -38,4 +40,5 @@ public class Monster extends Character{
     public int getLevel() {
         return level;
     }
+
 }

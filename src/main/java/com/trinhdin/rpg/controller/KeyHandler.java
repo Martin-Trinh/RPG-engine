@@ -1,12 +1,9 @@
 package com.trinhdin.rpg.controller;
 
+import com.trinhdin.rpg.model.GameEntity.*;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
-import com.trinhdin.rpg.model.GameEntity.Entity;
 import com.trinhdin.rpg.model.GameEntity.Item.Inventory;
 import com.trinhdin.rpg.model.GameEntity.Item.Item;
-import com.trinhdin.rpg.model.GameEntity.NPC;
-import com.trinhdin.rpg.model.GameEntity.Obstacle;
-import com.trinhdin.rpg.model.GameEntity.Tile;
 import com.trinhdin.rpg.model.Map;
 import com.trinhdin.rpg.model.MoveDirection;
 import javafx.event.EventHandler;
@@ -53,16 +50,8 @@ public class KeyHandler implements EventHandler<KeyEvent> {
             System.out.println("Interacting with entity");
             System.out.println(hero.getBounds().getBoundsInParent());
             System.out.println(entity.getName() + " " + entity.getBounds().getBoundsInParent());
-            if (entity instanceof Item) {
-                hero.getInventory().addItem((Item) entity);
+            if(((Interactable)entity).interact(hero)){
                 map.removeEntity(entity.getPos());
-            } else if (entity instanceof NPC) {
-                System.out.println(((NPC) entity).speak());
-                NPC npc = (NPC) entity;
-//                npc.interact(hero);
-            } else if (entity instanceof Obstacle) {
-                // resolve obstacle if item is in inventory
-                System.out.println(((Obstacle) entity).getDescription());
             }
         } else {
             System.out.println("No entity to interact with!");

@@ -1,15 +1,12 @@
 package com.trinhdin.rpg.model;
 
+import com.trinhdin.rpg.model.GameEntity.*;
 import com.trinhdin.rpg.model.GameEntity.Character.Character;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Character.Monster;
 import com.trinhdin.rpg.model.GameEntity.Character.Stat;
-import com.trinhdin.rpg.model.GameEntity.Entity;
 import com.trinhdin.rpg.model.GameEntity.Item.Consumable;
 import com.trinhdin.rpg.model.GameEntity.Item.Equipment;
-import com.trinhdin.rpg.model.GameEntity.NPC;
-import com.trinhdin.rpg.model.GameEntity.Obstacle;
-import com.trinhdin.rpg.model.GameEntity.Tile;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Rectangle;
@@ -23,6 +20,7 @@ import java.util.Scanner;
 public class Map {
     private HashMap<Point2D, Tile> tiles = new HashMap<>();
     private HashMap<Point2D, Entity> entities = new HashMap<>();
+    private HashMap<Point2D, Monster> monsters = new HashMap<>();
     private Hero hero;
     private int width;
     private int height;
@@ -42,6 +40,7 @@ public class Map {
     public HashMap<Point2D, Entity> getEntities() {
         return entities;
     }
+    public HashMap<Point2D, Monster> getMonsters() {return monsters;}
 
     public void addTile(Point2D pos, Tile entity){
         tiles.put(pos, entity);
@@ -90,13 +89,6 @@ public class Map {
         int topY = corner[1];
         int rightX = corner[2];
         int bottomY = corner[3];
-//        Bounds rec = hero.getOffsetBounds(newPos).getBoundsInLocal();
-//
-//        int leftX = (int)rec.getMinX()/ Entity.getWidth();
-//        int topY = (int)rec.getMinY()/ Entity.getHeight();
-//        int rightX = (int)rec.getMaxX()/ Entity.getWidth();
-//        int bottomY = (int)rec.getMaxY()/ Entity.getHeight();
-
         Tile [] tiles = new Tile[2];
 
         if(direction == MoveDirection.UP){
@@ -193,7 +185,7 @@ public class Map {
                     break;
                 case 'X':
                     Monster monster = new Monster(pos, "Goblin", prefixImgPath + "Monster/goblin_run.png", 1, stat, 10, 1);
-                    entities.put(pos, monster);
+                    monsters.put(pos, monster);
                     break;
                 case 'p':
                     Consumable potion = new Consumable(pos, "Potion", prefixImgPath + "Items/flasks_red.png", "Health Potion", 10, 10, 0);
@@ -204,7 +196,7 @@ public class Map {
                     entities.put(pos, sword);
                     break;
                 case '-':
-                    Obstacle gate = new Obstacle(pos, "Gate", prefixImgPath + "Obstacle/door_closed.png", true,null, "Locked gate");
+                    Obstacle gate = new Obstacle(pos, "Gate", prefixImgPath + "Obstacle/door_closed.png", true,null);
                     entities.put(pos, gate);
                     break;
                 case '?':

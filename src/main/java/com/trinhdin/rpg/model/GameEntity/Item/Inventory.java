@@ -29,6 +29,14 @@ public class Inventory {
         items.get(index).use(target);
         removeItem(index);
     }
+    public Item findItem(String name){
+        for(Item item : items){
+            if(item.getName().equals(name)){
+                return item;
+            }
+        }
+        return null;
+    }
     public ArrayList<Item> getItems() {
         return items;
     }

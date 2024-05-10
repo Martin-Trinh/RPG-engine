@@ -64,7 +64,9 @@ public class Hero extends Character {
     public Rectangle getBounds(){
         return new Rectangle(pos.getX(), pos.getY(), WIDTH, HEIGHT);
     }
-
+    public boolean isQuestCompleted(Quest quest){
+        return quests.contains(quest) && quest.isCompleted();
+    }
     public int getExp() {
         return exp;
     }

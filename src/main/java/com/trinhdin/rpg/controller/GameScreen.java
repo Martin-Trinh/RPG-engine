@@ -5,6 +5,7 @@ import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Character.Monster;
 import com.trinhdin.rpg.model.GameEntity.Character.Stat;
 import com.trinhdin.rpg.model.GameEntity.Entity;
+import com.trinhdin.rpg.model.GameEntity.Interactable;
 import com.trinhdin.rpg.model.GameEntity.Item.Inventory;
 import com.trinhdin.rpg.model.Map;
 import com.trinhdin.rpg.view.EquipmentView;
@@ -140,6 +141,7 @@ public class GameScreen {
             gc.strokeRect(  screenTileX, screenTileY, Entity.getWidth(), Entity.getHeight());
         }
     }
+
     public void drawHero() {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         double spriteSize = hero.getImage().getHeight();
@@ -155,10 +157,12 @@ public class GameScreen {
     }
     public void renderEntities() {
         map.getEntities().values().forEach(this::drawEntity);
+        map.getMonsters().values().forEach(this::drawEntity);
     }
     public void addKeyListener() {
         scene.setOnKeyPressed(new KeyHandler(this));
     }
+
     public void openInventory(Inventory inventory){
         isInventoryOpen = true;
         HBox splitPane = new HBox();

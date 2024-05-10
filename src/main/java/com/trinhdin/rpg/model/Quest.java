@@ -1,12 +1,12 @@
 package com.trinhdin.rpg.model;
 
 public class Quest {
-    private int questId;
+    private String name;
     private String description;
     private boolean isCompleted = false;
 
-    public Quest(int questId, String description) {
-        this.questId = questId;
+    public Quest(String name, String description) {
+        this.name = name;
         this.description = description;
     }
 
@@ -22,6 +22,6 @@ public class Quest {
         isCompleted = true;
     }
     public boolean equals(Quest quest){
-        return this.questId == quest.questId;
+        return this.name.equals(quest.name);
     }
 }
