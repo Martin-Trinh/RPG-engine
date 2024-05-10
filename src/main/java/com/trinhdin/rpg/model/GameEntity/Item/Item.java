@@ -7,7 +7,6 @@ import javafx.geometry.Point2D;
 public abstract class Item extends Entity {
     protected String description = "";
     protected int weight;
-
     public Item(Point2D pos, String name, String fileName, String description, int weight) {
         super(pos, name, fileName);
         this.description = description;

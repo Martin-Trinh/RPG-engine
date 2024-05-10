@@ -13,6 +13,15 @@ public abstract class Ability {
          this.cooldown = cooldown;
      }
 
+    @Override
+    public String toString() {
+        return "Ability{" +
+                "name='" + name + '\'' +
+                ", cost=" + cost +
+                ", cooldown=" + cooldown +
+                '}';
+    }
+
     public abstract void use(Character caster, Character target);
 
 }

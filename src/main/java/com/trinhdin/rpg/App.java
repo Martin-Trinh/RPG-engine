@@ -56,7 +56,6 @@ public class App extends Application {
         if(alert.showAndWait().get() == ButtonType.OK){
             stage.close();
         }
-
     }
     public static void main(String[] args) {
         launch(args);

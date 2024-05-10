@@ -1,5 +1,7 @@
 package com.trinhdin.rpg.model.GameEntity.Character;
 
+import com.trinhdin.rpg.model.GameEntity.Ability.AttackAbility;
+import com.trinhdin.rpg.model.GameEntity.Ability.AttackType;
 import com.trinhdin.rpg.model.GameEntity.Entity;
 import com.trinhdin.rpg.model.MoveDirection;
 import javafx.geometry.Point2D;
@@ -11,10 +13,10 @@ public class Character extends Entity {
     protected Stat stat;
     protected int currentHealth;
     protected int currentMana;
-    static protected int boundOffset = 4;
+    static protected int boundOffset = 8;
 
 
-   static public int getBoundOffset() {
+   static public int getOffset() {
         return boundOffset;
     }
 
@@ -25,7 +27,6 @@ public class Character extends Entity {
         this.currentHealth = stat.getMaxHealth();
         this.currentMana = stat.getMaxMana();
     }
-
     public double getSpeed() {
         return speed;
     }
@@ -81,5 +82,16 @@ public class Character extends Entity {
         return stat;
     }
 
+    public int[] calculateNewPosition4Corner(Point2D pos){
+        int [] corner = new int[4];
+        corner[0] = (int) (pos.getX() + boundOffset) /WIDTH;
+        corner[1] = (int) (pos.getY() + boundOffset) / HEIGHT;
+        corner[2] = (int) (pos.getX() + Entity.getWidth() - boundOffset) / WIDTH;
+        corner[3] = (int) (pos.getY() + Entity.getHeight() - boundOffset) / HEIGHT;
+        return corner;
+    }
+    public Rectangle getOffsetBounds(Point2D pos){
+       return new Rectangle (pos.getX() + boundOffset, pos.getY() + boundOffset, WIDTH - 2*boundOffset, HEIGHT - 2*boundOffset);
+    }
 
 }

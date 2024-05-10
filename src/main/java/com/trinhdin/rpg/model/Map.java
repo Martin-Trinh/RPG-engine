@@ -1,5 +1,6 @@
 package com.trinhdin.rpg.model;
 
+import com.trinhdin.rpg.model.GameEntity.Character.Character;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Character.Monster;
 import com.trinhdin.rpg.model.GameEntity.Character.Stat;
@@ -9,7 +10,9 @@ import com.trinhdin.rpg.model.GameEntity.Item.Equipment;
 import com.trinhdin.rpg.model.GameEntity.NPC;
 import com.trinhdin.rpg.model.GameEntity.Obstacle;
 import com.trinhdin.rpg.model.GameEntity.Tile;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.scene.shape.Rectangle;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -46,6 +49,107 @@ public class Map {
     public void addMapEntity(Point2D pos, Entity entity){
         entities.put(pos, entity);
     }
+    public void removeEntity(Point2D pos){
+        entities.remove(pos);
+    }
+    public Entity returnCollisionEntity(Point2D newPos, MoveDirection direction){
+        int [] corner = hero.calculateNewPosition4Corner(newPos);
+        int leftX = corner[0];
+        int topY = corner[1];
+        int rightX = corner[2];
+        int bottomY = corner[3];
+
+        Entity entity1 = null, entity2 = null;
+        if(direction == MoveDirection.UP){
+            entity1 = entities.get(new Point2D(leftX, topY));
+            entity2 = entities.get(new Point2D(rightX, topY));
+        }else if(direction == MoveDirection.DOWN) {
+            entity1 = entities.get(new Point2D(leftX, bottomY));
+            entity2 = entities.get(new Point2D(rightX, bottomY));
+        }else if (direction == MoveDirection.LEFT){
+            entity1 = entities.get(new Point2D(leftX, topY));
+            entity2 = entities.get(new Point2D(leftX, bottomY));
+        }else if(direction == MoveDirection.RIGHT){
+            entity1 = entities.get(new Point2D(rightX, topY));
+            entity2 = entities.get(new Point2D(rightX, bottomY));
+        }
+        if(entity1 != null && entity2 != null){
+           // return closer entity
+            if(hero.getPos().distance(entity1.getPos()) < hero.getPos().distance(entity2.getPos()))
+                return entity1;
+            return entity2;
+       }
+        if(entity1 != null){
+            return entity1;
+        }
+        return entity2;
+    }
+    public Tile[] return2CollisionTile(Point2D newPos, MoveDirection direction) {
+        int [] corner = hero.calculateNewPosition4Corner(newPos);
+        int leftX = corner[0];
+        int topY = corner[1];
+        int rightX = corner[2];
+        int bottomY = corner[3];
+//        Bounds rec = hero.getOffsetBounds(newPos).getBoundsInLocal();
+//
+//        int leftX = (int)rec.getMinX()/ Entity.getWidth();
+//        int topY = (int)rec.getMinY()/ Entity.getHeight();
+//        int rightX = (int)rec.getMaxX()/ Entity.getWidth();
+//        int bottomY = (int)rec.getMaxY()/ Entity.getHeight();
+
+        Tile [] tiles = new Tile[2];
+
+        if(direction == MoveDirection.UP){
+            tiles[0] = this.tiles.get(new Point2D(leftX, topY));
+            tiles[1] = this.tiles.get(new Point2D(rightX, topY));
+        }else if(direction == MoveDirection.DOWN){
+            tiles[0] = this.tiles.get(new Point2D(leftX, bottomY));
+            tiles[1] = this.tiles.get(new Point2D(rightX, bottomY));
+        }else if(direction == MoveDirection.LEFT){
+            tiles[0] = this.tiles.get(new Point2D(leftX, topY));
+            tiles[1] = this.tiles.get(new Point2D(leftX, bottomY));
+        }else if(direction == MoveDirection.RIGHT){
+            tiles[0] = this.tiles.get(new Point2D(rightX, topY));
+            tiles[1] = this.tiles.get(new Point2D(rightX, bottomY));
+        }
+        return tiles;
+    }
+    public Entity isCollideWithEntity(){
+        Bounds heroBound = hero.getBounds().getBoundsInParent();
+       for (Entity entity : entities.values()) {
+           if(heroBound.intersects(entity.getBounds().getBoundsInParent())){
+               return entity;
+           }
+       }
+       return null;
+    }
+    public boolean isCharacterCollide(MoveDirection direction) throws IllegalStateException {
+        Point2D newPos;
+        switch (direction) {
+            case UP:
+                newPos = hero.getPos().add(0, -hero.getSpeed());
+                break;
+            case DOWN:
+                newPos = hero.getPos().add(0, hero.getSpeed());
+                break;
+            case LEFT:
+                newPos = hero.getPos().add(-hero.getSpeed(), 0);
+                break;
+            case RIGHT:
+                newPos = hero.getPos().add(hero.getSpeed(), 0);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + direction);
+        }
+        // check tile collision
+        Tile[] tiles = return2CollisionTile(newPos, direction);
+        if((tiles[0] != null && tiles[0].isCollision()) || (tiles[1] != null && tiles[1].isCollision())){
+            return true;
+        }
+        // check entity collision
+        Entity entity = returnCollisionEntity(newPos , direction);
+        return entity != null;
+      }
     public void loadTileMap(String mapFileName) throws IOException {
         int maxLength = 0;
         int lineCnt;
@@ -72,6 +176,7 @@ public class Map {
             throw new IOException("File not found");
         }
     }
+
     public void loadCharToEntity(Point2D pos, char c){
         Stat stat = new Stat(10, 10, 10, 10, 10, 10, 10);
         if(c == '#'){
@@ -91,15 +196,15 @@ public class Map {
                     entities.put(pos, monster);
                     break;
                 case 'p':
-                    Consumable potion = new Consumable(pos, "Potion", prefixImgPath + "Item/potion.png", "Health Potion", 10, 10, 0);
+                    Consumable potion = new Consumable(pos, "Potion", prefixImgPath + "Items/flasks_red.png", "Health Potion", 10, 10, 0);
                     entities.put(pos, potion);
                     break;
                 case 'e':
-                    Equipment sword = new Equipment(pos, "Sword", prefixImgPath + "Item/sword.png", "Sword", 10, stat);
+                    Equipment sword = new Equipment(pos, "Sword", prefixImgPath + "Items/weapons/weapon01crystalsword.png", "Sword", 10, stat);
                     entities.put(pos, sword);
                     break;
                 case '-':
-                    Obstacle gate = new Obstacle(pos, "Gate", prefixImgPath + "Obstacle/gate.png", true,null, "Locked gate");
+                    Obstacle gate = new Obstacle(pos, "Gate", prefixImgPath + "Obstacle/door_closed.png", true,null, "Locked gate");
                     entities.put(pos, gate);
                     break;
                 case '?':

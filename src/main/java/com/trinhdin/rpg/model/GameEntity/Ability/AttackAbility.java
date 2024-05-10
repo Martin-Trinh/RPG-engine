@@ -4,10 +4,6 @@ import com.trinhdin.rpg.model.GameEntity.Character.Character;
 
 public class AttackAbility extends Ability{
     private int damage;
-    private enum AttackType{
-        PHYSICAL,
-        MAGICAL
-    }
     private AttackType type;
     public AttackAbility(String name, int cost, int cooldown, int damage, AttackType type) {
         super(name, cost, cooldown);

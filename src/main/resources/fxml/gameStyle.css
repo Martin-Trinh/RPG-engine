@@ -1,0 +1,62 @@
+#canvas{
+
+}
+#mainPane{
+
+}
+#gamePane{
+
+}
+#statPane{
+
+}
+#dialogPane{
+
+}
+#inventory{
+    -fx-border-color: red;
+    -fx-padding: 10px;
+    -fx-border-width: 4;
+}
+.item-rectangle{
+    -fx-stroke: black;
+    -fx-stroke-width: 2;
+    -fx-fill: white;
+}
+
+#equipment{
+    -fx-border-color: yellow;
+    -fx-padding: 20px;
+    -fx-border-width: 4;
+}
+.button{
+    -fx-background-color: #ff0000;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+.item-label{
+    -fx-background-color: red;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.heading{
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: red;
+    -fx-padding: 10px;
+}
+.stat-heading{
+    -fx-font-size:15px;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 0;
+}

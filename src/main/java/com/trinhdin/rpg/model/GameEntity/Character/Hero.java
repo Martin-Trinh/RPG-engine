@@ -1,10 +1,12 @@
 package com.trinhdin.rpg.model.GameEntity.Character;
 
 import com.trinhdin.rpg.model.GameEntity.Ability.Ability;
+import com.trinhdin.rpg.model.GameEntity.Ability.AttackType;
 import com.trinhdin.rpg.model.GameEntity.Item.Inventory;
 import com.trinhdin.rpg.model.GameEntity.Item.Item;
 import com.trinhdin.rpg.model.Quest;
 import javafx.geometry.Point2D;
+import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 
@@ -15,12 +17,10 @@ public class Hero extends Character {
     int exp = 0;
     int nextLevelExp = 100;
     int level = 1;
-
     private Point2D screenPos;
     public Hero(Point2D pos, String name,String fileName, double speed, Stat stat) {
         super(pos, name, fileName, speed, stat);
     }
-
     public void setScreenPos(Point2D screenPos) {
         this.screenPos = screenPos;
     }
@@ -39,11 +39,8 @@ public class Hero extends Character {
         inventory.useItem(index, this);
     }
 
-    public void pickupItem(Item item) {
-        inventory.addItem(item);
-    }
-    public void dropItem(int index) {
-        inventory.removeItem(index);
+    public Inventory getInventory() {
+        return inventory;
     }
     public void addQuest(Quest quest) {
         quests.add(quest);
@@ -64,4 +61,15 @@ public class Hero extends Character {
         stat.modifyStat(levelUpStat);
     }
 
+    public Rectangle getBounds(){
+        return new Rectangle(pos.getX(), pos.getY(), WIDTH, HEIGHT);
+    }
+
+    public int getExp() {
+        return exp;
+    }
+
+    public int getLevel() {
+        return level;
+    }
 }

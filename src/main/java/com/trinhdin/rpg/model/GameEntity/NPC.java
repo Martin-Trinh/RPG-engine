@@ -7,10 +7,10 @@ import javafx.geometry.Point2D;
 import java.util.ArrayList;
 
 public class NPC extends Entity {
-    ArrayList<String> dialogues;
+    private ArrayList<String> dialogues;
     private int dialogueIndex = 0;
-    Quest questForHero;
-    Item itemForHero;
+    private Quest questForHero;
+    private Item itemForHero;
     public NPC(Point2D pos, String name, String fileName, ArrayList<String> dialogues, Quest questForHero, Item itemForHero){
         super(pos, name, fileName);
         this.questForHero = questForHero;
@@ -25,6 +25,9 @@ public class NPC extends Entity {
         return null;
     }
     public Quest getQuestForHero(){
+        if(dialogueIndex < dialogues.size()){
+            return null;
+        }
         Quest tmp  = questForHero;
         // delete the quest after giving it to the hero
         questForHero = null;

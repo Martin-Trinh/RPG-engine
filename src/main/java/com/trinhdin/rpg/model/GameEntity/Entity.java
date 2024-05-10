@@ -2,6 +2,7 @@ package com.trinhdin.rpg.model.GameEntity;
 
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
+import javafx.scene.shape.Rectangle;
 
 public class Entity {
     static protected final int HEIGHT = 32;
@@ -15,7 +16,11 @@ public class Entity {
         this.pos = pos;
         this.name = name;
         this.fileName = fileName;
-        this.image = new Image(fileName);
+        try{
+            this.image = new Image(fileName);
+        } catch (Exception e) {
+            System.out.println("Error loading image: " + fileName);
+        }
     }
     static public int getWidth() {
         return WIDTH;
@@ -37,6 +42,9 @@ public class Entity {
 
     public String getName() {
         return name;
+    }
+    public Rectangle getBounds() {
+        return new Rectangle(pos.getX() * WIDTH, pos.getY() * HEIGHT, WIDTH, HEIGHT);
     }
 
 }
