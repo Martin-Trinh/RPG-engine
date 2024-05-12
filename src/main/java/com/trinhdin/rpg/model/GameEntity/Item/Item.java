@@ -7,11 +7,9 @@ import javafx.geometry.Point2D;
 
 public abstract class Item extends Entity implements Interactable{
     protected String description = "";
-    protected int weight;
-    public Item(Point2D pos, String name, String fileName, String description, int weight) {
+    public Item(Point2D pos, String name, String fileName, String description) {
         super(pos, name, fileName);
         this.description = description;
-        this.weight = weight;
     }
 
     public abstract void use(Hero hero);
@@ -36,8 +34,5 @@ public abstract class Item extends Entity implements Interactable{
         return false;
     }
 
-    public int getWeight() {
-        return weight;
-    }
 
 }

@@ -8,8 +8,8 @@ public class Equipment extends Item{
     private Stat statIncrease;
 
 
-    public Equipment(Point2D pos, String name, String fileName, String description, int weight, Stat statIncrease) {
-        super(pos, name, fileName, description, weight);
+    public Equipment(Point2D pos, String name, String fileName, String description, Stat statIncrease) {
+        super(pos, name, fileName, description);
         this.statIncrease = statIncrease;
     }
 

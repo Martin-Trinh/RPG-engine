@@ -6,5 +6,4 @@ import javafx.scene.shape.Rectangle;
 
 public interface Interactable {
     boolean interact(Hero hero);
-    Rectangle getBounds();
 }

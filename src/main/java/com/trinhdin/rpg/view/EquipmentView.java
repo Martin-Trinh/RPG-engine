@@ -4,6 +4,7 @@ import com.trinhdin.rpg.model.GameEntity.Item.Inventory;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -43,15 +44,15 @@ public class EquipmentView {
                         break;
                     case TAB:
                         Node node = equipmentPane.getParent().lookup("#inventory");
-                        node.setDisable(false);
-                        node.setFocusTraversable(true);
                         node.requestFocus();
-                        equipmentPane.setDisable(true);
                         break;
                 }
                 highlightRow(prevIndex,"black");
                 prevIndex = index;
                 highlightRow(index,"red");
+                if(event.getCode() != KeyCode.I) {
+                    event.consume();
+                }
             }
         });
     }

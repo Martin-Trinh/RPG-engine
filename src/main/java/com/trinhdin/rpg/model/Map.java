@@ -7,6 +7,7 @@ import com.trinhdin.rpg.model.GameEntity.Character.Monster;
 import com.trinhdin.rpg.model.GameEntity.Character.Stat;
 import com.trinhdin.rpg.model.GameEntity.Item.Consumable;
 import com.trinhdin.rpg.model.GameEntity.Item.Equipment;
+import com.trinhdin.rpg.model.GameEntity.Item.ObstacleItem;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Rectangle;
@@ -48,9 +49,8 @@ public class Map {
     public void addMapEntity(Point2D pos, Entity entity){
         entities.put(pos, entity);
     }
-    public void removeEntity(Point2D pos){
-        entities.remove(pos);
-    }
+    public void removeEntity(Entity entity){entities.remove(entity.getPos());}
+    public void removeMonster(Monster monster){monsters.remove(monster.getPos());}
     public Entity returnCollisionEntity(Point2D newPos, MoveDirection direction){
         int [] corner = hero.calculateNewPosition4Corner(newPos);
         int leftX = corner[0];
@@ -115,6 +115,16 @@ public class Map {
        }
        return null;
     }
+    public Monster isMonsterNearby(){
+        // distance from monster
+        int distance = 30;
+        for (Monster monster : monsters.values()) {
+            if(hero.getCenter().distance(monster.getCenter()) < distance){
+                return monster;
+            }
+        }
+        return null;
+    }
     public boolean isCharacterCollide(MoveDirection direction) throws IllegalStateException {
         Point2D newPos;
         switch (direction) {
@@ -171,6 +181,7 @@ public class Map {
 
     public void loadCharToEntity(Point2D pos, char c){
         Stat stat = new Stat(10, 10, 10, 10, 10, 10, 10);
+        ObstacleItem key = new ObstacleItem(pos, "Key", prefixImgPath + "Items/key.png", "Key for gate");
         if(c == '#'){
                 Tile wall = new Tile(pos, "wall", prefixImgPath + "wall.png", true);
                 tiles.put(pos, wall);
@@ -188,20 +199,23 @@ public class Map {
                     monsters.put(pos, monster);
                     break;
                 case 'p':
-                    Consumable potion = new Consumable(pos, "Potion", prefixImgPath + "Items/flasks_red.png", "Health Potion", 10, 10, 0);
+                    Consumable potion = new Consumable(pos, "Potion", prefixImgPath + "Items/flasks_red.png", "Health Potion", 10, 10);
                     entities.put(pos, potion);
                     break;
                 case 'e':
-                    Equipment sword = new Equipment(pos, "Sword", prefixImgPath + "Items/weapons/weapon01crystalsword.png", "Sword", 10, stat);
+                    Equipment sword = new Equipment(pos, "Sword", prefixImgPath + "Items/weapons/weapon01crystalsword.png", "Sword", stat);
                     entities.put(pos, sword);
                     break;
                 case '-':
-                    Obstacle gate = new Obstacle(pos, "Gate", prefixImgPath + "Obstacle/door_closed.png", true,null);
+                    Obstacle gate = new Obstacle(pos, "Gate", prefixImgPath + "Obstacle/door_closed.png", true,key);
                     entities.put(pos, gate);
                     break;
                 case '?':
-                    NPC monk = new NPC(pos, "Monk", prefixImgPath + "NPC/monk.png", null, null, null);
+                    NPC monk = new NPC(pos, "Monk", prefixImgPath + "NPC/monk.png", null, null, key);
                     entities.put(pos, monk);
+                    break;
+                case 'k':
+                    entities.put(pos, key);
                     break;
                 default:
             }

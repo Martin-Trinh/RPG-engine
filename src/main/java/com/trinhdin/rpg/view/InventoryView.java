@@ -4,6 +4,7 @@ import com.trinhdin.rpg.model.GameEntity.Item.Inventory;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -37,8 +38,8 @@ public class InventoryView {
         return inventoryPane;
     }
     private void addKeyHandler(){
-        inventoryPane.setFocusTraversable(true);
         inventoryPane.requestFocus();
+        inventoryPane.setFocusTraversable(true);
         inventoryPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -75,16 +76,15 @@ public class InventoryView {
                         break;
                     case TAB:
                         Node node = inventoryPane.getParent().lookup("#equipment");
-                        node.setDisable(false);
-                        node.setFocusTraversable(true);
                         node.requestFocus();
-                        inventoryPane.setDisable(true);
                         break;
                 }
                 System.out.println("Row: " + currentRow + " Col: " + currentCol);
                 highlightItem(selectedIndex,"black");
                 selectedIndex = currentRow * maxCol + currentCol;
                 highlightItem(selectedIndex,"red");
+                if(event.getCode() != KeyCode.I)
+                    event.consume();
             }
         });
     }

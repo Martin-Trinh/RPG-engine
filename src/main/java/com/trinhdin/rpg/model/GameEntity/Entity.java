@@ -25,21 +25,17 @@ public class Entity {
     static public int getWidth() {
         return WIDTH;
     }
-    public Point2D getPos() {
-        return pos;
-    }
-
-    static public int getHeight() {
-        return HEIGHT;
-    }
-
+    static public int getHeight() {return HEIGHT;}
+    public Point2D getPos() {return pos;}
     public String getFileName() {
         return fileName;
     }
     public Image getImage() {
         return image;
     }
-
+    public Point2D getCenter() {
+        return new Point2D(pos.getX() * WIDTH + WIDTH /2.0, pos.getY() * HEIGHT +  HEIGHT /2.0);
+    }
     public String getName() {
         return name;
     }

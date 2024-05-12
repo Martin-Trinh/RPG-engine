@@ -70,7 +70,7 @@ public class Character extends Entity {
     }
 
     public boolean isDead() {
-        return currentHealth == 0;
+        return currentHealth <= 0;
     }
     public int getCurrentHealth() {
         return currentHealth;

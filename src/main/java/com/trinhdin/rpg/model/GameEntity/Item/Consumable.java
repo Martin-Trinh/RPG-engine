@@ -7,8 +7,8 @@ public class Consumable extends Item {
     private int health;
     private int mana;
 
-    public Consumable(Point2D pos, String name, String fileName, String description, int weight, int health, int mana) {
-        super(pos, name, fileName, description, weight);
+    public Consumable(Point2D pos, String name, String fileName, String description, int health, int mana) {
+        super(pos, name, fileName, description);
         this.health = health;
         this.mana = mana;
     }

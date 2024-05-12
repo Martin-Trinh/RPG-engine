@@ -18,6 +18,7 @@ public class Hero extends Character {
     int nextLevelExp = 100;
     int level = 1;
     private Point2D screenPos;
+    private final int MAX_ABILITY = 3;
     public Hero(Point2D pos, String name,String fileName, double speed, Stat stat) {
         super(pos, name, fileName, speed, stat);
     }
@@ -28,11 +29,17 @@ public class Hero extends Character {
         return screenPos;
     }
     public void addAbility(Ability ability) {
-        abilities.add(ability);
+        if(abilities.size() < MAX_ABILITY){
+            abilities.add(ability);
+        }
     }
 
     public void castAbility(int index, Monster target) {
-        abilities.get(index).use(this, target);
+        if(index >= abilities.size() || index < 0) {
+            System.out.println("Cannot use this ability");
+        }else{
+            abilities.get(index).use(this, target);
+        }
     }
 
     public void useItem(int index) {
@@ -47,6 +54,9 @@ public class Hero extends Character {
     }
     public void completeQuest(int index) {
         quests.get(index).complete();
+    }
+    public boolean isQuestCompleted(Quest quest){
+        return quests.contains(quest) && quest.isCompleted();
     }
     public void gainExp(int exp) {
         this.exp += exp;
@@ -64,8 +74,8 @@ public class Hero extends Character {
     public Rectangle getBounds(){
         return new Rectangle(pos.getX(), pos.getY(), WIDTH, HEIGHT);
     }
-    public boolean isQuestCompleted(Quest quest){
-        return quests.contains(quest) && quest.isCompleted();
+    public Point2D getCenter(){
+        return new Point2D(pos.getX() + WIDTH/2.0, pos.getY() + HEIGHT/2.0);
     }
     public int getExp() {
         return exp;
