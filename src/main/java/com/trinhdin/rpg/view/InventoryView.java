@@ -24,13 +24,11 @@ public class InventoryView {
     private int maxRow = (int) Math.ceil(maxSize * 1.0 / maxCol);
     private Inventory inventory;
     public InventoryView(Inventory inventory) {
+        this.inventory = inventory;
         Label text = new Label("Hero Inventory");
         text.getStyleClass().add("heading");
-        this.inventory = inventory;
         inventoryPane.setPrefSize(300,250);
         inventoryPane.setId("inventory");
-
-        inventoryPane.setStyle("-fx-border-color: black");
         inventoryPane.getChildren().addAll(text, createInventoryPane());
         addKeyHandler();
     }

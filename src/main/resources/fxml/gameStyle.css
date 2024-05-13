@@ -18,6 +18,10 @@
     -fx-padding: 10px;
     -fx-border-width: 4;
 }
+.questBox{
+    -fx-border-color: black;
+    -fx-border-width: 2;
+}
 .item-rectangle{
     -fx-stroke: black;
     -fx-stroke-width: 2;

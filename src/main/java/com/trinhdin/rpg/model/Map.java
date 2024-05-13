@@ -217,7 +217,7 @@ public class Map {
                     entities.put(pos, potion);
                     break;
                 case 'e':
-                    Equipment sword = new Equipment(pos, "Sword", prefixImgPath + "Items/weapons/weapon01crystalsword.png", "Sword", stat);
+                    Equipment sword = new Equipment(pos, "Sword", prefixImgPath + "Items/weapons/weapon01crystalsword.png", "Sword", stat, Equipment.EquipmentType.WEAPON);
                     entities.put(pos, sword);
                     break;
                 case '-':

@@ -1,4 +1,4 @@
-package com.trinhdin.rpg.controller;
+package com.trinhdin.rpg.view;
 
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -15,6 +15,12 @@ public class GameLog extends VBox {
         this.getChildren().clear();
     }
     public void displayLogMsg(String logMsg){
+        String []output = logMsg.split("\n");
+        for(String msg : output){
+            addLogMsg(msg);
+        }
+    }
+    private void addLogMsg(String logMsg){
         if(this.getChildren().size() >= MAX_LOG_MSG){
             this.getChildren().remove(0);
         }

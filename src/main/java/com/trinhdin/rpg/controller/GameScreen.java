@@ -7,8 +7,8 @@ import com.trinhdin.rpg.model.GameEntity.Character.Monster;
 import com.trinhdin.rpg.model.GameEntity.Entity;
 import com.trinhdin.rpg.model.GameEntity.Interactable;
 import com.trinhdin.rpg.model.Map;
-import com.trinhdin.rpg.view.EquipmentView;
-import com.trinhdin.rpg.view.InventoryView;
+import com.trinhdin.rpg.model.Quest;
+import com.trinhdin.rpg.view.*;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Orientation;
 import javafx.geometry.Point2D;
@@ -21,6 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class GameScreen {
     private final Canvas canvas;
@@ -35,8 +36,10 @@ public class GameScreen {
     private final int CANVAS_HEIGHT = 400;
     private Map map;
     private final Hero hero;
-    boolean isInventoryOpen = false;
+    private boolean isInventoryOpen = false;
     private boolean nearMonster = false;
+    private boolean questViewOpen = false;
+
     private Combat combat = null;
 
     private final AnimationTimer animationTimer;
@@ -56,6 +59,8 @@ public class GameScreen {
 
         mainPane.getChildren().addAll(canvas);
         mainPane.setId("mainPane");
+
+        sidePane.displayAbility(hero.getAbilities());
 
         Scene scene = new Scene(root, WIN_WIDTH, WIN_HEIGHT);
         scene.getStylesheets().add(getClass().getResource("/fxml/gameStyle.css").toExternalForm());
@@ -203,9 +208,25 @@ public class GameScreen {
         mainPane.getChildren().remove(mainPane.lookup("#inventoryPane"));
         mainPane.getChildren().add(canvas);
     }
+    public void openQuestView(){
+        gameLog.displayLogMsg("Open quest view");
+        System.out.println("Open quest view");
+        mainPane.getChildren().remove(canvas);
+        QuestView questView = new QuestView(hero.getQuests());
+        mainPane.getChildren().add(questView.createQuestPane());
+        questViewOpen = true;
+    }
+    public void closeQuestView(){
+        gameLog.displayLogMsg("Close quest view");
+        System.out.println("Close quest view");
+        mainPane.getChildren().remove(mainPane.lookup("#questPane"));
+        mainPane.getChildren().add(canvas);
+        questViewOpen = false;
+    }
     public boolean isInventoryOpen() {
         return isInventoryOpen;
     }
+    public boolean isQuestViewOpen() {return questViewOpen;}
     public void interactionWithFKey(){
         Entity entity = map.isCollideWithEntity();
         if (entity != null) {

@@ -13,8 +13,10 @@ public class AttackAbility extends Ability{
     @Override
     public void use(Character caster, Character target) {
         if(caster.getCurrentMana() < cost) {
+            gameMsg = "Not enough mana";
             System.out.println("Not enough mana");
         }else{
+            gameMsg = caster.getName() + " dealt " + calculateDamage(caster, target) + " damage to " + target.getName();
             target.setCurrentHealth(target.getCurrentHealth() - calculateDamage(caster, target));
             caster.setCurrentMana(caster.getCurrentMana() - cost);
         }

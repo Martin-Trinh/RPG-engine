@@ -17,7 +17,16 @@ public class Quest {
     public String getDescription() {
         return description;
     }
+    public String getName(){
+        return name;
+    }
 
+    public String getMonsterToKill() {
+        return monsterToKill.getName();
+    }
+    public String toString(){
+        return "Name: " + name + " - Description: " + description + " - Monster to kill" + monsterToKill.getName();
+    }
     public boolean isCompleted() {
         return isCompleted;
     }

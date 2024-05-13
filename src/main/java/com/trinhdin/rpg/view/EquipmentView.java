@@ -81,7 +81,7 @@ public class EquipmentView {
             createEquipmentRow("Weapon"),
             createEquipmentRow("Shield"),
             createEquipmentRow("Boots"),
-            createEquipmentRow("Gloves")
+            createEquipmentRow("Accessory")
         );
     }
     private void highlightRow(int index, String color){

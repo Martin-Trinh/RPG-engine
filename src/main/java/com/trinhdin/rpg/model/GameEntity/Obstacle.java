@@ -18,15 +18,15 @@ public class Obstacle extends Tile implements Interactable{
 
     @Override
     public boolean interact(Hero hero) {
-        gameMsg.clear();
       Item item = hero.getInventory().findItem(resolveItem);
         if(item != null){
-            gameMsg.add("Obstacle resolved");
+            gameMsg = "Obstacle resolved";
             resolveObstacle();
             hero.getInventory().removeItem(item);
             return true;
         }
-        gameMsg.add("You need " + resolveItem.getName() + " to resolve this obstacle");
+
+        gameMsg = "You need " + resolveItem.getName() + " to resolve this obstacle";
         System.out.println("You need " + resolveItem.getName() + " to resolve this obstacle");
         return false;
     }

@@ -36,6 +36,7 @@ public class Hero extends Character {
 
     public void castAbility(int index, Monster target) {
         if(index >= abilities.size() || index < 0) {
+            gameMsg = "Ability not found";
             System.out.println("Ability not found");
         }else{
             abilities.get(index).use(this, target);
@@ -59,12 +60,14 @@ public class Hero extends Character {
         return quests.contains(quest) && quest.isCompleted();
     }
     public void gainExp(int exp) {
+        gameMsg = "You gain " + exp + " exp";
         this.exp += exp;
         if (this.exp >= nextLevelExp) {
             levelUp();
         }
     }
     private void levelUp() {
+        gameMsg = "Level up";
         level++;
         nextLevelExp *= 2;
         Stat levelUpStat = new Stat(10, 10, 2, 2, 2, 2, 2);
@@ -83,5 +86,11 @@ public class Hero extends Character {
 
     public int getLevel() {
         return level;
+    }
+    public ArrayList<Ability> getAbilities() {
+        return abilities;
+    }
+    public ArrayList<Quest> getQuests (){
+        return quests;
     }
 }

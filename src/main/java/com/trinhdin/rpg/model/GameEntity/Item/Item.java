@@ -27,9 +27,11 @@ public abstract class Item extends Entity implements Interactable{
     @Override
     public boolean interact(Hero hero) {
         if(hero.getInventory().addItem(this)){
+            gameMsg = "Item added to inventory";
             System.out.println("Item added to inventory");
             return true;
         }
+        gameMsg = "Inventory is full";
         System.out.println("Inventory is full");
         return false;
     }

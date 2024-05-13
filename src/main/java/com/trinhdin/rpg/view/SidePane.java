@@ -1,4 +1,4 @@
-package com.trinhdin.rpg.controller;
+package com.trinhdin.rpg.view;
 
 import com.trinhdin.rpg.model.GameEntity.Ability.Ability;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
@@ -80,8 +80,14 @@ public class SidePane extends VBox {
         monsterStatPane.getChildren().addAll(monsterLabel,splitPane);
     }
     public void displayAbility(ArrayList<Ability> abilities){
+        Label heading = new Label("Abilities: ");
+        heading.getStyleClass().add("stat-heading");
+        abilityPane.getChildren().add(heading);
         for(Ability ability: abilities){
-            abilityPane.getChildren().add(new Label(ability.toString()));
+            String [] output = ability.toString().split("\n");
+            for(String s : output){
+                abilityPane.getChildren().add(new Label(s));
+            }
         }
     }
 

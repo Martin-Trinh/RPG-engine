@@ -36,28 +36,25 @@ public class NPC extends Entity implements Interactable{
     @Override
     public boolean interact(Hero hero){
         String dialogue = speak();
-        gameMsg.clear();
         if(dialogue != null){
-            gameMsg.add(dialogue);
+            gameMsg = dialogue;
             System.out.println(dialogue);
         }else {
             if (!questGiven) {
                 hero.addQuest(questForHero);
-                gameMsg.add("Quest given");
+                gameMsg = "Quest given";
                 System.out.println("Quest given");
                 questGiven = true;
             } else {
                 if (hero.isQuestCompleted(questForHero)) {
-                    gameMsg.clear();
-                    gameMsg.add("Quest completed");
+                    gameMsg = "Quest completed";
                     System.out.println("Quest completed");
                     hero.getInventory().addItem(itemForHero);
-                    gameMsg.add("Item given");
+                    gameMsg += "\nItem given";
                     System.out.println("Item given");
                     return true;
                 }else{
-                    gameMsg.clear();
-                    gameMsg.add("Quest not completed");
+                    gameMsg = "Quest not completed";
                     System.out.println("Quest not completed");
                 }
             }

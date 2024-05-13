@@ -6,7 +6,7 @@ public abstract class Ability {
      String name;
      int cost;
      int cooldown;
-
+     String gameMsg = "";
      public Ability(String name, int cost, int cooldown) {
          this.name = name;
          this.cost = cost;
@@ -15,11 +15,10 @@ public abstract class Ability {
 
     @Override
     public String toString() {
-        return "Ability{" +
-                "name='" + name + '\'' +
-                ", cost=" + cost +
-                ", cooldown=" + cooldown +
-                '}';
+        return "Name: " + name + " - Cost: " + cost + " - Cooldown: " + cooldown;
+    }
+    public String getName(){
+        return name;
     }
 
     public abstract void use(Character caster, Character target);

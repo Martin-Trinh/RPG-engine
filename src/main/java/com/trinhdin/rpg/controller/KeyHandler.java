@@ -44,7 +44,14 @@ public class KeyHandler implements EventHandler<KeyEvent>{
             }
         } else if (keyEvent.getCode() == KeyCode.E) {
             gameScreen.checkMonsterForCombat();
+        }else if (keyEvent.getCode() == KeyCode.Q){
+            if(gameScreen.isQuestViewOpen()){
+                gameScreen.closeQuestView();
+            }else{
+                gameScreen.openQuestView();
+            }
         }
+
 
     }
 }

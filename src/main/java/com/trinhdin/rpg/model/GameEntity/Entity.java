@@ -13,7 +13,7 @@ public class Entity {
     protected String fileName;
     protected String name;
     protected Image image;
-    protected ArrayList<String> gameMsg = new ArrayList<>();
+    protected String gameMsg;
 
     public Entity(Point2D pos, String name, String fileName) {
         this.pos = pos;
@@ -25,7 +25,7 @@ public class Entity {
             System.out.println("Error loading image: " + fileName);
         }
     }
-    public ArrayList<String> getGameMsg(){
+    public String getGameMsg(){
         return gameMsg;
     }
     static public int getWidth() {

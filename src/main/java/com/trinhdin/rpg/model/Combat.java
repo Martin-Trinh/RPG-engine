@@ -39,17 +39,17 @@ public class Combat {
             switch (event.getCode()){
                 case KeyCode.Q:
                     System.out.println("Q");
-//                        hero.castAbility(0, monster);
+                        hero.castAbility(0, monster);
                     break;
                 case KeyCode.W:
                     System.out.println("W");
-//                        hero.castAbility(1, monster);
+                        hero.castAbility(1, monster);
                     break;
                 case KeyCode.E:
-//                        hero.castAbility(2, monster);
+                        hero.castAbility(2, monster);
                     break;
                 case KeyCode.R:
-//                        hero.castAbility(3, monster);
+                        hero.castAbility(3, monster);
                     break;
                 case KeyCode.ESCAPE:
                     this.end();
