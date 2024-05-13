@@ -58,7 +58,7 @@ public class SidePane extends VBox {
         VBox vBox1 = new VBox();
         VBox vBox2 = new VBox();
         monsterStatPane.getChildren().clear();
-        Label monsterLabel = new Label("Hero Stat:");
+        Label monsterLabel = new Label("Monster Stat:");
         monsterLabel.getStyleClass().add("stat-heading");
         vBox1.getChildren().addAll(
                 new Label("Current Health: " + monster.getCurrentHealth()),
@@ -73,7 +73,7 @@ public class SidePane extends VBox {
         );
         vBox2.getChildren().addAll(
                 new Label("Level: " + monster.getLevel()),
-                new Label("Exp worth: " + monster.getExpWorth())
+                new Label("Exp: " + monster.getExpWorth())
         );
         splitPane.getItems().addAll(vBox1,vBox2);
         splitPane.setDividerPositions(0.65);

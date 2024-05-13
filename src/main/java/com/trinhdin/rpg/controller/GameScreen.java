@@ -23,11 +23,12 @@ import javafx.stage.Stage;
 import java.io.*;
 
 public class GameScreen {
-    private Scene scene;
-    private Canvas canvas;
-    private Pane mainPane = new Pane();
+    private final Canvas canvas;
+    private final Pane mainPane = new Pane();
     private BorderPane root = new BorderPane();
     SplitPane splitPane = new SplitPane();
+    SidePane sidePane;
+    private GameLog gameLog = new GameLog();
     private final int WIN_WIDTH = 800;
     private final int WIN_HEIGHT = 600;
     private final int CANVAS_WIDTH = 600;
@@ -35,7 +36,7 @@ public class GameScreen {
     private Map map;
     private final Hero hero;
     boolean isInventoryOpen = false;
-    private boolean isInCombat = false;
+    private boolean nearMonster = false;
     private Combat combat = null;
 
     private final AnimationTimer animationTimer;
@@ -44,9 +45,9 @@ public class GameScreen {
         hero = map.getHero();
         createHero();
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+        canvas.setId("canvas");
 
-        GameLog gameLog = new GameLog();
-        SidePane sidePane = new SidePane(WIN_WIDTH - CANVAS_WIDTH);
+        sidePane = new SidePane(WIN_WIDTH - CANVAS_WIDTH);
         sidePane.displayHeroStat(hero);
 
         splitPane.setOrientation(Orientation.VERTICAL);
@@ -54,21 +55,10 @@ public class GameScreen {
         splitPane.getItems().addAll(mainPane,gameLog);
 
         mainPane.getChildren().addAll(canvas);
-        mainPane.setStyle("-fx-border-color: black");
+        mainPane.setId("mainPane");
 
-
-        // Sample log items
-        gameLog.addLogItem("Log Item 1");
-        gameLog.addLogItem("Log Item 2");
-        gameLog.addLogItem("Log Item 3");
-        gameLog.addLogItem("Log Item 4");
-        gameLog.addLogItem("Log Item 5");
-
-        gameLog.displayLog();
-
-        scene = new Scene(root, WIN_WIDTH, WIN_HEIGHT);
+        Scene scene = new Scene(root, WIN_WIDTH, WIN_HEIGHT);
         scene.getStylesheets().add(getClass().getResource("/fxml/gameStyle.css").toExternalForm());
-        canvas.setId("canvas");
         root.setCenter(splitPane);
         root.setRight(sidePane);
 
@@ -118,8 +108,10 @@ public class GameScreen {
                 Monster monster = combat.getKilledMonster();
                 if(monster != null){
                     map.removeMonster(monster);
+                    gameLog.displayLogMsg("Hero won");
                     System.out.println("Hero won");
                 }else{
+                    gameLog.displayLogMsg("Hero lost");
                     // exit out of the game
                     System.out.println("Hero lost");
                 }
@@ -127,7 +119,16 @@ public class GameScreen {
             }
         }else{
             // not in combat
-            checkMonsterForCombat();
+            Monster monster = map.isMonsterNearby();
+            if(monster != null){
+                if(!nearMonster) {
+                    sidePane.displayMonsterStat(monster);
+                    gameLog.displayLogMsg("Monster nearby: " + monster.getName());
+                    nearMonster = true;
+                }
+            }else{
+                nearMonster = false;
+            }
         }
     }
     public Map getMap() {
@@ -175,6 +176,7 @@ public class GameScreen {
         map.getMonsters().values().forEach(this::drawEntity);
     }
     public void openInventory(){
+        gameLog.displayLogMsg("Open inventory");
         System.out.println("Open inventory");
         isInventoryOpen = true;
         HBox splitPane = new HBox();
@@ -195,9 +197,10 @@ public class GameScreen {
         splitPane.setSpacing(10);
     }
     public void closeInventory(){
+        gameLog.displayLogMsg("Close inventory");
         System.out.println("Close inventory");
         isInventoryOpen = false;
-        mainPane.getChildren().remove(0);
+        mainPane.getChildren().remove(mainPane.lookup("#inventoryPane"));
         mainPane.getChildren().add(canvas);
     }
     public boolean isInventoryOpen() {
@@ -206,21 +209,26 @@ public class GameScreen {
     public void interactionWithFKey(){
         Entity entity = map.isCollideWithEntity();
         if (entity != null) {
+            gameLog.displayLogMsg("Interacting with entity " + entity.getName());
             System.out.println("Interacting with entity " + entity.getName());
             if(((Interactable)entity).interact(hero)){
                 map.removeEntity(entity);
             }
+            gameLog.displayLogMsg(entity.getGameMsg());
         } else {
+            gameLog.displayLogMsg("No entity to interact with!");
             System.out.println("No entity to interact with!");
         }
     }
     public void checkMonsterForCombat(){
         Monster monster = map.isMonsterNearby();
         if(monster != null){
-            System.out.println(monster.getName() + " nearby");
+            gameLog.displayLogMsg("Entering combat with " + monster.getName());
             System.out.println("Entering combat with " + monster.getName());
+
             combat = new Combat(hero, mainPane);
             combat.start(monster);
+            sidePane.displayMonsterStat(monster);
         }
     }
 }

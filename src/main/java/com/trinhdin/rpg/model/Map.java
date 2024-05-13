@@ -1,6 +1,10 @@
 package com.trinhdin.rpg.model;
 
 import com.trinhdin.rpg.model.GameEntity.*;
+import com.trinhdin.rpg.model.GameEntity.Ability.Ability;
+import com.trinhdin.rpg.model.GameEntity.Ability.AttackAbility;
+import com.trinhdin.rpg.model.GameEntity.Ability.AttackType;
+import com.trinhdin.rpg.model.GameEntity.Ability.ModifyStatAbility;
 import com.trinhdin.rpg.model.GameEntity.Character.Character;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Character.Monster;
@@ -15,6 +19,9 @@ import javafx.scene.shape.Rectangle;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.Key;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -189,13 +196,20 @@ public class Map {
 
         }else{
             Tile floor = new Tile(pos, "floor", prefixImgPath + "floor_5.png", false);
+            Monster monster = new Monster(pos, "Goblin", prefixImgPath + "Monster/goblin_run.png", 1, stat, 10, 1);
             tiles.put(pos, floor);
+            Ability pAbility = new AttackAbility("Attack", 10, 1, 1, AttackType.MAGICAL );
+            Ability mAbility = new AttackAbility("Attack", 10, 1, 1, AttackType.PHYSICAL );
+            Stat abilityStat = new Stat(10, 10, 0, 1, 1, 1, 1);
+            Ability buffAbility = new ModifyStatAbility("Buff", 10, 1, abilityStat );
             switch (c){
                 case '@':
                     hero = new Hero(pos.multiply(Entity.getWidth()), "Knight", prefixImgPath + "Heroes/knight_run.png", 2, stat);
+                    hero.addAbility(pAbility);
+                    hero.addAbility(buffAbility);
                     break;
                 case 'X':
-                    Monster monster = new Monster(pos, "Goblin", prefixImgPath + "Monster/goblin_run.png", 1, stat, 10, 1);
+                    monster.setAbility(mAbility);
                     monsters.put(pos, monster);
                     break;
                 case 'p':
@@ -211,7 +225,9 @@ public class Map {
                     entities.put(pos, gate);
                     break;
                 case '?':
-                    NPC monk = new NPC(pos, "Monk", prefixImgPath + "NPC/monk.png", null, null, key);
+                    ArrayList<String> dialogues = new ArrayList<>(Arrays.asList("Hello", "I have a quest for you"));
+                    Quest quest = new Quest("Quest", "Find the key", monster);
+                    NPC monk = new NPC(pos, "Monk", prefixImgPath + "NPC/monk.png", dialogues, quest, key);
                     entities.put(pos, monk);
                     break;
                 case 'k':

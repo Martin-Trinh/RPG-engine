@@ -42,6 +42,8 @@ public class KeyHandler implements EventHandler<KeyEvent>{
             } else {
                 gameScreen.openInventory();
             }
+        } else if (keyEvent.getCode() == KeyCode.E) {
+            gameScreen.checkMonsterForCombat();
         }
 
     }

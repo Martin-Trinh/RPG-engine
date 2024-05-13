@@ -6,6 +6,7 @@ import com.trinhdin.rpg.model.Quest;
 import javafx.geometry.Point2D;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class NPC extends Entity implements Interactable{
     private ArrayList<String> dialogues;
@@ -26,24 +27,37 @@ public class NPC extends Entity implements Interactable{
         }
         return null;
     }
-
+    /**
+     * Interact with NPC
+     * @param hero the hero interact with NPC
+     * @return bool true if the want to remove entity from map after interaction
+     *
+     */
     @Override
     public boolean interact(Hero hero){
         String dialogue = speak();
+        gameMsg.clear();
         if(dialogue != null){
+            gameMsg.add(dialogue);
             System.out.println(dialogue);
         }else {
             if (!questGiven) {
-                System.out.println("Quest given");
                 hero.addQuest(questForHero);
+                gameMsg.add("Quest given");
+                System.out.println("Quest given");
                 questGiven = true;
             } else {
                 if (hero.isQuestCompleted(questForHero)) {
+                    gameMsg.clear();
+                    gameMsg.add("Quest completed");
                     System.out.println("Quest completed");
-                    System.out.println("Item given");
                     hero.getInventory().addItem(itemForHero);
+                    gameMsg.add("Item given");
+                    System.out.println("Item given");
                     return true;
                 }else{
+                    gameMsg.clear();
+                    gameMsg.add("Quest not completed");
                     System.out.println("Quest not completed");
                 }
             }

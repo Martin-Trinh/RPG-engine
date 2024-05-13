@@ -2,7 +2,7 @@
 
 }
 #mainPane{
-
+    -fx-border-color: black;
 }
 #gamePane{
 

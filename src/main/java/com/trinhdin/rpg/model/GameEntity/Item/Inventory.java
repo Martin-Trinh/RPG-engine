@@ -29,9 +29,9 @@ public class Inventory {
         items.get(index).use(target);
         removeItem(index);
     }
-    public Item findItem(String name){
+    public Item findItem(Item itemToFind){
         for(Item item : items){
-            if(item.getName().equals(name)){
+            if(item == itemToFind){
                 return item;
             }
         }

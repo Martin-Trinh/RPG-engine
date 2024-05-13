@@ -34,5 +34,7 @@ public abstract class Item extends Entity implements Interactable{
         return false;
     }
 
-
+    public boolean equals(Item item){
+        return this.name.equals(item.getName());
+    }
 }

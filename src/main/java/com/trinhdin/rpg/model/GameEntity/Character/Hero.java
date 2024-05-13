@@ -36,7 +36,7 @@ public class Hero extends Character {
 
     public void castAbility(int index, Monster target) {
         if(index >= abilities.size() || index < 0) {
-            System.out.println("Cannot use this ability");
+            System.out.println("Ability not found");
         }else{
             abilities.get(index).use(this, target);
         }
@@ -52,8 +52,8 @@ public class Hero extends Character {
     public void addQuest(Quest quest) {
         quests.add(quest);
     }
-    public void completeQuest(int index) {
-        quests.get(index).complete();
+    public void completeQuest(int index, Monster monsterKilled){
+        quests.get(index).complete(monsterKilled);
     }
     public boolean isQuestCompleted(Quest quest){
         return quests.contains(quest) && quest.isCompleted();

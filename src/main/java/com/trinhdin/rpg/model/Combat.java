@@ -9,6 +9,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
 public class Combat {
+    public enum CombatResult{
+        WIN, LOSE, QUIT
+    }
     Hero hero;
     Monster killedMonster = null;
     Pane pane;
@@ -47,6 +50,8 @@ public class Combat {
                     break;
                 case KeyCode.R:
 //                        hero.castAbility(3, monster);
+                    break;
+                case KeyCode.ESCAPE:
                     this.end();
                     break;
 

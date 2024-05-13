@@ -40,5 +40,8 @@ public class Monster extends Character {
     public int getLevel() {
         return level;
     }
+    public boolean equals(Monster monster){
+        return this.getName().equals(monster.getName());
+    }
 
 }

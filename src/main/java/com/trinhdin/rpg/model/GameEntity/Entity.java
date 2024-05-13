@@ -4,6 +4,8 @@ import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 
+import java.util.ArrayList;
+
 public class Entity {
     static protected final int HEIGHT = 32;
     static protected final int WIDTH = 32;
@@ -11,6 +13,7 @@ public class Entity {
     protected String fileName;
     protected String name;
     protected Image image;
+    protected ArrayList<String> gameMsg = new ArrayList<>();
 
     public Entity(Point2D pos, String name, String fileName) {
         this.pos = pos;
@@ -21,6 +24,9 @@ public class Entity {
         } catch (Exception e) {
             System.out.println("Error loading image: " + fileName);
         }
+    }
+    public ArrayList<String> getGameMsg(){
+        return gameMsg;
     }
     static public int getWidth() {
         return WIDTH;
