@@ -1,11 +1,12 @@
 package com.trinhdin.rpg.model.GameEntity.Ability;
 
+import com.trinhdin.rpg.controller.LogGameMsg;
 import com.trinhdin.rpg.model.GameEntity.Character.Character;
 
-public abstract class Ability {
-     String name;
-     int cost;
-     int cooldown;
+public abstract class Ability implements LogGameMsg {
+     protected String name;
+     protected int cost;
+     protected int cooldown;
      String gameMsg = "";
      public Ability(String name, int cost, int cooldown) {
          this.name = name;
@@ -22,5 +23,8 @@ public abstract class Ability {
     }
 
     public abstract void use(Character caster, Character target);
-
+     @Override
+    public String getGameMsg(){
+        return gameMsg;
+    }
 }

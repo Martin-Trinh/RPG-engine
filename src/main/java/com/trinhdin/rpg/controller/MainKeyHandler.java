@@ -1,24 +1,18 @@
 package com.trinhdin.rpg.controller;
 
-import com.trinhdin.rpg.model.Combat;
-import com.trinhdin.rpg.model.GameEntity.*;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
-import com.trinhdin.rpg.model.GameEntity.Character.Monster;
-import com.trinhdin.rpg.model.GameEntity.Item.Inventory;
-import com.trinhdin.rpg.model.GameEntity.Item.Item;
 import com.trinhdin.rpg.model.Map;
 import com.trinhdin.rpg.model.MoveDirection;
 import javafx.event.EventHandler;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-public class KeyHandler implements EventHandler<KeyEvent>{
+public class MainKeyHandler implements EventHandler<KeyEvent>{
     private GameScreen gameScreen;
     private Map map;
     private Hero hero;
 
-    public KeyHandler(GameScreen gameScreen) {
+    public MainKeyHandler(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
         this.map = gameScreen.getMap();
         this.hero = map.getHero();

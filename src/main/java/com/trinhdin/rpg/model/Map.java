@@ -11,6 +11,7 @@ import com.trinhdin.rpg.model.GameEntity.Character.Monster;
 import com.trinhdin.rpg.model.GameEntity.Character.Stat;
 import com.trinhdin.rpg.model.GameEntity.Item.Consumable;
 import com.trinhdin.rpg.model.GameEntity.Item.Equipment;
+import com.trinhdin.rpg.model.GameEntity.Item.EquipmentType;
 import com.trinhdin.rpg.model.GameEntity.Item.ObstacleItem;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
@@ -217,7 +218,7 @@ public class Map {
                     entities.put(pos, potion);
                     break;
                 case 'e':
-                    Equipment sword = new Equipment(pos, "Sword", prefixImgPath + "Items/weapons/weapon01crystalsword.png", "Sword", stat, Equipment.EquipmentType.WEAPON);
+                    Equipment sword = new Equipment(pos, "Sword", prefixImgPath + "Items/weapons/weapon01crystalsword.png", "Sword", stat, EquipmentType.WEAPON);
                     entities.put(pos, sword);
                     break;
                 case '-':

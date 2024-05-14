@@ -14,9 +14,14 @@ public class Consumable extends Item {
     }
 
     @Override
-    public void use(Hero hero) {
-        hero.setCurrentHealth(hero.getCurrentHealth() + health);
-        hero.setCurrentMana(hero.getCurrentMana() + mana);
+    public boolean use(Hero hero) {
+        // use if hero is not full health or mana
+        if(hero.getCurrentHealth() < hero.getStat().getMaxHealth() || hero.getCurrentMana() < hero.getStat().getMaxMana()){
+            hero.setCurrentHealth(hero.getCurrentHealth() + health);
+            hero.setCurrentMana(hero.getCurrentMana() + mana);
+            return true;
+        }
+        return false;
     }
 
 

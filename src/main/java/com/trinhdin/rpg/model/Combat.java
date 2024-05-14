@@ -1,5 +1,6 @@
 package com.trinhdin.rpg.model;
 
+import com.trinhdin.rpg.controller.LogGameMsg;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Character.Monster;
 import javafx.event.EventHandler;
@@ -8,7 +9,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
-public class Combat {
+public class Combat implements LogGameMsg {
+
+
     public enum CombatResult{
         WIN, LOSE, QUIT
     }
@@ -16,6 +19,7 @@ public class Combat {
     Monster killedMonster = null;
     Pane pane;
     Map map;
+    String gameMsg = "";
     private boolean ended = false;
     public Combat(Hero hero, Pane pane){
         this.hero = hero;
@@ -31,6 +35,10 @@ public class Combat {
     }
     public Monster getKilledMonster(){
         return killedMonster;
+    }
+    @Override
+    public String getGameMsg() {
+        return gameMsg;
     }
     public void start(Monster monster){
         pane.requestFocus();

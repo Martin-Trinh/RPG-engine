@@ -1,12 +1,13 @@
 package com.trinhdin.rpg.model.GameEntity;
 
+import com.trinhdin.rpg.controller.LogGameMsg;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 
-public class Entity {
+public class Entity implements LogGameMsg {
     static protected final int HEIGHT = 32;
     static protected final int WIDTH = 32;
     protected Point2D pos;
@@ -25,6 +26,7 @@ public class Entity {
             System.out.println("Error loading image: " + fileName);
         }
     }
+    @Override
     public String getGameMsg(){
         return gameMsg;
     }

@@ -23,9 +23,8 @@
     -fx-border-width: 2;
 }
 .item-rectangle{
-    -fx-stroke: black;
-    -fx-stroke-width: 2;
-    -fx-fill: white;
+    -fx-border-color: black;
+    -fx-border-width: 2;
 }
 
 #equipment{

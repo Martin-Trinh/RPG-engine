@@ -7,7 +7,6 @@ import com.trinhdin.rpg.model.GameEntity.Character.Monster;
 import com.trinhdin.rpg.model.GameEntity.Entity;
 import com.trinhdin.rpg.model.GameEntity.Interactable;
 import com.trinhdin.rpg.model.Map;
-import com.trinhdin.rpg.model.Quest;
 import com.trinhdin.rpg.view.*;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Orientation;
@@ -21,7 +20,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.util.ArrayList;
 
 public class GameScreen {
     private final Canvas canvas;
@@ -69,7 +67,7 @@ public class GameScreen {
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        scene.setOnKeyPressed(new KeyHandler(this));
+        scene.setOnKeyPressed(new MainKeyHandler(this));
          animationTimer = new AnimationTimer() {
             long lastFrameTime = 0;
             final int FPS = 60;
@@ -91,7 +89,7 @@ public class GameScreen {
         stage.setScene(scene);
         stage.show();
     }
-    public void configureMap() {
+    private void configureMap() {
         map = new Map();
         try {
             String mapFileName = "src/main/resources/configMap/map1.map";
@@ -100,13 +98,16 @@ public class GameScreen {
             System.out.println("Error loading map");
         }
     }
-    public void onUpdate() {
+    private void onUpdate() {
         // render map
         renderMap();
         // render enemies, items, etc.
         renderEntities();
         // render hero
         drawHero();
+        combatController();
+    }
+    private void combatController(){
         if(combat != null){
             // check if combat is ended
             if(combat.ended()){
@@ -188,8 +189,12 @@ public class GameScreen {
         // remove canvas from mainPane
         mainPane.getChildren().remove(canvas);
         // create inventory view and equipment view
-        InventoryView inventoryView = new InventoryView(hero.getInventory());
-        EquipmentView equipmentView = new EquipmentView();
+        InventoryView inventoryView = new InventoryView(hero, gameLog, sidePane);
+        EquipmentView equipmentView = new EquipmentView(hero, gameLog, sidePane);
+        // add reference equipment view for inventory view
+        inventoryView.setEquipmentView(equipmentView);
+        // add reference inventory view for equipment view
+        equipmentView.setInventoryView(inventoryView);
         // get inventory and equipment pane
         VBox equipmentPane = equipmentView.getEquipmentPane();
         VBox inventoryPane = inventoryView.getInventoryPane();
@@ -205,7 +210,7 @@ public class GameScreen {
         gameLog.displayLogMsg("Close inventory");
         System.out.println("Close inventory");
         isInventoryOpen = false;
-        mainPane.getChildren().remove(mainPane.lookup("#inventoryPane"));
+        mainPane.getChildren().remove(0);
         mainPane.getChildren().add(canvas);
     }
     public void openQuestView(){
@@ -230,8 +235,6 @@ public class GameScreen {
     public void interactionWithFKey(){
         Entity entity = map.isCollideWithEntity();
         if (entity != null) {
-            gameLog.displayLogMsg("Interacting with entity " + entity.getName());
-            System.out.println("Interacting with entity " + entity.getName());
             if(((Interactable)entity).interact(hero)){
                 map.removeEntity(entity);
             }

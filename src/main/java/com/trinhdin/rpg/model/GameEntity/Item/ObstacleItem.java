@@ -9,9 +9,10 @@ public class ObstacleItem extends Item{
     }
 
     @Override
-    public void use(Hero hero) {
+    public boolean use(Hero hero) {
         System.out.println(name + "\n" + description);
         // find the nearest obstacle to the hero and remove it
+        return false;
     }
 
 }
