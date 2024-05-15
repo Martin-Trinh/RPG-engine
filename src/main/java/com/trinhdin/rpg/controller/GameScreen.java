@@ -23,6 +23,7 @@ import java.io.*;
 
 public class GameScreen {
     private final Canvas canvas;
+    private Stage stage;
     private final Pane mainPane = new Pane();
     private BorderPane root = new BorderPane();
     SplitPane splitPane = new SplitPane();
@@ -42,6 +43,7 @@ public class GameScreen {
 
     private final AnimationTimer animationTimer;
     public GameScreen(Stage stage) {
+        this.stage = stage;
         configureMap();
         hero = map.getHero();
         createHero();
@@ -175,7 +177,7 @@ public class GameScreen {
         gc.strokeRect(hero.getScreenPos().getX() + Character.getOffset(), hero.getScreenPos().getY() + Character.getOffset(), Entity.getWidth() - 2*Character.getOffset(), Entity.getHeight() - 2*Character.getOffset());
     }
     private void renderMap() {
-        map.getTileMap().values().forEach(this::drawEntity);
+        map.getTiles().values().forEach(this::drawEntity);
     }
     private void renderEntities() {
         map.getEntities().values().forEach(this::drawEntity);
@@ -250,9 +252,14 @@ public class GameScreen {
             gameLog.displayLogMsg("Entering combat with " + monster.getName());
             System.out.println("Entering combat with " + monster.getName());
 
-            combat = new Combat(hero, mainPane);
+            combat = new Combat(hero, mainPane, sidePane, gameLog);
             combat.start(monster);
             sidePane.displayMonsterStat(monster);
         }
+    }
+    public void exit(){
+        gameLog.displayLogMsg("Exit game");
+        System.out.println("Exit game");
+        stage.close();
     }
 }

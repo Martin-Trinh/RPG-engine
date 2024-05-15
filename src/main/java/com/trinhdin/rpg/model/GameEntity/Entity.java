@@ -1,11 +1,10 @@
 package com.trinhdin.rpg.model.GameEntity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.trinhdin.rpg.controller.LogGameMsg;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
-
-import java.util.ArrayList;
 
 public class Entity implements LogGameMsg {
     static protected final int HEIGHT = 32;
@@ -13,8 +12,9 @@ public class Entity implements LogGameMsg {
     protected Point2D pos;
     protected String fileName;
     protected String name;
+    @JsonIgnore
     protected Image image;
-    protected String gameMsg;
+    protected String gameMsg = "";
 
     public Entity(Point2D pos, String name, String fileName) {
         this.pos = pos;
@@ -41,13 +41,13 @@ public class Entity implements LogGameMsg {
     public Image getImage() {
         return image;
     }
-    public Point2D getCenter() {
+    public Point2D calculateCenter() {
         return new Point2D(pos.getX() * WIDTH + WIDTH /2.0, pos.getY() * HEIGHT +  HEIGHT /2.0);
     }
     public String getName() {
         return name;
     }
-    public Rectangle getBounds() {
+    public Rectangle bounds() {
         return new Rectangle(pos.getX() * WIDTH, pos.getY() * HEIGHT, WIDTH, HEIGHT);
     }
 

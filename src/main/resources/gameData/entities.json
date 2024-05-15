@@ -1,0 +1,77 @@
+{
+  "Point2D [x = 8.0, y = 4.0]": {
+    "pos": {
+      "x": 8.0,
+      "y": 4.0
+    },
+    "fileName": "file:src/main/resources/img/Monster/goblin_run.png",
+    "name": "Goblin",
+    "gameMsg": "",
+    "speed": 1.0,
+    "direction": null,
+    "stat": {
+      "maxHealth": 15,
+      "maxMana": 15,
+      "strength": 11,
+      "intelligence": 11,
+      "agility": 11,
+      "armor": 11,
+      "magicArmor": 11
+    },
+    "currentHealth": 10,
+    "currentMana": 10,
+    "expWorth": 10,
+    "level": 1,
+    "dead": false
+  },
+  "Point2D [x = 4.0, y = 8.0]": {
+    "pos": {
+      "x": 4.0,
+      "y": 8.0
+    },
+    "fileName": "file:src/main/resources/img/Monster/goblin_run.png",
+    "name": "Goblin",
+    "gameMsg": "",
+    "speed": 1.0,
+    "direction": null,
+    "stat": {
+      "maxHealth": 15,
+      "maxMana": 15,
+      "strength": 11,
+      "intelligence": 11,
+      "agility": 11,
+      "armor": 11,
+      "magicArmor": 11
+    },
+    "currentHealth": 10,
+    "currentMana": 10,
+    "expWorth": 10,
+    "level": 1,
+    "dead": false
+  },
+  "Point2D [x = 8.0, y = 8.0]": {
+    "pos": {
+      "x": 8.0,
+      "y": 8.0
+    },
+    "fileName": "file:src/main/resources/img/Monster/goblin_run.png",
+    "name": "Goblin",
+    "gameMsg": "",
+    "speed": 1.0,
+    "direction": null,
+    "stat": {
+      "maxHealth": 15,
+      "maxMana": 15,
+      "strength": 11,
+      "intelligence": 11,
+      "agility": 11,
+      "armor": 11,
+      "magicArmor": 11
+    },
+    "currentHealth": 10,
+    "currentMana": 10,
+    "expWorth": 10,
+    "level": 1,
+    "dead": false
+  }
+}

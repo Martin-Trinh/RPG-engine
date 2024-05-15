@@ -3,27 +3,29 @@ package com.trinhdin.rpg.model;
 import com.trinhdin.rpg.controller.LogGameMsg;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Character.Monster;
+import com.trinhdin.rpg.view.GameLog;
+import com.trinhdin.rpg.view.SidePane;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
-public class Combat implements LogGameMsg {
-
-
+public class Combat {
     public enum CombatResult{
         WIN, LOSE, QUIT
     }
-    Hero hero;
-    Monster killedMonster = null;
-    Pane pane;
-    Map map;
-    String gameMsg = "";
+    private Hero hero;
+    private Monster killedMonster = null;
+    private Pane pane;
+    private SidePane sidePane;
+    private GameLog gameLog;
     private boolean ended = false;
-    public Combat(Hero hero, Pane pane){
+    public Combat(Hero hero, Pane mainPane, SidePane sidePane, GameLog gameLog){
         this.hero = hero;
-        this.pane = pane;
+        this.pane = mainPane;
+        this.sidePane = sidePane;
+        this.gameLog = gameLog;
     }
     public void end(){
         ended = true;
@@ -36,10 +38,6 @@ public class Combat implements LogGameMsg {
     public Monster getKilledMonster(){
         return killedMonster;
     }
-    @Override
-    public String getGameMsg() {
-        return gameMsg;
-    }
     public void start(Monster monster){
         pane.requestFocus();
         pane.setFocusTraversable(true);
@@ -48,22 +46,26 @@ public class Combat implements LogGameMsg {
                 case KeyCode.Q:
                     System.out.println("Q");
                         hero.castAbility(0, monster);
+                        gameLog.displayLogMsg(hero.getGameMsg());
                     break;
                 case KeyCode.W:
                     System.out.println("W");
                         hero.castAbility(1, monster);
+                        gameLog.displayLogMsg(hero.getGameMsg());
                     break;
                 case KeyCode.E:
                         hero.castAbility(2, monster);
+                        gameLog.displayLogMsg(hero.getGameMsg());
                     break;
                 case KeyCode.R:
                         hero.castAbility(3, monster);
+                        gameLog.displayLogMsg(hero.getGameMsg());
                     break;
                 case KeyCode.ESCAPE:
                     this.end();
                     break;
-
             }
+            sidePane.displayHeroStat(hero);
             event.consume();
             if(monster.isDead()){
                 killedMonster = monster;

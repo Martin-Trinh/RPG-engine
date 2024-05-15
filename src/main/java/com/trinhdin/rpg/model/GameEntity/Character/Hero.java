@@ -42,9 +42,10 @@ public class Hero extends Character {
     public void castAbility(int index, Monster target) {
         if (index >= abilities.size() || index < 0) {
             gameMsg = "Ability not found";
-            System.out.println("Ability not found");
         } else {
+            gameMsg = abilities.get(index).getName() + " used on " + target.getName();
             abilities.get(index).use(this, target);
+            gameMsg += "\n" + abilities.get(index).getGameMsg();
         }
     }
 
@@ -141,11 +142,11 @@ public class Hero extends Character {
         stat.add(levelUpStat);
     }
 
-    public Rectangle getBounds() {
+    public Rectangle bounds() {
         return new Rectangle(pos.getX(), pos.getY(), WIDTH, HEIGHT);
     }
 
-    public Point2D getCenter() {
+    public Point2D calculateCenter() {
         return new Point2D(pos.getX() + WIDTH / 2.0, pos.getY() + HEIGHT / 2.0);
     }
 

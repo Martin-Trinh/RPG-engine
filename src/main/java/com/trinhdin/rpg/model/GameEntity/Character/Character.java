@@ -90,7 +90,7 @@ public class Character extends Entity {
         corner[3] = (int) (pos.getY() + Entity.getHeight() - boundOffset) / HEIGHT;
         return corner;
     }
-    public Rectangle getOffsetBounds(Point2D pos){
+    public Rectangle offsetBounds(Point2D pos){
        return new Rectangle (pos.getX() + boundOffset, pos.getY() + boundOffset, WIDTH - 2*boundOffset, HEIGHT - 2*boundOffset);
     }
 

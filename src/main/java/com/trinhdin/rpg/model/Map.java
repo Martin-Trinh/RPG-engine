@@ -1,11 +1,11 @@
 package com.trinhdin.rpg.model;
 
+import com.trinhdin.rpg.controller.GameSaveLoad;
 import com.trinhdin.rpg.model.GameEntity.*;
 import com.trinhdin.rpg.model.GameEntity.Ability.Ability;
 import com.trinhdin.rpg.model.GameEntity.Ability.AttackAbility;
 import com.trinhdin.rpg.model.GameEntity.Ability.AttackType;
 import com.trinhdin.rpg.model.GameEntity.Ability.ModifyStatAbility;
-import com.trinhdin.rpg.model.GameEntity.Character.Character;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Character.Monster;
 import com.trinhdin.rpg.model.GameEntity.Character.Stat;
@@ -15,37 +15,22 @@ import com.trinhdin.rpg.model.GameEntity.Item.EquipmentType;
 import com.trinhdin.rpg.model.GameEntity.Item.ObstacleItem;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
-import javafx.scene.shape.Rectangle;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.security.Key;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class Map {
     private HashMap<Point2D, Tile> tiles = new HashMap<>();
     private HashMap<Point2D, Entity> entities = new HashMap<>();
     private HashMap<Point2D, Monster> monsters = new HashMap<>();
     private Hero hero;
-    private int width;
-    private int height;
     private final String prefixImgPath = "file:src/main/resources/img/";
-
-    public int getWidth() {
-        return width;
-    }
-    public int getHeight() {
-        return height;
-    }
     public Hero getHero() {return hero;}
-    public HashMap<Point2D, Tile> getTileMap() {
+    public HashMap<Point2D, Tile> getTiles() {
         return tiles;
     }
-
     public HashMap<Point2D, Entity> getEntities() {
         return entities;
     }
@@ -115,9 +100,9 @@ public class Map {
         return tiles;
     }
     public Entity isCollideWithEntity(){
-        Bounds heroBound = hero.getBounds().getBoundsInParent();
+        Bounds heroBound = hero.bounds().getBoundsInParent();
        for (Entity entity : entities.values()) {
-           if(heroBound.intersects(entity.getBounds().getBoundsInParent())){
+           if(heroBound.intersects(entity.bounds().getBoundsInParent())){
                return entity;
            }
        }
@@ -127,7 +112,7 @@ public class Map {
         // distance from monster
         int distance = 30;
         for (Monster monster : monsters.values()) {
-            if(hero.getCenter().distance(monster.getCenter()) < distance){
+            if(hero.calculateCenter().distance(monster.calculateCenter()) < distance){
                 return monster;
             }
         }
@@ -178,15 +163,18 @@ public class Map {
                 }
 //                System.out.println(line);
             }
-            width = maxLength * Entity.getWidth();
-            height = lineCnt * Entity.getHeight();
             scanner.close();
             inputStream.close();
         } catch (FileNotFoundException e) {
             throw new IOException("File not found");
         }
     }
-
+    public void saveMap(){
+        GameSaveLoad gameSaveLoad = new GameSaveLoad();
+        gameSaveLoad.saveGame(tiles, "src/main/resources/gameData/map.json");
+        List<Object> list = List.of(hero, entities, monsters);
+        gameSaveLoad.saveGame( list, "src/main/resources/gameData/entities.json");
+    }
     public void loadCharToEntity(Point2D pos, char c){
         Stat stat = new Stat(10, 10, 10, 10, 10, 10, 10);
         ObstacleItem key = new ObstacleItem(pos, "Key", prefixImgPath + "Items/key.png", "Key for gate");
