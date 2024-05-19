@@ -1,5 +1,8 @@
 package com.trinhdin.rpg.model.GameEntity.Character;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Stat {
     private int maxHealth;
     private int maxMana;
@@ -9,7 +12,14 @@ public class Stat {
     private int armor;
     private int magicArmor;
 
-    public Stat(int maxHealth, int maxMana, int strength, int intelligence, int agility, int armor, int magicArmor) {
+    @JsonCreator
+    public Stat(@JsonProperty("maxHealth") int maxHealth,
+                @JsonProperty("maxMana") int maxMana,
+                @JsonProperty("strength") int strength,
+                @JsonProperty("intelligence") int intelligence,
+                @JsonProperty("agility") int agility,
+                @JsonProperty("armor") int armor,
+                @JsonProperty("magicArmor") int magicArmor) {
         this.maxHealth = maxHealth;
         this.maxMana = maxMana;
         this.strength = strength;
@@ -28,7 +38,7 @@ public class Stat {
         armor += stat.armor;
         magicArmor += stat.magicArmor;
     }
-    public void subtract(Stat stat) {
+    public Stat subtract(Stat stat) {
         if(stat.maxHealth >= 0) {
             maxHealth -= stat.maxHealth;
         }
@@ -50,8 +60,18 @@ public class Stat {
             armor = 0;
         if(magicArmor < 0)
             magicArmor = 0;
+        return this;
     }
-
+    public Stat multiply(int num) {
+        maxHealth *= num;
+        maxMana *= num;
+        strength *= num;
+        intelligence *= num;
+        agility *= num;
+        armor *= num;
+        magicArmor *= num;
+        return this;
+    }
     public int getMaxHealth() {
         return maxHealth;
     }

@@ -1,16 +1,20 @@
 package com.trinhdin.rpg.model.GameEntity;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Item.Item;
 import com.trinhdin.rpg.model.GameEntity.Item.ObstacleItem;
 import javafx.geometry.Point2D;
 
 public class Obstacle extends Tile implements Interactable{
-    private Item resolveItem;
-
+    private ObstacleItem resolveItem;
     public Obstacle(Point2D pos, String name, String fileName, boolean collision, ObstacleItem resolveItem) {
         super(pos, name, fileName, collision);
         this.resolveItem = resolveItem;
+    }
+    public Obstacle(JsonNode node){
+        super(node);
+        this.resolveItem = new ObstacleItem(node.get("resolveItem"));
     }
     public void resolveObstacle() {
         collision = false;
@@ -29,5 +33,9 @@ public class Obstacle extends Tile implements Interactable{
         gameMsg = "You need " + resolveItem.getName() + " to resolve this obstacle";
         System.out.println("You need " + resolveItem.getName() + " to resolve this obstacle");
         return false;
+    }
+
+    public ObstacleItem getResolveItem() {
+        return resolveItem;
     }
 }

@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Goblin",
+    "fileName": "file:src/main/resources/img/Monsters/goblin_run.png",
+    "speed": 2.0,
+    "stat": {
+      "maxHealth": 50,
+      "maxMana": 10,
+      "strength": 10,
+      "intelligence": 0,
+      "agility": 2,
+      "armor": 5,
+      "magicArmor": 0
+    },
+    "abilities": {
+      "Attack": 1
+    },
+    "itemDrop": {
+      "Obstacle": 1
+    }
+  },
+  {
+    "name": "Orc",
+    "fileName": "file:src/main/resources/img/Monsters/orc_run.png",
+    "speed": 2.0,
+    "stat": {
+      "maxHealth": 100,
+      "maxMana": 20,
+      "strength": 20,
+      "intelligence": 0,
+      "agility": 2,
+      "armor": 10,
+      "magicArmor": 0
+    },
+    "abilities": {
+      "Attack": 0
+    },
+    "itemDrop": {
+      "Consumable": 0
+    }
+  },
+  {
+    "name": "Troll",
+    "fileName": "file:src/main/resources/img/Monsters/troll_run.png",
+    "speed": 2.0,
+    "stat": {
+      "maxHealth": 150,
+      "maxMana": 50,
+      "strength": 30,
+      "intelligence": 0,
+      "agility": 2,
+      "armor": 15,
+      "magicArmor": 0
+    },
+    "abilities": {
+      "Attack": 2
+    },
+    "itemDrop": {
+      "Equipment": 0
+    }
+  }
+]

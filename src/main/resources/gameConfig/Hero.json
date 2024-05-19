@@ -1,0 +1,77 @@
+[
+  {
+    "name": "Knight",
+    "fileName": "file:src/main/resources/img/Heroes/knight_run.png",
+    "speed": 4.0,
+    "stat": {
+      "maxHealth": 100,
+      "maxMana": 100,
+      "strength": 20,
+      "intelligence": 5,
+      "agility": 2,
+      "armor": 20,
+      "magicArmor": 5
+    },
+    "abilities": [
+      {
+        "Attack": 1
+      },
+      {
+        "ModifyStat": 1
+      },
+      {
+        "Heal": 1
+      }
+    ]
+  },
+  {
+    "name": "Mage",
+    "fileName": "file:src/main/resources/img/Heroes/mage_run.png",
+    "speed": 4.0,
+    "stat": {
+      "maxHealth": 100,
+      "maxMana": 100,
+      "strength": 5,
+      "intelligence": 20,
+      "agility": 2,
+      "armor": 5,
+      "magicArmor": 20
+    },
+    "abilities": [
+      {
+        "Attack": 2
+      },
+      {
+        "ModifyStat": 2
+      },
+      {
+        "Heal": 1
+      }
+    ]
+  },
+  {
+    "name": "Archer",
+    "fileName": "file:src/main/resources/img/Heroes/archer_run.png",
+    "speed": 4.0,
+    "stat": {
+      "maxHealth": 200,
+      "maxMana": 200,
+      "strength": 10,
+      "intelligence": 10,
+      "agility": 20,
+      "armor": 5,
+      "magicArmor": 5
+    },
+    "abilities": [
+      {
+        "Attack": 3
+      },
+      {
+        "ModifyStat": 3
+      },
+      {
+        "Heal": 1
+      }
+    ]
+  }
+]

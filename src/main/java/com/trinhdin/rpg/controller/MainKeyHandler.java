@@ -1,5 +1,6 @@
 package com.trinhdin.rpg.controller;
 
+import com.trinhdin.rpg.model.GameData;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.Map;
 import com.trinhdin.rpg.model.MoveDirection;
@@ -62,7 +63,11 @@ public class MainKeyHandler implements EventHandler<KeyEvent>{
                 break;
         }
         if(keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.S) {
-            map.saveMap();
+                GameSaveLoad gameSaveLoad = new GameSaveLoad();
+                GameData gameData = new GameData(map.getEntities(), map.getMonsters(), hero);
+                gameSaveLoad.saveGame(gameData, "game1.json");
+                gameSaveLoad.loadGame("game1.json");
+
             gameScreen.exit();
         }
 

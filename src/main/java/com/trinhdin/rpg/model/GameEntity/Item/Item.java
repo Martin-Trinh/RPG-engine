@@ -1,5 +1,6 @@
 package com.trinhdin.rpg.model.GameEntity.Item;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.trinhdin.rpg.model.GameEntity.Entity;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Interactable;
@@ -10,6 +11,10 @@ public abstract class Item extends Entity implements Interactable{
     public Item(Point2D pos, String name, String fileName, String description) {
         super(pos, name, fileName);
         this.description = description;
+    }
+    public Item(JsonNode node){
+        super(node);
+        description = node.get("description").asText();
     }
     /**
      * Use the item
@@ -40,4 +45,5 @@ public abstract class Item extends Entity implements Interactable{
     public boolean equals(Item item){
         return this.name.equals(item.getName());
     }
+
 }

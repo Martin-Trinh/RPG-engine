@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Gate",
+    "fileName": "file:src/main/resources/img/Obstacle/door_closed.png",
+    "resolveItem": 0
+  },
+  {
+    "name": "Barrel",
+    "fileName": "file:src/main/resources/img/Obstacle/barrel.png",
+    "resolveItem": 1
+  },
+  {
+    "name": "flame",
+    "fileName": "file:src/main/resources/img/Obstacle/flame.png",
+    "resolveItem": 2
+  }
+]

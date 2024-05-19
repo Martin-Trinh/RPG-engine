@@ -1,15 +1,40 @@
 package com.trinhdin.rpg.model.GameEntity.Item;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.trinhdin.rpg.controller.LogGameMsg;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Item.Item;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Inventory implements LogGameMsg {
+    @JsonIgnore
     private final int maxSlot = 16;
     private ArrayList<Item> items = new ArrayList<>();
+    @JsonIgnore
     private String gameMsg = "";
+    public Inventory(){}
+    public Inventory(JsonNode node){
+        for(JsonNode itemNode : node){
+            JsonNode value = itemNode.get("value");
+            switch (itemNode.get("key").asText()){
+                case "Consumable":
+                    items.add(new Consumable(value));
+                    break;
+                case "Equipment":
+                    items.add(new Equipment(value));
+                    break;
+                case "ObstacleItem":
+                    items.add(new ObstacleItem(value));
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid item name" + itemNode.get("key").asText());
+            }
+        }
+    }
     /**
      * Add item to inventory
      * @param item

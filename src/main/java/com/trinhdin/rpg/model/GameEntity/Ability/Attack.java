@@ -1,14 +1,20 @@
 package com.trinhdin.rpg.model.GameEntity.Ability;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.trinhdin.rpg.model.GameEntity.Character.Character;
 
-public class AttackAbility extends Ability{
+public class Attack extends Ability{
     private int damage;
     private AttackType type;
-    public AttackAbility(String name, int cost, int cooldown, int damage, AttackType type) {
+    public Attack(String name, int cost, int cooldown, int damage, AttackType type) {
         super(name, cost, cooldown);
         this.damage = damage;
         this.type = type;
+    }
+    public Attack(JsonNode node){
+        super(node);
+        this.damage = node.get("damage").asInt();
+        this.type = AttackType.valueOf(node.get("type").asText());
     }
     @Override
     public void use(Character caster, Character target) {

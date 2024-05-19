@@ -1,21 +1,19 @@
 package com.trinhdin.rpg.model.GameEntity.Character;
 
-import com.trinhdin.rpg.model.GameEntity.Ability.AttackAbility;
-import com.trinhdin.rpg.model.GameEntity.Ability.AttackType;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trinhdin.rpg.model.GameEntity.Entity;
 import com.trinhdin.rpg.model.MoveDirection;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Rectangle;
 
-public class Character extends Entity {
+public abstract class Character extends Entity {
     protected double speed;
     protected MoveDirection direction;
     protected Stat stat;
     protected int currentHealth;
     protected int currentMana;
     static protected int boundOffset = 8;
-
-
    static public int getOffset() {
         return boundOffset;
     }
@@ -26,6 +24,14 @@ public class Character extends Entity {
         this.stat = stat;
         this.currentHealth = stat.getMaxHealth();
         this.currentMana = stat.getMaxMana();
+    }
+    public Character(JsonNode node){
+        super(node);
+        ObjectMapper objectMapper = new ObjectMapper();
+        this.speed = node.get("speed").asDouble();
+        this.stat = objectMapper.convertValue(node.get("stat"), Stat.class);
+        this.currentHealth = node.get("currentHealth").asInt();
+        this.currentMana = node.get("currentMana").asInt();
     }
     public double getSpeed() {
         return speed;

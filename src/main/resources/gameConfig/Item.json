@@ -1,0 +1,160 @@
+{
+
+  "Consumable": [
+    {
+      "name": "Health Potion",
+      "fileName": "file:src/main/resources/img/Items/flasks_red.png",
+      "description": "Health Potion",
+      "health": 10,
+      "mana": 0
+    },
+    {
+      "name": "Mana Potion",
+      "fileName": "file:src/main/resources/img/Items/flasks_blue.png",
+      "description": "Mana Potion",
+      "health": 0,
+      "mana": 10
+    }
+  ],
+  "Equipment": [
+    {
+      "name": "Sword",
+      "fileName": "file:src/main/resources/img/Items/sword_1_new.png",
+      "description": "Sword",
+      "stat": {
+        "maxHealth": 100,
+        "maxMana": 50,
+        "strength": 50,
+        "intelligence": 0,
+        "agility": 0,
+        "armor": 0,
+        "magicArmor": 0
+      },
+      "type": "Weapon"
+    },
+    {
+    "name": "Spear",
+    "fileName": "file:src/main/resources/img/Items/sword_1_new.png",
+    "description": "Spear",
+    "stat": {
+      "maxHealth": 0,
+      "maxMana": 100,
+      "strength": 0,
+      "intelligence": 50,
+      "agility": 0,
+      "armor": 0,
+      "magicArmor": 0
+    },
+    "type": "Weapon"
+    },
+    {
+      "name": "Bow",
+      "fileName": "file:src/main/resources/img/Items/sword_1_new.png",
+      "description": "Bow",
+      "stat": {
+        "maxHealth": 0,
+        "maxMana": 0,
+        "strength": 50,
+        "intelligence": 50,
+        "agility": 0,
+        "armor": 10,
+        "magicArmor": 10
+      },
+      "type": "Weapon"
+    },
+    {
+      "name": "Shield",
+      "fileName": "file:src/main/resources/img/Items/shield_1_new.png",
+      "description": "Shield",
+        "stat": {
+            "maxHealth": 100,
+            "maxMana": 0,
+            "strength": 0,
+            "intelligence": 0,
+            "agility": 0,
+            "armor": 30,
+            "magicArmor": 10
+        },
+        "type": "SHIELD"
+    },
+    {
+      "name": "Boots",
+      "fileName": "file:src/main/resources/img/Items/shield_1_new.png",
+      "description": "Boots",
+      "stat": {
+        "maxHealth": 100,
+        "maxMana": 0,
+        "strength": 0,
+        "intelligence": 0,
+        "agility": 10,
+        "armor": 30,
+        "magicArmor": 10
+      },
+      "type": "Boots"
+    },
+    {
+        "name": "Helmet",
+        "fileName": "file:src/main/resources/img/Items/shield_1_new.png",
+        "description": "Helmet",
+        "stat": {
+            "maxHealth": 100,
+            "maxMana": 0,
+            "strength": 0,
+            "intelligence": 0,
+            "agility": 0,
+            "armor": 30,
+            "magicArmor": 10
+        },
+        "type": "Helmet"
+        },
+        {
+        "name": "Plate mail",
+        "fileName": "file:src/main/resources/img/Items/shield_1_new.png",
+        "description": "Plate mail",
+        "stat": {
+            "maxHealth": 200,
+            "maxMana": 0,
+            "strength": 0,
+            "intelligence": 0,
+            "agility": 0,
+            "armor": 50,
+            "magicArmor": 20
+        },
+        "type": "Armor"
+        },
+        {
+        "name": "Amulet",
+        "fileName": "file:src/main/resources/img/Items/shield_1_new.png",
+        "description": "Amulet",
+        "stat": {
+            "maxHealth": 0,
+            "maxMana": 10,
+            "strength": 0,
+            "intelligence": 20,
+            "agility": 0,
+            "armor": 0,
+            "magicArmor": 10
+        },
+        "type": "ACCESSORY"
+        },
+        {
+    }
+  ],
+  "ObstacleItem": [
+    {
+      "name": "Key",
+      "fileName": "file:src/main/resources/img/Items/key.png",
+      "description": "Key for gate"
+    },
+    {
+      "name": "Water",
+        "fileName": "file:src/main/resources/img/Items/water.png",
+        "description": "Water extinguisher"
+    },
+    {
+      "name": "Bomb",
+        "fileName": "file:src/main/resources/img/Items/bomb.png",
+        "description": "Bomb for destroying walls"
+    }
+  ]
+}

@@ -1,14 +1,21 @@
 package com.trinhdin.rpg.model.GameEntity.Ability;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trinhdin.rpg.model.GameEntity.Character.Character;
 import com.trinhdin.rpg.model.GameEntity.Character.Stat;
-public class ModifyStatAbility extends Ability{
+public class ModifyStat extends Ability{
     private Stat stat;
-
-    public ModifyStatAbility(String name, int cost, int cooldown, Stat stat) {
+    private int duration;
+    public ModifyStat(String name, int cost, int cooldown, Stat stat, int duration) {
         super(name, cost, cooldown);
         this.stat = stat;
+        this.duration = duration;
     }
-
+    public ModifyStat(JsonNode node){
+        super(node);
+        ObjectMapper objectMapper = new ObjectMapper();
+        this.stat = objectMapper.convertValue(node.get("stat"), Stat.class);
+    }
     @Override
     public void use(Character caster, Character target) {
         if(caster.getCurrentMana() < cost) {
@@ -19,5 +26,8 @@ public class ModifyStatAbility extends Ability{
             target.getStat().add(stat);
             caster.setCurrentMana(caster.getCurrentMana() - cost);
         }
+    }
+    public int getDuration() {
+        return duration;
     }
 }

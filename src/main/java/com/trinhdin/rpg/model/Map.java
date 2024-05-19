@@ -1,11 +1,11 @@
 package com.trinhdin.rpg.model;
 
-import com.trinhdin.rpg.controller.GameSaveLoad;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trinhdin.rpg.model.GameEntity.*;
 import com.trinhdin.rpg.model.GameEntity.Ability.Ability;
-import com.trinhdin.rpg.model.GameEntity.Ability.AttackAbility;
+import com.trinhdin.rpg.model.GameEntity.Ability.Attack;
 import com.trinhdin.rpg.model.GameEntity.Ability.AttackType;
-import com.trinhdin.rpg.model.GameEntity.Ability.ModifyStatAbility;
+import com.trinhdin.rpg.model.GameEntity.Ability.ModifyStat;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Character.Monster;
 import com.trinhdin.rpg.model.GameEntity.Character.Stat;
@@ -16,17 +16,18 @@ import com.trinhdin.rpg.model.GameEntity.Item.ObstacleItem;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
 public class Map {
-    private HashMap<Point2D, Tile> tiles = new HashMap<>();
-    private HashMap<Point2D, Entity> entities = new HashMap<>();
-    private HashMap<Point2D, Monster> monsters = new HashMap<>();
+    private final HashMap<Point2D, Tile> tiles = new HashMap<>();
+    private final HashMap<Point2D, Entity> entities = new HashMap<>();
+    private final HashMap<Point2D, Monster> monsters = new HashMap<>();
     private Hero hero;
-    private final String prefixImgPath = "file:src/main/resources/img/";
+    private static final String prefixImgPath = "file:src/main/resources/img/";
     public Hero getHero() {return hero;}
     public HashMap<Point2D, Tile> getTiles() {
         return tiles;
@@ -148,10 +149,12 @@ public class Map {
     public void loadTileMap(String mapFileName) throws IOException {
         int maxLength = 0;
         int lineCnt;
+        ArrayList<ArrayList<String>> map = new ArrayList<>();
         try {
             FileInputStream inputStream = new FileInputStream(mapFileName);
             Scanner scanner = new Scanner(inputStream);
             for (lineCnt = 0; scanner.hasNextLine(); lineCnt++) {
+                ArrayList<String> tmp = new ArrayList<>();
                 String line = scanner.nextLine();
                 if(line.length() > maxLength){
                     maxLength = line.length();
@@ -160,7 +163,9 @@ public class Map {
                     Point2D pos = new Point2D(i, lineCnt);
                     char c = line.charAt(i);
                     loadCharToEntity(pos, c);
+                    tmp.add(String.valueOf(c));
                 }
+                map.add(tmp);
 //                System.out.println(line);
             }
             scanner.close();
@@ -169,12 +174,7 @@ public class Map {
             throw new IOException("File not found");
         }
     }
-    public void saveMap(){
-        GameSaveLoad gameSaveLoad = new GameSaveLoad();
-        gameSaveLoad.saveGame(tiles, "src/main/resources/gameData/map.json");
-        List<Object> list = List.of(hero, entities, monsters);
-        gameSaveLoad.saveGame( list, "src/main/resources/gameData/entities.json");
-    }
+
     public void loadCharToEntity(Point2D pos, char c){
         Stat stat = new Stat(10, 10, 10, 10, 10, 10, 10);
         ObstacleItem key = new ObstacleItem(pos, "Key", prefixImgPath + "Items/key.png", "Key for gate");
@@ -187,13 +187,13 @@ public class Map {
             Tile floor = new Tile(pos, "floor", prefixImgPath + "floor_5.png", false);
             Monster monster = new Monster(pos, "Goblin", prefixImgPath + "Monster/goblin_run.png", 1, stat, 10, 1);
             tiles.put(pos, floor);
-            Ability pAbility = new AttackAbility("Attack", 10, 1, 1, AttackType.MAGICAL );
-            Ability mAbility = new AttackAbility("Attack", 10, 1, 1, AttackType.PHYSICAL );
+            Ability pAbility = new Attack("Attack", 10, 1, 1, AttackType.MAGICAL );
+            Ability mAbility = new Attack("Attack", 10, 1, 1, AttackType.PHYSICAL );
             Stat abilityStat = new Stat(10, 10, 0, 1, 1, 1, 1);
-            Ability buffAbility = new ModifyStatAbility("Buff", 10, 1, abilityStat );
+            Ability buffAbility = new ModifyStat("Buff", 10, 1, abilityStat, 5 );
             switch (c){
                 case '@':
-                    hero = new Hero(pos.multiply(Entity.getWidth()), "Knight", prefixImgPath + "Heroes/knight_run.png", 2, stat);
+                    hero = new Hero(pos.multiply(Entity.getWidth()), "Knight", prefixImgPath + "Heroes/knight_run.png", 4, stat);
                     hero.addAbility(pAbility);
                     hero.addAbility(buffAbility);
                     break;
@@ -215,7 +215,7 @@ public class Map {
                     break;
                 case '?':
                     ArrayList<String> dialogues = new ArrayList<>(Arrays.asList("Hello", "I have a quest for you"));
-                    Quest quest = new Quest("Quest", "Find the key", monster);
+                    Quest quest = new Quest("Quest", "Find the key", monster.getName());
                     NPC monk = new NPC(pos, "Monk", prefixImgPath + "NPC/monk.png", dialogues, quest, key);
                     entities.put(pos, monk);
                     break;

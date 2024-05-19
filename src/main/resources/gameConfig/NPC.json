@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Monk",
+    "fileName": "file:src/main/resources/img/NPC/Monk.png",
+    "dialogues": [
+      "Hello",
+      "I have a quest for you"
+    ],
+    "questForHero": {
+      "name": "Quest",
+      "description": "Find the key",
+      "monsterToKill": "Goblin"
+    },
+    "itemForHero": {
+      "pos": {
+        "x": 21.0,
+        "y": 9.0
+      },
+      "name": "Key",
+      "fileName": "file:src/main/resources/img/Items/key.png",
+      "description": "Key for gate"
+    }
+  },
+  {
+    "name": "Oldman",
+    "fileName": "file:src/main/resources/img/NPC/oldman.png",
+    "dialogues": [
+      "Hello",
+      "I have a quest for you"
+    ],
+    "questForHero": {
+      "name": "Quest",
+      "description": "Kill monster orc to get a bomb, that you can use to destroy the barrel",
+      "monsterToKill": "Orc"
+    },
+    "itemForHero": {
+      "name": "Bomb",
+      "fileName": "file:src/main/resources/img/Items/bomb.png",
+      "description": "Bomb for barrel"
+    }
+  }
+]

@@ -1,5 +1,6 @@
 package com.trinhdin.rpg.model.GameEntity.Item;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import javafx.geometry.Point2D;
 
@@ -12,7 +13,11 @@ public class Consumable extends Item {
         this.health = health;
         this.mana = mana;
     }
-
+    public Consumable(JsonNode node){
+        super(node);
+        health = node.get("health").asInt();
+        mana = node.get("mana").asInt();
+    }
     @Override
     public boolean use(Hero hero) {
         // use if hero is not full health or mana
@@ -24,5 +29,11 @@ public class Consumable extends Item {
         return false;
     }
 
+    public int getHealth() {
+        return health;
+    }
 
+    public int getMana() {
+        return mana;
+    }
 }
