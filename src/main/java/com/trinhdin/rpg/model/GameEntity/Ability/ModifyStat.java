@@ -3,6 +3,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trinhdin.rpg.model.GameEntity.Character.Character;
 import com.trinhdin.rpg.model.GameEntity.Character.Stat;
+/**
+ * Ability to modify stat of character
+ */
 public class ModifyStat extends Ability{
     private Stat stat;
     private int duration;

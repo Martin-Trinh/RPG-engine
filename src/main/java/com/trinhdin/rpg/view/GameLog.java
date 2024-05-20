@@ -4,7 +4,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
-
+/**
+ * GameLog class for displaying game log on screen
+ */
 public class GameLog extends VBox {
     private final int MAX_LOG_MSG = 5;
     public GameLog(){

@@ -7,7 +7,14 @@ import com.trinhdin.rpg.model.MoveDirection;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import lombok.extern.slf4j.Slf4j;
 
+import java.io.IOException;
+
+/**
+ * Handle main key event for canvas
+ */
+@Slf4j
 public class MainKeyHandler implements EventHandler<KeyEvent>{
     private GameScreen gameScreen;
     private Map map;
@@ -18,6 +25,10 @@ public class MainKeyHandler implements EventHandler<KeyEvent>{
         this.map = gameScreen.getMap();
         this.hero = map.getHero();
     }
+    /**
+     * Handle key event for canvas
+     * @param keyEvent
+     */
     @Override
     public void handle(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
@@ -42,9 +53,11 @@ public class MainKeyHandler implements EventHandler<KeyEvent>{
                 }
                 break;
             case F:
+                // interact with entity pressing F key
                 gameScreen.interactionWithFKey();
                 break;
             case I:
+                // open or close inventory
                 if (gameScreen.isInventoryOpen()) {
                     gameScreen.closeInventory();
                 } else {
@@ -52,9 +65,11 @@ public class MainKeyHandler implements EventHandler<KeyEvent>{
                 }
                 break;
             case E:
+                // enter comabat with monster if monster is nearby
                 gameScreen.checkMonsterForCombat();
                 break;
             case Q:
+                // open or close quest view
                 if (gameScreen.isQuestViewOpen()) {
                     gameScreen.closeQuestView();
                 } else {
@@ -62,13 +77,18 @@ public class MainKeyHandler implements EventHandler<KeyEvent>{
                 }
                 break;
         }
+        // save game using ctrl + s
         if(keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.S) {
                 GameSaveLoad gameSaveLoad = new GameSaveLoad();
                 GameData gameData = new GameData(map.getEntities(), map.getMonsters(), hero);
-                gameSaveLoad.saveGame(gameData, "game1.json");
-                gameScreen.exit();
+                try{
+                    gameSaveLoad.saveGame(gameData, "game1.json");
+                    log.info("Game saved");
+                    gameScreen.exit();
+                }catch (IOException e){
+                    log.error("Error saving game: " + e.getMessage());
+                }
         }
-
     }
 }
 

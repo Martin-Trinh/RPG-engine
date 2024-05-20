@@ -2,7 +2,9 @@ package com.trinhdin.rpg.model;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.trinhdin.rpg.model.GameEntity.Character.Monster;
-
+/**
+ * Quest class to represent hero quest in game
+ */
 public class Quest {
     private String name;
     private String description;

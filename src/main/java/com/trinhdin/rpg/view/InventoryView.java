@@ -19,7 +19,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-
+/**
+ * InventoryView class to display hero inventory and handle key event
+ */
 public class InventoryView{
     Hero hero;
     VBox inventoryPane = new VBox();

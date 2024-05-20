@@ -15,7 +15,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
-
+/**
+ * EquipmentView class to display hero equipment and handle key event
+ */
 public class EquipmentView {
     private final Hero hero;
     private final VBox equipmentPane = new VBox();

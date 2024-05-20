@@ -1,6 +1,7 @@
 package com.trinhdin.rpg.controller;
 
 import com.trinhdin.rpg.model.Combat;
+import com.trinhdin.rpg.model.GameConfig;
 import com.trinhdin.rpg.model.GameEntity.Character.Character;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Character.Monster;
@@ -22,6 +23,11 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
+
+/**
+ * GameScreen class main controller of the game
+ * It handles the game loop and create view of the game
+ */
 @Slf4j
 public class GameScreen {
     private Canvas canvas;
@@ -36,7 +42,7 @@ public class GameScreen {
     private final int CANVAS_WIDTH = 600;
     private final int CANVAS_HEIGHT = 400;
     @Getter
-    private Map map;
+    private Map map = new Map();
     private Hero hero;
     private boolean isInventoryOpen = false;
     private boolean nearMonster = false;
@@ -46,15 +52,36 @@ public class GameScreen {
     public GameScreen(Stage stage) {
         this.stage = stage;
     }
-    public void loadGame(String fileName){
+    private void initGame(boolean newGame, int level) {
+        try {
+            map.loadMap(level, newGame);
+        } catch (IOException e) {
+            log.error("Error loading map: " + e.getMessage());
+        }catch (IndexOutOfBoundsException e){
+            log.error("Invalid Level: " + level);
+        }
+    }
+    public void loadGameFromFile(String fileName) throws IOException{
         GameSaveLoad gameSaveLoad = new GameSaveLoad();
         gameSaveLoad.loadGame(fileName, map);
-    }
-    public void start(){
-        log.info("Starting game...");
-        configureMap();
+        initGame(false, map.getLevel());
         hero = map.getHero();
-        createHero();
+        start();
+    }
+    public void loadNewGame(String heroName){
+        log.info("Loading new game...");
+        try{
+            map.configureHero(heroName);
+            initGame(true, 0);
+            hero = map.getHero();
+            start();
+        }catch (IllegalArgumentException e){
+            log.error(e.getMessage());
+        }
+    }
+    private void start(){
+        log.info("Starting game...");
+        setPositionHero();
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         canvas.setId("canvas");
 
@@ -97,15 +124,7 @@ public class GameScreen {
         stage.setScene(scene);
         stage.show();
     }
-    private void configureMap() {
-        map = new Map();
-        try {
-            String mapFileName = "src/main/resources/configMap/map1.map";
-            map.loadTileMap(mapFileName);
-        } catch (IOException e) {
-            log.error("Error loading map");
-        }
-    }
+
     private void onUpdate() {
         // render map
         renderMap();
@@ -145,7 +164,7 @@ public class GameScreen {
             }
         }
     }
-    public void createHero(){
+    public void setPositionHero(){
         // set screen position for hero to middle of canvas
         double screenX = CANVAS_WIDTH/2.0 - Entity.getWidth()/2.0;
         double screenY = CANVAS_HEIGHT/2.0 - Entity.getHeight()/2.0;

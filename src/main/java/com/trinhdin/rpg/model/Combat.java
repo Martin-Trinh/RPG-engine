@@ -10,7 +10,9 @@ import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-
+/**
+ * Combat class to handle combat logic between hero and monster
+ */
 public class Combat {
     public enum CombatResult{
         WIN, LOSE, QUIT

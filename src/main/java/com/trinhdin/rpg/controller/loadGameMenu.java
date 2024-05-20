@@ -1,5 +1,4 @@
 package com.trinhdin.rpg.controller;
-
 import com.trinhdin.rpg.model.GameConfig;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,14 +17,12 @@ public class loadGameMenu extends menuController{
     @FXML
     private Text errorMsg;
     public void loadGame(ActionEvent event) throws IOException {
+        String fileName = fileNameInput.getText();
         try{
-            String fileName = fileNameInput.getText();
-            System.out.println(fileName);
             GameScreen gameScreen = new GameScreen(stage);
-            gameScreen.loadGame(fileName);
-            gameScreen.start();
-        }catch (Exception e){
-            errorMsg.setText("Error loading game");
+            gameScreen.loadGameFromFile(fileName);
+        }catch (IOException e){
+            errorMsg.setText("Error loading game from: " + fileName);
             log.error("Error loading game: " + e.getMessage());
         }
     }

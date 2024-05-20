@@ -9,7 +9,9 @@ import javafx.geometry.Point2D;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
+/**
+ * NPC class to represent NPC entity
+ */
 public class NPC extends Entity implements Interactable{
     private ArrayList<String> dialogues;
     private int dialogueIndex = 0;

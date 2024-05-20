@@ -2,7 +2,9 @@ package com.trinhdin.rpg.model.GameEntity.Character;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+/**
+ * Stat class to represent stat of character
+ */
 public class Stat {
     private int maxHealth;
     private int maxMana;

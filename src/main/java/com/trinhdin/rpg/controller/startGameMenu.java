@@ -1,6 +1,7 @@
 package com.trinhdin.rpg.controller;
 
 import com.trinhdin.rpg.model.GameConfig;
+import com.trinhdin.rpg.model.GameEntity.Character.Stat;
 import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,8 +11,11 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -19,69 +23,62 @@ import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
-
-
 public class startGameMenu extends menuController implements Initializable {
     @FXML
     private ChoiceBox<String> heroType;
     @FXML
-    private Text errorMsg;
-    private String[] heroTypes = {"Mage" ,"Warrior", "Archer"};
+    private Label maxHealth;
     @FXML
-    private Spinner<Integer> strengthInput;
+    private Label maxMana;
     @FXML
-    private Spinner<Integer> intelligenceInput;
+    private Label strength;
     @FXML
-    private Spinner<Integer> agilityInput;
+    private Label intelligence;
     @FXML
-    private Spinner<Integer> armorInput;
+    private Label agility;
     @FXML
-    private Spinner<Integer> magicArmorInput;
+    private Label armor;
+    @FXML
+    private Label magicArmor;
+    @FXML
+    private Label errorMsg;
+    private HashMap<String, Stat> heroes = GameConfig.getInstance().getHeroes();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        heroType.setValue("Please select a hero type");
         // select hero type
-        heroType.getItems().addAll(heroTypes);
+        heroType.getItems().addAll(heroes.keySet());
         heroType.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println(heroType.getValue());
+                showStats();
             }
         });
-        // select stats for hero
-        SpinnerValueFactory<Integer> strengthFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,10);
-        SpinnerValueFactory<Integer> intelligenceFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,10);
-        SpinnerValueFactory<Integer> agilityFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,10);
-        SpinnerValueFactory<Integer> armorFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,10);
-        SpinnerValueFactory<Integer> magicArmorFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,10);
-        strengthFactory.setValue(1);
-        intelligenceFactory.setValue(1);
-        agilityFactory.setValue(1);
-        magicArmorFactory.setValue(1);
-        armorFactory.setValue(1);
-        strengthInput.setValueFactory(strengthFactory);
-        intelligenceInput.setValueFactory(intelligenceFactory);
-        agilityInput.setValueFactory(agilityFactory);
-        armorInput.setValueFactory(armorFactory);
-        magicArmorInput.setValueFactory(magicArmorFactory);
+
+    }
+    private void showStats(){
+        Stat stat = heroes.get(heroType.getValue());
+        maxHealth.setText("Max Health: " + stat.getMaxHealth());;
+        maxMana.setText("Max Mana: " + stat.getMaxMana());
+        strength.setText("Strength: " + stat.getStrength());
+        intelligence.setText("Intelligence: " + stat.getIntelligence());
+        agility.setText("Agility: " + stat.getAgility());
+        armor.setText("Armor: " + stat.getArmor());
+        magicArmor.setText("Magic Armor: " + stat.getMagicArmor());
     }
     public void startGame(ActionEvent event){
-        if(heroType.getValue() == null){
-            errorMsg.setText("Please select hero type!");
+        if(heroType.getValue().equals( "Select a hero type")){
+            errorMsg.setText("Please select a hero type");
+            return;
         }
-        System.out.println("Strength: " + strengthInput.getValue());
-        System.out.println("Intelligence: " + intelligenceInput.getValue());
-        System.out.println("Agility : " + agilityInput.getValue());
-        System.out.println("Armor: " + armorInput.getValue());
-        System.out.println("Magic Armor: " + magicArmorInput.getValue());
-
         // render game screen
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        new GameScreen(stage);
-
-
-
+        GameScreen gameScreen = new GameScreen(stage);
+        gameScreen.loadNewGame(heroType.getValue());
 
     }
 }

@@ -5,7 +5,9 @@ import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Item.Item;
 import com.trinhdin.rpg.model.GameEntity.Item.ObstacleItem;
 import javafx.geometry.Point2D;
-
+/**
+ * Obstacle class to represent obstacle entity
+ */
 public class Obstacle extends Tile implements Interactable{
     private ObstacleItem resolveItem;
     public Obstacle(Point2D pos, String name, String fileName, boolean collision, ObstacleItem resolveItem) {

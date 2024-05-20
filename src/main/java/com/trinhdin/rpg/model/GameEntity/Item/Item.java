@@ -5,7 +5,9 @@ import com.trinhdin.rpg.model.GameEntity.Entity;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Interactable;
 import javafx.geometry.Point2D;
-
+/**
+ * Item abstract class to represent items
+ */
 public abstract class Item extends Entity implements Interactable{
     protected String description = "";
     public Item(Point2D pos, String name, String fileName, String description) {

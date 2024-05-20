@@ -1,7 +1,7 @@
 [
   {
     "name": "Knight",
-    "fileName": "file:src/main/resources/img/Heroes/knight_run.png",
+    "fileName": "Heroes/knight_idle.png",
     "speed": 4.0,
     "stat": {
       "maxHealth": 100,
@@ -26,7 +26,7 @@
   },
   {
     "name": "Mage",
-    "fileName": "file:src/main/resources/img/Heroes/mage_run.png",
+    "fileName": "Heroes/wizzard_idle.png",
     "speed": 4.0,
     "stat": {
       "maxHealth": 100,
@@ -50,8 +50,8 @@
     ]
   },
   {
-    "name": "Archer",
-    "fileName": "file:src/main/resources/img/Heroes/archer_run.png",
+    "name": "Hunter",
+    "fileName": "Heroes/hunter.png",
     "speed": 4.0,
     "stat": {
       "maxHealth": 200,

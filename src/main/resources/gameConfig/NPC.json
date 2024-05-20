@@ -1,8 +1,8 @@
 [
   {
-    "char": "*",
+    "char": "?",
     "name": "Monk",
-    "fileName": "file:src/main/resources/img/NPC/Monk.png",
+    "fileName": "NPC/Monk.png",
     "dialogues": [
       "Hello",
       "I have a quest for you"
@@ -17,7 +17,7 @@
   {
     "char": "!",
     "name": "Oldman",
-    "fileName": "file:src/main/resources/img/NPC/oldman.png",
+    "fileName": "NPC/oldman.png",
     "dialogues": [
       "Hello",
       "I have a quest for you"

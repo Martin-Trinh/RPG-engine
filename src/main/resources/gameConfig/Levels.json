@@ -1,4 +1,3 @@
 [
-    "file:src/main/resources/levels/level1.tmx",
-    "file:src/main/resources/levels/level2.tmx"
+    "map1.txt"
 ]

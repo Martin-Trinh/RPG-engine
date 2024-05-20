@@ -13,7 +13,9 @@ import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+/**
+ * GameData class to store game data using Jackson
+ */
 public class GameData {
     private ArrayList<Pair<String, Entity>> entities = new ArrayList<>();
     private ArrayList<Monster> monsters;

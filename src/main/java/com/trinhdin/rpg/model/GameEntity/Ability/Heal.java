@@ -2,7 +2,9 @@ package com.trinhdin.rpg.model.GameEntity.Ability;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.trinhdin.rpg.model.GameEntity.Character.Character;
-
+/**
+ * Attack class to represent attack ability of character
+ */
 public class Heal extends Ability{
     private int amount = 0;
     public Heal(String name, int cost, int cooldown, int amount, int mana){

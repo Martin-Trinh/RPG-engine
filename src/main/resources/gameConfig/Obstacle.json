@@ -2,19 +2,19 @@
   {
     "char": "-",
     "name": "Gate",
-    "fileName": "file:src/main/resources/img/Obstacle/door_closed.png",
+    "fileName": "Obstacle/door_closed.png",
     "resolveItem": 0
   },
   {
-    "char": "%",
+    "char": "*",
     "name": "flame",
-    "fileName": "file:src/main/resources/img/Obstacle/flame.png",
+    "fileName": "Obstacle/flame.png",
     "resolveItem": 1
   },
   {
     "char": "=",
     "name": "Barrel",
-    "fileName": "file:src/main/resources/img/Obstacle/barrel.png",
+    "fileName": "Obstacle/barrel.png",
     "resolveItem": 2
   }
 ]

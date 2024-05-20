@@ -9,19 +9,32 @@ import com.trinhdin.rpg.model.GameEntity.Item.Inventory;
 import com.trinhdin.rpg.model.Quest;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Rectangle;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
-
+/**
+ * Hero class to represent hero in game
+ */
 public class Hero extends Character {
     @JsonIgnore
+    @Getter
     private Inventory inventory = new Inventory();
     @JsonIgnore
+    @Getter
     private ArrayList<Ability> abilities = new ArrayList<>();
+    @Getter
     private ArrayList<Quest> quests = new ArrayList<>();
+    @Getter
     private Equipment[] equipments = new Equipment[MAX_EQUIPMENT]; // [weapon, helmet, shield, boots, armor, accessory
+    @Getter
     private int exp = 0;
+    @Getter
     private int level = 1;
+    @Getter
     private int nextLevelExp = 100;
+    @Getter
+    @Setter
     private Point2D screenPos;
     private final int MAX_ABILITY = 3;
     private static final int MAX_EQUIPMENT = 6;
@@ -29,6 +42,10 @@ public class Hero extends Character {
     public Hero(Point2D pos, String name, String fileName, double speed, Stat stat) {
         super(pos, name, fileName, speed, stat);
     }
+    /**
+     * Constructor for hero from json node
+     * @param node json node
+     */
     public Hero(JsonNode node){
         super(node);
         for(JsonNode questNode : node.get("quests")){
@@ -43,24 +60,20 @@ public class Hero extends Character {
         level = node.get("level").asInt();
         screenPos = new Point2D(node.get("screenPos").get("x").asDouble(), node.get("screenPos").get("y").asDouble());
     }
-    public void setScreenPos(Point2D screenPos) {
-        this.screenPos = screenPos;
-    }
-
-    public Point2D getScreenPos() {
-        return screenPos;
-    }
-
-    public int getNextLevelExp() {
-        return nextLevelExp;
-    }
-
+    /**
+     * Add ability to hero
+     * @param ability
+     */
     public void addAbility(Ability ability) {
         if (abilities.size() < MAX_ABILITY) {
             abilities.add(ability);
         }
     }
-
+    /**
+     * Cast ability on monster
+     * @param index index of ability
+     * @param target monster to cast ability on
+     */
     public void castAbility(int index, Monster target) {
         if (index >= abilities.size() || index < 0) {
             gameMsg = "Ability not found";
@@ -70,7 +83,11 @@ public class Hero extends Character {
             gameMsg += "\n" + abilities.get(index).getGameMsg();
         }
     }
-
+    /**
+     * Equip equipment to hero
+     * @param equipment
+     * @return true if equipped
+     */
     public boolean equip(Equipment equipment) {
         switch (equipment.getType()) {
             case WEAPON:
@@ -88,7 +105,12 @@ public class Hero extends Character {
         }
         return false;
     }
-
+    /**
+     * Helper function to equip equipment to hero
+     * @param index index of equipment
+     * @param equipment
+     * @return true if equipped
+     */
     private boolean equip(int index, Equipment equipment) {
         if (equipments[index] == null) {
             stat.add(equipment.getStatIncrease());
@@ -97,7 +119,11 @@ public class Hero extends Character {
         }
         return false;
     }
-
+    /**
+     * Unequip equipment from hero
+     * @param index index of equipment
+     * @return true if unequipped
+     */
     public boolean unequip(int index) {
         if (equipments[index] != null) {
             // subtract the stat increase from the equipment
@@ -114,6 +140,11 @@ public class Hero extends Character {
         }
         return false;
     }
+    /**
+     * Unequip equipment from hero
+     * @param type
+     * @return true if unequipped
+     */
     public boolean unequip(EquipmentType type) {
         switch (type) {
             case WEAPON:
@@ -131,15 +162,18 @@ public class Hero extends Character {
         }
         return false;
     }
-
-    public Inventory getInventory() {
-        return inventory;
-    }
-
+    /**
+     * Add quest to the hero from npc
+     * @param quest
+     */
     public void addQuest(Quest quest) {
         quests.add(quest);
     }
-
+    /**
+     * Complete quest after killing monster
+     * @param index
+     * @param monsterKilled
+     */
     public void completeQuest(int index, Monster monsterKilled) {
         quests.get(index).complete(monsterKilled);
     }
@@ -148,6 +182,10 @@ public class Hero extends Character {
         return quests.contains(quest) && quest.getCompleted();
     }
 
+    /**
+     * Gain exp after killing monster
+     * @param exp
+     */
     public void gainExp(int exp) {
         gameMsg = "You gain " + exp + " exp";
         this.exp += exp;
@@ -155,7 +193,9 @@ public class Hero extends Character {
             levelUp();
         }
     }
-
+    /**
+     * Level up hero increase stats by level coefficient
+     */
     private void levelUp() {
         gameMsg = "Level up";
         level++;
@@ -163,31 +203,22 @@ public class Hero extends Character {
         Stat levelUpStat = new Stat(10, 10, 2, 2, 2, 2, 2);
         stat.add(levelUpStat);
     }
-
+    /**
+     * Check if hero is in the bounds of the rectangle
+     * @param rect
+     * @return rectangle around hero
+     */
     public Rectangle bounds() {
         return new Rectangle(pos.getX(), pos.getY(), WIDTH, HEIGHT);
     }
+    /**
+     * Calculate the center of the hero
+     * @return center point
 
+     */
     public Point2D calculateCenter() {
         return new Point2D(pos.getX() + WIDTH / 2.0, pos.getY() + HEIGHT / 2.0);
     }
 
-    public int getExp() {
-        return exp;
-    }
-
-    public int getLevel() {return level;}
-
-    public ArrayList<Ability> getAbilities() {
-        return abilities;
-    }
-
-    public ArrayList<Quest> getQuests() {
-        return quests;
-    }
-
-    public Equipment[] getEquipments() {
-        return equipments;
-    }
 
 }

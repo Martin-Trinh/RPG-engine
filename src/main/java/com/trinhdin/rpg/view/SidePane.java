@@ -10,7 +10,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
-
+/**
+ * SidePane class to display hero and monster stat and abilities
+ */
 public class SidePane extends VBox {
     private VBox heroStatPane = new VBox();
     private VBox monsterStatPane = new VBox();

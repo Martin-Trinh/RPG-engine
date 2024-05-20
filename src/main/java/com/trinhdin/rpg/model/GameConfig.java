@@ -14,10 +14,16 @@ import com.trinhdin.rpg.model.GameEntity.NPC;
 import com.trinhdin.rpg.model.GameEntity.Obstacle;
 import javafx.geometry.Point2D;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.HashMap;
+/**
+ * GameConfig class to load game configuration from json files
+ */
+@Slf4j
 public class GameConfig {
     private ObjectMapper objectMapper = new ObjectMapper();
     private static final String PATH_PREFIX = "src/main/resources/gameConfig/";
@@ -28,9 +34,11 @@ public class GameConfig {
     private static final String npcFile = "NPC.json";
     private static final String obstacleFile = "Obstacle.json";
     @Getter
+    private final HashMap<String, Stat> heroes = new HashMap<>();
+    @Getter
     private ArrayList<String> maps;
     @Getter
-    private static GameConfig instance = new GameConfig();
+    private final static GameConfig instance = new GameConfig();
     JsonNode abilitiesNode, heroNode, itemsNode, monstersNode, npcsNode, obstaclesNode, levelsNode;
     private GameConfig(){
         try{
@@ -40,15 +48,27 @@ public class GameConfig {
             monstersNode = objectMapper.readTree(new File(PATH_PREFIX + monsterFile));
             npcsNode = objectMapper.readTree(new File(PATH_PREFIX + npcFile));
             obstaclesNode = objectMapper.readTree(new File(PATH_PREFIX + obstacleFile));
-            maps = objectMapper.readValue(new File("Levels"), maps.getClass());
+            maps = objectMapper.readValue(new File(PATH_PREFIX + "Levels.json"), ArrayList.class);
             for (String map : maps){
                 System.out.println(map);
             }
+            System.out.println(
+                    maps.size()
+            );
+            loadHeroNamesAndStats();
         }
         catch (IOException e){
-            System.out.println("Error loading abilities from file");
+            log.info("Error loading abilities from file");
             e.printStackTrace();
         }
+    }
+    public void loadHeroNamesAndStats(){
+        heroNode.forEach(node -> {
+            heroes.put(node.get("name").asText(), objectMapper.convertValue(node.get("stat"), Stat.class));
+        });
+    }
+    public String getMapPath(int level){
+        return maps.get(level);
     }
     public Ability getAbilityFromConfig(String type, int index){
         Ability newAbility = null;
@@ -80,32 +100,31 @@ public class GameConfig {
                     newAbility = new Heal(abilityArray.get(index));
                     break;
                 default:
-
                     throw new IllegalArgumentException("Invalid ability type" + type);
             }
             return newAbility;
         }catch (IllegalArgumentException e){
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
         }
         return null;
     }
     public Hero getHeroFromConfig(Point2D pos, String name) throws IllegalArgumentException{
         for(JsonNode node : heroNode){
-            if(heroNode.get("name").asText().equals(name)){
-                String fileName = heroNode.get("fileName").asText();
-                int speed = heroNode.get("speed").asInt();
-                Stat stat = objectMapper.convertValue(heroNode.get("stat"), Stat.class);
+            if(node.get("name").asText().equals(name)){
+                String fileName = node.get("fileName").asText();
+                int speed = node.get("speed").asInt();
+                Stat stat = objectMapper.convertValue(node.get("stat"), Stat.class);
                 Hero hero =  new Hero(pos, name, fileName, speed, stat);
-                JsonNode abilityNode = heroNode.get("abilities");
+                JsonNode abilityNode = node.get("abilities");
                 for (JsonNode ability : abilityNode){
-                    hero.addAbility(getAbilityFromConfig(ability.fields().next().getKey(), ability.get("index").asInt()));
+                    hero.addAbility(getAbilityFromConfig(ability.fields().next().getKey(), ability.asInt()));
                 }
                 return hero;
             }
         }
-        throw new IllegalArgumentException("Hero not found, name is invalid" + name);
+        throw new IllegalArgumentException("Hero not found, name is invalid: " + name);
     }
-    public Monster getMonsterFromConfig(Point2D pos, Character c) throws IllegalArgumentException{
+    public Monster getMonsterFromConfig(Point2D pos, Character c) {
         for(JsonNode node : monstersNode){
             if(node.get("char").asText().equals(c.toString())){
                 String name = node.get("name").asText();
@@ -116,11 +135,11 @@ public class GameConfig {
                 int level = node.get("level").asInt();
                 Monster monster = new Monster(pos, name, fileName, speed, stat, expWorth, level);
                 JsonNode abilityNode = node.get("abilities");
-                monster.setAbility(getAbilityFromConfig(abilityNode.fields().next().getKey(), abilityNode.get("index").asInt()));
+                monster.setAbility(getAbilityFromConfig(abilityNode.fields().next().getKey(), abilityNode.asInt()));
                 return monster;
             }
         }
-        throw new IllegalArgumentException("Monster not found, character is invalid" + c.toString());
+        return null;
     }
     private JsonNode getNodeFromArray(Character c, JsonNode node){
         for(JsonNode n : node){
@@ -130,8 +149,7 @@ public class GameConfig {
         }
         return null;
     }
-    public Item getItemFromConfig(Point2D pos, Character c) throws IllegalArgumentException{
-        Item item = null;
+    public Item getItemFromConfig(Point2D pos, Character c) {
         JsonNode consumableNode = itemsNode.get("Consumable");
         JsonNode node = getNodeFromArray(c, consumableNode);
         if(node != null){
@@ -160,19 +178,20 @@ public class GameConfig {
             String description = node.get("description").asText();
             return new ObstacleItem(pos, name, fileName,description);
         }
-        throw new IllegalArgumentException("Item not found, character is invalid" + c.toString());
+        return null;
     }
-    public NPC getNPCFromConfig(Point2D pos, Character c) throws IllegalArgumentException{
+    public NPC getNPCFromConfig(Point2D pos, Character c) {
         JsonNode node = getNodeFromArray(c, npcsNode);
         if(node != null){
             String name = node.get("name").asText();
             String fileName = node.get("fileName").asText();
             ArrayList<String> dialogues = objectMapper.convertValue(node.get("dialogues"), ArrayList.class);
-            ObstacleItem item = new ObstacleItem(node.get("itemForHero"));
+            int index = node.get("itemForHero").asInt();
+            ObstacleItem item = getObstacleItemFromConfig(index);
             Quest quest = new Quest(node.get("questForHero"));
             return new NPC(pos, name, fileName, dialogues, quest, item);
         }
-        throw new IllegalArgumentException("NPC not found, character is invalid" + c.toString());
+        return null;
     }
     public Obstacle getObstacleFromConfig(Point2D pos, Character c) throws IllegalArgumentException{
         JsonNode node = getNodeFromArray(c, obstaclesNode);
@@ -182,17 +201,21 @@ public class GameConfig {
             ObstacleItem item = getObstacleItemFromConfig(node.get("resolveItem").asInt());
             return new Obstacle(pos, name, fileName, true, item);
         }
-        throw new IllegalArgumentException("Obstacle not found, character is invalid" + c.toString());
+        return null;
     }
     private ObstacleItem getObstacleItemFromConfig(int index) throws IllegalArgumentException{
         if(index < 0){
             throw new IllegalArgumentException("Invalid index: " + index);
         }
-        JsonNode node = obstaclesNode.get("ObstacleItem");
+        JsonNode node = itemsNode.get("ObstacleItem");
         if(index >= node.size()){
             throw new IllegalArgumentException("Invalid index: " + index);
         }
-        return new ObstacleItem(node.get(index));
+        JsonNode itemNode = node.get(index);
+        String name = itemNode.get("name").asText();
+        String fileName = itemNode.get("fileName").asText();
+        String description = itemNode.get("description").asText();
+        return new ObstacleItem(new Point2D(0,0), name, fileName, description);
     }
 }
 

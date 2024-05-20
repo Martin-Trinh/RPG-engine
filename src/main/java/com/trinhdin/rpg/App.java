@@ -11,9 +11,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
-
+@Slf4j
 public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
@@ -23,30 +24,16 @@ public class App extends Application {
             Parent root = loader.load();
             Scene scene = new Scene(root);
             String css = getClass().getResource("/fxml/mainMenu.css").toExternalForm();
-
-
-            scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                @Override
-                public void handle(KeyEvent keyEvent) {
-                    if(keyEvent.getCode() == KeyCode.UP){
-
-                    }else if(keyEvent.getCode() == KeyCode.DOWN){
-
-                    }
-                }
-            });
             scene.getStylesheets().add(css);
             stage.setScene(scene);
             stage.setTitle("RPG");
             stage.show();
-
             stage.setOnCloseRequest(event -> {
                 event.consume();
                 this.exit(stage);
             });
-
         }catch (Exception e){
-            e.printStackTrace();
+            log.error("Error starting game: " + e.getMessage());
         }
     }
     public void exit (Stage stage){

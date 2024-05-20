@@ -11,31 +11,36 @@ import com.trinhdin.rpg.model.GameEntity.NPC;
 import com.trinhdin.rpg.model.GameEntity.Obstacle;
 import com.trinhdin.rpg.model.Map;
 import javafx.geometry.Point2D;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-
+/**
+ * Class to save and load game from json file
+ */
+@Slf4j
 public class GameSaveLoad {
     ObjectMapper objectMapper = new ObjectMapper();
     private static final String PATH_PREFIX = "src/main/resources/gameData/";
-
-    public void loadGame(String fileName, Map map) {
+    public void loadGame(String fileName, Map map) throws IOException{
         try {
             JsonNode node = objectMapper.readTree(new File(PATH_PREFIX + fileName));
-            Hero hero = loadHero(node);
-            loadEntities(node.get("entities"));
-            loadMonsters(node.get("monsters"));
+            map.setHero(loadHero(node));
+            map.setEntities(loadEntities(node.get("entities")));
+            map.setMonsters(loadMonsters(node.get("monsters")));
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Error loading game from file: " + PATH_PREFIX + fileName);
+            throw new IOException("Error loading game from file: " + PATH_PREFIX + fileName);
         }
     }
 
-    public void saveGame(GameData data, String fileName) {
+    public void saveGame(GameData data, String fileName) throws IOException{
         try {
             objectMapper.writeValue(new File(PATH_PREFIX + fileName), data);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Error saving game to file: " + PATH_PREFIX + fileName);
+            throw new IOException("Error saving game to file: " + PATH_PREFIX + fileName);
         }
     }
     private Hero loadHero(JsonNode node) {
@@ -46,7 +51,7 @@ public class GameSaveLoad {
         }
         return hero;
     }
-    private void loadEntities(JsonNode node) {
+    private HashMap<Point2D, Entity> loadEntities(JsonNode node) throws IllegalArgumentException{
         HashMap<Point2D, Entity> entities = new HashMap<>();
         for (JsonNode entityNode : node) {
             JsonNode value = entityNode.get("value");
@@ -76,13 +81,15 @@ public class GameSaveLoad {
             }
         }
         System.out.println(entities.size());
+        return entities;
     }
-    private void loadMonsters(JsonNode node) {
+    private HashMap<Point2D, Monster> loadMonsters(JsonNode node) {
         HashMap<Point2D, Monster> monsters = new HashMap<>();
         for (JsonNode monsterNode : node) {
             Monster monster = new Monster(monsterNode);
             monsters.put(monster.getPos(), monster);
         }
         System.out.println(monsters.size());
+        return monsters;
     }
 }

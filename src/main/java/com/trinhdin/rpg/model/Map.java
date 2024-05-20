@@ -1,41 +1,43 @@
 package com.trinhdin.rpg.model;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trinhdin.rpg.model.GameEntity.*;
-import com.trinhdin.rpg.model.GameEntity.Ability.Ability;
-import com.trinhdin.rpg.model.GameEntity.Ability.Attack;
-import com.trinhdin.rpg.model.GameEntity.Ability.AttackType;
-import com.trinhdin.rpg.model.GameEntity.Ability.ModifyStat;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Character.Monster;
-import com.trinhdin.rpg.model.GameEntity.Character.Stat;
-import com.trinhdin.rpg.model.GameEntity.Item.Consumable;
-import com.trinhdin.rpg.model.GameEntity.Item.Equipment;
-import com.trinhdin.rpg.model.GameEntity.Item.EquipmentType;
-import com.trinhdin.rpg.model.GameEntity.Item.ObstacleItem;
+import com.trinhdin.rpg.model.GameEntity.Item.*;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.util.*;
-
+/**
+ * Map class that represents game map
+ */
+@Getter
+@Slf4j
 public class Map {
-    @Getter
+    private static final String PATH_PREFIX= "src/main/resources/gameMap/";
+    @Setter
+    // level of the map
+    private int level;
     private final HashMap<Point2D, Tile> tiles = new HashMap<>();
-    @Getter
-    private final HashMap<Point2D, Entity> entities = new HashMap<>();
-    @Getter
-    private final HashMap<Point2D, Monster> monsters = new HashMap<>();
-    @Getter
+    @Setter
+    private HashMap<Point2D, Entity> entities = new HashMap<>();
+    @Setter
+    private HashMap<Point2D, Monster> monsters = new HashMap<>();
+    @Setter
     private Hero hero;
-    private static final String prefixImgPath = "file:src/main/resources/img/";
-    public void addTile(Point2D pos, Tile entity){tiles.put(pos, entity);}
-    public void addMapEntity(Point2D pos, Entity entity){
-        entities.put(pos, entity);
-    }
     public void removeEntity(Entity entity){entities.remove(entity.getPos());}
     public void removeMonster(Monster monster){monsters.remove(monster.getPos());}
+
+    /**
+     * Check collision with entity
+     * @param newPos new position of the hero
+     * @param direction direction of the movement
+     * @return entity if hero is collided with entity, null otherwise
+     */
     public Entity returnCollisionEntity(Point2D newPos, MoveDirection direction){
         int [] corner = hero.calculateNewPosition4Corner(newPos);
         int leftX = corner[0];
@@ -68,6 +70,12 @@ public class Map {
         }
         return entity2;
     }
+    /**
+     * Return 2 tiles that hero is going to collide with
+     * @param newPos new position of hero
+     * @param direction direction of the movement
+     * @return 2 tiles that hero is going to collide with
+     */
     public Tile[] return2CollisionTile(Point2D newPos, MoveDirection direction) {
         int [] corner = hero.calculateNewPosition4Corner(newPos);
         int leftX = corner[0];
@@ -91,6 +99,11 @@ public class Map {
         }
         return tiles;
     }
+
+    /**
+     * Check if character is collided with entity using rectangle intersection
+     * @return entity if hero is collided with entity, null otherwise
+     */
     public Entity isCollideWithEntity(){
         Bounds heroBound = hero.bounds().getBoundsInParent();
        for (Entity entity : entities.values()) {
@@ -100,6 +113,10 @@ public class Map {
        }
        return null;
     }
+    /**
+     * Check if monster is nearby hero
+     * @return monster if monster is nearby, null otherwise
+     */
     public Monster isMonsterNearby(){
         // distance from monster
         int distance = 30;
@@ -110,8 +127,13 @@ public class Map {
         }
         return null;
     }
-    public boolean isCharacterCollide(MoveDirection direction) throws IllegalStateException {
-        Point2D newPos;
+    /**
+     * Check if character is collided with wall or other entity
+     * @param direction direction of the movement
+     * @return true if character is collided with wall or other entity
+     */
+    public boolean isCharacterCollide(MoveDirection direction) {
+        Point2D newPos = hero.getPos();
         switch (direction) {
             case UP:
                 newPos = hero.getPos().add(0, -hero.getSpeed());
@@ -126,7 +148,8 @@ public class Map {
                 newPos = hero.getPos().add(hero.getSpeed(), 0);
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + direction);
+                log.error("Unexpected direction: " + direction);
+                return true;
         }
         // check tile collision
         Tile[] tiles = return2CollisionTile(newPos, direction);
@@ -137,17 +160,24 @@ public class Map {
         Entity entity = returnCollisionEntity(newPos , direction);
         return entity != null;
       }
-    public void loadTileMap(String mapFileName) throws IOException {
-        int maxLength = 0;
-        int lineCnt;
-        ObjectMapper objectMapper = new ObjectMapper();
 
-        StringBuilder json = new StringBuilder("[\n");
+    /**
+     * Load map from file of character
+     * @param level level of the map
+     * @param loadEntity if true, load entity to map, otherwise just load character to tile
+     * @throws IndexOutOfBoundsException level is not found in configuration
+     * @throws IOException error reading map file
+     */
+    public void loadMap(int level, boolean loadEntity) throws IndexOutOfBoundsException, IOException{
+        log.info("Loading map level: " + level);
+        String mapPath = GameConfig.getInstance().getMapPath(level);
         try {
-            FileInputStream inputStream = new FileInputStream(mapFileName);
+            int maxLength = 0;
+            int lineCnt;
+            FileInputStream inputStream = new FileInputStream(PATH_PREFIX + mapPath);
             Scanner scanner = new Scanner(inputStream);
+            // read map line per line
             for (lineCnt = 0; scanner.hasNextLine(); lineCnt++) {
-                ArrayList<String> tmp = new ArrayList<>();
                 String line = scanner.nextLine();
                 if (line.length() > maxLength) {
                     maxLength = line.length();
@@ -155,78 +185,86 @@ public class Map {
                 for (int i = 0; i < line.length(); i++) {
                     Point2D pos = new Point2D(i, lineCnt);
                     char c = line.charAt(i);
-                    loadCharToEntity(pos, c);
-                    tmp.add(String.valueOf(c));
+                    if(loadEntity && !loadCharToTile(pos, c)){
+                        loadCharToEntity(pos, c);
+                    }
                 }
-                if(scanner.hasNextLine())
-                    json.append(objectMapper.writeValueAsString(tmp)).append(",\n");
-                else
-                    json.append(objectMapper.writeValueAsString(tmp)).append("\n");
             }
-            json.append("]");
-            try (FileWriter writer = new FileWriter("src/main/resources/map.json")) {
-                writer.write(json.toString());
-                System.out.println("String written to file successfully.");
-            } catch (IOException e) {
-                System.err.println("Error writing string to file: " + e.getMessage());
-            }
-
             scanner.close();
             inputStream.close();
-        } catch (FileNotFoundException e) {
-            throw new IOException("File not found");
+        }catch (FileNotFoundException e) {
+            throw new FileNotFoundException("Map file not found: " + PATH_PREFIX + mapPath);
+        }catch (IOException e){
+            throw new IOException("Error reading map file: " + PATH_PREFIX + mapPath);
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("Invalid character in map file: " + e.getMessage());
         }
     }
-    public void loadCharToEntity(Point2D pos, char c){
-        Stat stat = new Stat(10, 10, 10, 10, 10, 10, 10);
-        ObstacleItem key = new ObstacleItem(pos, "Key", prefixImgPath + "Items/key.png", "Key for gate");
-        if(c == '#'){
-                Tile wall = new Tile(pos, "wall", prefixImgPath + "wall.png", true);
+    /**
+     * Configure hero from game init configuration
+     * @param name hero name
+     * @throws IllegalArgumentException if hero name is not found in configuration
+     */
+    public void configureHero(String name) throws IllegalArgumentException{
+        log.info("Configuring hero: " + name);
+        hero = GameConfig.getInstance().getHeroFromConfig(new Point2D(0,0), name);
+    }
+    /**
+     * Load character to tile and add to map
+     * @param pos position of the character
+     * @param c character
+     * @return true if character is loaded to tile, false if character is not a tile
+     */
+    private boolean loadCharToTile(Point2D pos,char c){
+        Tile floor = new Tile(pos, "floor", "floor_5.png", false);
+        switch (c){
+            case '#': // wall
+                Tile wall = new Tile(pos, "wall", "wall.png", true);
                 tiles.put(pos, wall);
-        }else if(c == ' '){
-
-        }else{
-            Tile floor = new Tile(pos, "floor", prefixImgPath + "floor_5.png", false);
-            Monster monster = new Monster(pos, "Goblin", prefixImgPath + "Monster/goblin_run.png", 1, stat, 10, 1);
-            tiles.put(pos, floor);
-            Ability pAbility = new Attack("Attack", 10, 1, 1, AttackType.MAGICAL );
-            Ability mAbility = new Attack("Attack", 10, 1, 1, AttackType.PHYSICAL );
-            Stat abilityStat = new Stat(10, 10, 0, 1, 1, 1, 1);
-            Ability buffAbility = new ModifyStat("Buff", 10, 1, abilityStat, 5 );
-            switch (c){
-                case '@':
-                    hero = new Hero(pos.multiply(Entity.getWidth()), "Knight", prefixImgPath + "Heroes/knight_run.png", 4, stat);
-                    hero.addAbility(pAbility);
-                    hero.addAbility(buffAbility);
-                    break;
-                case 'X':
-                    monster.setAbility(mAbility);
-                    monsters.put(pos, monster);
-                    break;
-                case 'p':
-                    Consumable potion = new Consumable(pos, "Potion", prefixImgPath + "Items/flasks_red.png", "Health Potion", 10, 10);
-                    entities.put(pos, potion);
-                    break;
-                case 'e':
-                    Equipment sword = new Equipment(pos, "Sword", prefixImgPath + "Items/weapons/weapon01crystalsword.png", "Sword", stat, EquipmentType.WEAPON);
-                    entities.put(pos, sword);
-                    break;
-                case '-':
-                    Obstacle gate = new Obstacle(pos, "Gate", prefixImgPath + "Obstacle/door_closed.png", true,key);
-                    entities.put(pos, gate);
-                    break;
-                case '?':
-                    ArrayList<String> dialogues = new ArrayList<>(Arrays.asList("Hello", "I have a quest for you"));
-                    Quest quest = new Quest("Quest", "Find the key", monster.getName());
-                    NPC monk = new NPC(pos, "Monk", prefixImgPath + "NPC/monk.png", dialogues, quest, key);
-                    entities.put(pos, monk);
-                    break;
-                case 'k':
-                    entities.put(pos, key);
-                    break;
-                default:
-            }
+                return true;
+            case ' ': // empty space
+                return true;
+            case '.': // floor
+                tiles.put(pos, floor);
+                return true;
+            default: // other character
+                tiles.put(pos, floor);
+                return false;
         }
+    }
+
+    /**
+     * Load character to entity from game init configuration and add to map
+     * @param pos position of the character
+     * @param c character
+     */
+    private void loadCharToEntity(Point2D pos, char c){
+        GameConfig config = GameConfig.getInstance();
+        if(c == '@'){
+            hero.setPos(pos.multiply(Entity.getWidth()));
+            return;
+        }
+        Monster monster1 = config.getMonsterFromConfig(pos, c);
+        if(monster1 != null){
+            monsters.put(pos, monster1);
+            return;
+        }
+        Item item = config.getItemFromConfig(pos, c);
+        if(item != null){
+            entities.put(pos, item);
+            return;
+        }
+        Obstacle obstacle = config.getObstacleFromConfig(pos, c);
+        if(obstacle != null){
+            entities.put(pos, obstacle);
+            return;
+        }
+        NPC npc = config.getNPCFromConfig(pos, c);
+        if(npc != null){
+            entities.put(pos, npc);
+            return;
+        }
+        log.warn("Invalid character in map file: " + c);
     }
 
 }

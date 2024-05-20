@@ -11,7 +11,9 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
+/**
+ * Controller for menu handle switching between scenes
+ */
 public class menuController {
     protected Stage stage;
     protected Scene scene;

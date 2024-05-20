@@ -6,7 +6,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
-
+/**
+ * QuestView class to display all quests from hero
+ */
 public class QuestView {
     private ArrayList<Quest> quests;
     public QuestView(ArrayList<Quest> quests) {

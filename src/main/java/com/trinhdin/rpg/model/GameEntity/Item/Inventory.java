@@ -5,14 +5,19 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.trinhdin.rpg.controller.LogGameMsg;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Item.Item;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+/**
+ * Inventory class to store items
+ */
 public class Inventory implements LogGameMsg {
     @JsonIgnore
+    @Getter
     private final int maxSlot = 16;
+    @Getter
     private ArrayList<Item> items = new ArrayList<>();
     @JsonIgnore
     private String gameMsg = "";
@@ -53,7 +58,7 @@ public class Inventory implements LogGameMsg {
      */
     public boolean removeItem(int index){
         if(index < items.size() && index >= 0){
-            gameMsg = items.get(index) + " removed from inventory";
+            gameMsg = items.get(index).getName() + " removed from inventory";
             items.remove(index);
             return true;
         }
@@ -67,11 +72,17 @@ public class Inventory implements LogGameMsg {
     public boolean removeItem(Item item){
         return items.remove(item);
     }
+    /**
+     * Use item from inventory by index on target if item is used successfully remove it from inventory
+     * @param index
+     * @param target
+     */
     public void useItem(int index, Hero target){
         if(index >= 0 && index < items.size()){
-            gameMsg = items.get(index).getName() + " used";
-            if(items.get(index).use(target))
+            if(items.get(index).use(target)){
+                gameMsg = items.get(index).getName() + " used";
                 removeItem(index);
+            }
         }else{
             gameMsg = "No item to use";
         }
@@ -89,12 +100,7 @@ public class Inventory implements LogGameMsg {
         }
         return null;
     }
-    public int getMaxSlot() {
-        return maxSlot;
-    }
-    public ArrayList<Item> getItems() {
-        return items;
-    }
+
     @Override
     public String getGameMsg() {
         return gameMsg;

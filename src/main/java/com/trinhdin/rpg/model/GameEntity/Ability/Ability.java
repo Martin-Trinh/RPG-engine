@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.trinhdin.rpg.controller.LogGameMsg;
 import com.trinhdin.rpg.model.GameEntity.Character.Character;
-
+/**
+ * Abstract ability class to represent abilities of character
+ */
 public abstract class Ability implements LogGameMsg {
      protected String name;
      protected int cost;

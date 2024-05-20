@@ -2,7 +2,7 @@
   {
     "char": "G",
     "name": "Goblin",
-    "fileName": "file:src/main/resources/img/Monsters/goblin_run.png",
+    "fileName": "Monster/goblin.png",
     "speed": 2.0,
     "stat": {
       "maxHealth": 50,
@@ -13,17 +13,16 @@
       "armor": 5,
       "magicArmor": 0
     },
+    "expWorth": 10,
+    "level": 1,
     "abilities": {
       "Attack": 1
-    },
-    "itemDrop": {
-      "Obstacle": 1
     }
   },
   {
     "char": "O",
     "name": "Orc",
-    "fileName": "file:src/main/resources/img/Monsters/orc_run.png",
+    "fileName": "Monster/orc.png",
     "speed": 2.0,
     "stat": {
       "maxHealth": 100,
@@ -34,17 +33,16 @@
       "armor": 10,
       "magicArmor": 0
     },
+    "expWorth": 20,
+    "level": 2,
     "abilities": {
       "Attack": 0
-    },
-    "itemDrop": {
-      "Consumable": 0
     }
   },
   {
     "char": "T",
-    "name": "Troll",
-    "fileName": "file:src/main/resources/img/Monsters/troll_run.png",
+    "name": "Skeleton",
+    "fileName": "Monster/skeleton.png",
     "speed": 2.0,
     "stat": {
       "maxHealth": 150,
@@ -55,11 +53,30 @@
       "armor": 15,
       "magicArmor": 0
     },
+    "expWorth": 30,
+    "level": 3,
     "abilities": {
       "Attack": 2
+    }
+  },
+  {
+    "char": "S",
+    "name": "Slime",
+    "fileName": "Monster/slime.png",
+    "speed": 2.0,
+    "stat": {
+      "maxHealth": 200,
+      "maxMana": 50,
+      "strength": 10,
+      "intelligence": 0,
+      "agility": 2,
+      "armor": 30,
+      "magicArmor": 0
     },
-    "itemDrop": {
-      "Equipment": 0
+    "expWorth": 30,
+    "level": 3,
+    "abilities": {
+      "Attack": 2
     }
   }
 ]
