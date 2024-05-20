@@ -1,5 +1,6 @@
 [
   {
+    "char": "G",
     "name": "Goblin",
     "fileName": "file:src/main/resources/img/Monsters/goblin_run.png",
     "speed": 2.0,
@@ -20,6 +21,7 @@
     }
   },
   {
+    "char": "O",
     "name": "Orc",
     "fileName": "file:src/main/resources/img/Monsters/orc_run.png",
     "speed": 2.0,
@@ -40,6 +42,7 @@
     }
   },
   {
+    "char": "T",
     "name": "Troll",
     "fileName": "file:src/main/resources/img/Monsters/troll_run.png",
     "speed": 2.0,

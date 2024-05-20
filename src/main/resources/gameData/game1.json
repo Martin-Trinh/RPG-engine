@@ -1,1 +1,792 @@
-{"entities":[{"key":"Equipment","value":{"pos":{"x":35.0,"y":6.0},"name":"Sword","fileName":"file:src/main/resources/img/Items/weapons/weapon01crystalsword.png","description":"Sword","statIncrease":{"maxHealth":10,"maxMana":10,"strength":10,"intelligence":10,"agility":10,"armor":10,"magicArmor":10},"type":"WEAPON"}},{"key":"ObstacleItem","value":{"pos":{"x":4.0,"y":5.0},"name":"Key","fileName":"file:src/main/resources/img/Items/key.png","description":"Key for gate"}},{"key":"Obstacle","value":{"pos":{"x":30.0,"y":2.0},"name":"Gate","fileName":"file:src/main/resources/img/Obstacle/door_closed.png","collision":true,"resolveItem":{"pos":{"x":30.0,"y":2.0},"name":"Key","fileName":"file:src/main/resources/img/Items/key.png","description":"Key for gate"}}},{"key":"Equipment","value":{"pos":{"x":35.0,"y":5.0},"name":"Sword","fileName":"file:src/main/resources/img/Items/weapons/weapon01crystalsword.png","description":"Sword","statIncrease":{"maxHealth":10,"maxMana":10,"strength":10,"intelligence":10,"agility":10,"armor":10,"magicArmor":10},"type":"WEAPON"}},{"key":"NPC","value":{"pos":{"x":21.0,"y":9.0},"name":"Monk","fileName":"file:src/main/resources/img/NPC/monk.png","dialogues":["Hello","I have a quest for you"],"dialogueIndex":0,"questForHero":{"name":"Quest","description":"Find the key","monsterToKill":"Goblin","completed":false},"itemForHero":{"pos":{"x":21.0,"y":9.0},"name":"Key","fileName":"file:src/main/resources/img/Items/key.png","description":"Key for gate"},"questGiven":false}},{"key":"Consumable","value":{"pos":{"x":6.0,"y":10.0},"name":"Potion","fileName":"file:src/main/resources/img/Items/flasks_red.png","description":"Health Potion","health":10,"mana":10}},{"key":"Equipment","value":{"pos":{"x":35.0,"y":7.0},"name":"Sword","fileName":"file:src/main/resources/img/Items/weapons/weapon01crystalsword.png","description":"Sword","statIncrease":{"maxHealth":10,"maxMana":10,"strength":10,"intelligence":10,"agility":10,"armor":10,"magicArmor":10},"type":"WEAPON"}},{"key":"Consumable","value":{"pos":{"x":6.0,"y":9.0},"name":"Potion","fileName":"file:src/main/resources/img/Items/flasks_red.png","description":"Health Potion","health":10,"mana":10}},{"key":"Equipment","value":{"pos":{"x":4.0,"y":6.0},"name":"Sword","fileName":"file:src/main/resources/img/Items/weapons/weapon01crystalsword.png","description":"Sword","statIncrease":{"maxHealth":10,"maxMana":10,"strength":10,"intelligence":10,"agility":10,"armor":10,"magicArmor":10},"type":"WEAPON"}},{"key":"Obstacle","value":{"pos":{"x":5.0,"y":7.0},"name":"Gate","fileName":"file:src/main/resources/img/Obstacle/door_closed.png","collision":true,"resolveItem":{"pos":{"x":5.0,"y":7.0},"name":"Key","fileName":"file:src/main/resources/img/Items/key.png","description":"Key for gate"}}},{"key":"Equipment","value":{"pos":{"x":8.0,"y":1.0},"name":"Sword","fileName":"file:src/main/resources/img/Items/weapons/weapon01crystalsword.png","description":"Sword","statIncrease":{"maxHealth":10,"maxMana":10,"strength":10,"intelligence":10,"agility":10,"armor":10,"magicArmor":10},"type":"WEAPON"}},{"key":"ObstacleItem","value":{"pos":{"x":1.0,"y":2.0},"name":"Key","fileName":"file:src/main/resources/img/Items/key.png","description":"Key for gate"}},{"key":"Equipment","value":{"pos":{"x":35.0,"y":1.0},"name":"Sword","fileName":"file:src/main/resources/img/Items/weapons/weapon01crystalsword.png","description":"Sword","statIncrease":{"maxHealth":10,"maxMana":10,"strength":10,"intelligence":10,"agility":10,"armor":10,"magicArmor":10},"type":"WEAPON"}},{"key":"NPC","value":{"pos":{"x":9.0,"y":2.0},"name":"Monk","fileName":"file:src/main/resources/img/NPC/monk.png","dialogues":["Hello","I have a quest for you"],"dialogueIndex":0,"questForHero":{"name":"Quest","description":"Find the key","monsterToKill":"Goblin","completed":false},"itemForHero":{"pos":{"x":9.0,"y":2.0},"name":"Key","fileName":"file:src/main/resources/img/Items/key.png","description":"Key for gate"},"questGiven":false}},{"key":"NPC","value":{"pos":{"x":37.0,"y":4.0},"name":"Monk","fileName":"file:src/main/resources/img/NPC/monk.png","dialogues":["Hello","I have a quest for you"],"dialogueIndex":0,"questForHero":{"name":"Quest","description":"Find the key","monsterToKill":"Goblin","completed":false},"itemForHero":{"pos":{"x":37.0,"y":4.0},"name":"Key","fileName":"file:src/main/resources/img/Items/key.png","description":"Key for gate"},"questGiven":false}},{"key":"Equipment","value":{"pos":{"x":39.0,"y":1.0},"name":"Sword","fileName":"file:src/main/resources/img/Items/weapons/weapon01crystalsword.png","description":"Sword","statIncrease":{"maxHealth":10,"maxMana":10,"strength":10,"intelligence":10,"agility":10,"armor":10,"magicArmor":10},"type":"WEAPON"}},{"key":"NPC","value":{"pos":{"x":37.0,"y":6.0},"name":"Monk","fileName":"file:src/main/resources/img/NPC/monk.png","dialogues":["Hello","I have a quest for you"],"dialogueIndex":0,"questForHero":{"name":"Quest","description":"Find the key","monsterToKill":"Goblin","completed":false},"itemForHero":{"pos":{"x":37.0,"y":6.0},"name":"Key","fileName":"file:src/main/resources/img/Items/key.png","description":"Key for gate"},"questGiven":false}},{"key":"NPC","value":{"pos":{"x":37.0,"y":5.0},"name":"Monk","fileName":"file:src/main/resources/img/NPC/monk.png","dialogues":["Hello","I have a quest for you"],"dialogueIndex":0,"questForHero":{"name":"Quest","description":"Find the key","monsterToKill":"Goblin","completed":false},"itemForHero":{"pos":{"x":37.0,"y":5.0},"name":"Key","fileName":"file:src/main/resources/img/Items/key.png","description":"Key for gate"},"questGiven":false}},{"key":"Obstacle","value":{"pos":{"x":25.0,"y":3.0},"name":"Gate","fileName":"file:src/main/resources/img/Obstacle/door_closed.png","collision":true,"resolveItem":{"pos":{"x":25.0,"y":3.0},"name":"Key","fileName":"file:src/main/resources/img/Items/key.png","description":"Key for gate"}}},{"key":"NPC","value":{"pos":{"x":22.0,"y":10.0},"name":"Monk","fileName":"file:src/main/resources/img/NPC/monk.png","dialogues":["Hello","I have a quest for you"],"dialogueIndex":0,"questForHero":{"name":"Quest","description":"Find the key","monsterToKill":"Goblin","completed":false},"itemForHero":{"pos":{"x":22.0,"y":10.0},"name":"Key","fileName":"file:src/main/resources/img/Items/key.png","description":"Key for gate"},"questGiven":false}},{"key":"Consumable","value":{"pos":{"x":7.0,"y":3.0},"name":"Potion","fileName":"file:src/main/resources/img/Items/flasks_red.png","description":"Health Potion","health":10,"mana":10}},{"key":"Equipment","value":{"pos":{"x":23.0,"y":2.0},"name":"Sword","fileName":"file:src/main/resources/img/Items/weapons/weapon01crystalsword.png","description":"Sword","statIncrease":{"maxHealth":10,"maxMana":10,"strength":10,"intelligence":10,"agility":10,"armor":10,"magicArmor":10},"type":"WEAPON"}},{"key":"NPC","value":{"pos":{"x":37.0,"y":7.0},"name":"Monk","fileName":"file:src/main/resources/img/NPC/monk.png","dialogues":["Hello","I have a quest for you"],"dialogueIndex":0,"questForHero":{"name":"Quest","description":"Find the key","monsterToKill":"Goblin","completed":false},"itemForHero":{"pos":{"x":37.0,"y":7.0},"name":"Key","fileName":"file:src/main/resources/img/Items/key.png","description":"Key for gate"},"questGiven":false}},{"key":"NPC","value":{"pos":{"x":22.0,"y":13.0},"name":"Monk","fileName":"file:src/main/resources/img/NPC/monk.png","dialogues":["Hello","I have a quest for you"],"dialogueIndex":0,"questForHero":{"name":"Quest","description":"Find the key","monsterToKill":"Goblin","completed":false},"itemForHero":{"pos":{"x":22.0,"y":13.0},"name":"Key","fileName":"file:src/main/resources/img/Items/key.png","description":"Key for gate"},"questGiven":false}},{"key":"NPC","value":{"pos":{"x":22.0,"y":12.0},"name":"Monk","fileName":"file:src/main/resources/img/NPC/monk.png","dialogues":["Hello","I have a quest for you"],"dialogueIndex":0,"questForHero":{"name":"Quest","description":"Find the key","monsterToKill":"Goblin","completed":false},"itemForHero":{"pos":{"x":22.0,"y":12.0},"name":"Key","fileName":"file:src/main/resources/img/Items/key.png","description":"Key for gate"},"questGiven":false}},{"key":"Consumable","value":{"pos":{"x":6.0,"y":3.0},"name":"Potion","fileName":"file:src/main/resources/img/Items/flasks_red.png","description":"Health Potion","health":10,"mana":10}},{"key":"NPC","value":{"pos":{"x":22.0,"y":11.0},"name":"Monk","fileName":"file:src/main/resources/img/NPC/monk.png","dialogues":["Hello","I have a quest for you"],"dialogueIndex":0,"questForHero":{"name":"Quest","description":"Find the key","monsterToKill":"Goblin","completed":false},"itemForHero":{"pos":{"x":22.0,"y":11.0},"name":"Key","fileName":"file:src/main/resources/img/Items/key.png","description":"Key for gate"},"questGiven":false}},{"key":"Equipment","value":{"pos":{"x":35.0,"y":4.0},"name":"Sword","fileName":"file:src/main/resources/img/Items/weapons/weapon01crystalsword.png","description":"Sword","statIncrease":{"maxHealth":10,"maxMana":10,"strength":10,"intelligence":10,"agility":10,"armor":10,"magicArmor":10},"type":"WEAPON"}},{"key":"Consumable","value":{"pos":{"x":7.0,"y":6.0},"name":"Potion","fileName":"file:src/main/resources/img/Items/flasks_red.png","description":"Health Potion","health":10,"mana":10}}],"monsters":[{"pos":{"x":8.0,"y":4.0},"name":"Goblin","fileName":"file:src/main/resources/img/Monster/goblin_run.png","speed":1.0,"direction":null,"stat":{"maxHealth":10,"maxMana":10,"strength":10,"intelligence":10,"agility":10,"armor":10,"magicArmor":10},"currentHealth":10,"currentMana":10,"expWorth":10,"level":1,"dead":false},{"pos":{"x":4.0,"y":8.0},"name":"Goblin","fileName":"file:src/main/resources/img/Monster/goblin_run.png","speed":1.0,"direction":null,"stat":{"maxHealth":10,"maxMana":10,"strength":10,"intelligence":10,"agility":10,"armor":10,"magicArmor":10},"currentHealth":10,"currentMana":10,"expWorth":10,"level":1,"dead":false},{"pos":{"x":8.0,"y":8.0},"name":"Goblin","fileName":"file:src/main/resources/img/Monster/goblin_run.png","speed":1.0,"direction":null,"stat":{"maxHealth":10,"maxMana":10,"strength":10,"intelligence":10,"agility":10,"armor":10,"magicArmor":10},"currentHealth":10,"currentMana":10,"expWorth":10,"level":1,"dead":false}],"hero":{"pos":{"x":32.0,"y":32.0},"name":"Knight","fileName":"file:src/main/resources/img/Heroes/knight_run.png","speed":4.0,"direction":null,"stat":{"maxHealth":10,"maxMana":10,"strength":10,"intelligence":10,"agility":10,"armor":10,"magicArmor":10},"currentHealth":10,"currentMana":10,"quests":[],"equipments":[null,null,null,null,null,null],"exp":0,"level":1,"nextLevelExp":100,"screenPos":{"x":284.0,"y":184.0},"dead":false},"inventory":[]}
+{
+  "entities": [
+    {
+      "key": "Equipment",
+      "value": {
+        "pos": {
+          "x": 35.0,
+          "y": 6.0
+        },
+        "name": "Sword",
+        "fileName": "file:src/main/resources/img/Items/weapons/weapon01crystalsword.png",
+        "description": "Sword",
+        "statIncrease": {
+          "maxHealth": 10,
+          "maxMana": 10,
+          "strength": 10,
+          "intelligence": 10,
+          "agility": 10,
+          "armor": 10,
+          "magicArmor": 10
+        },
+        "type": "WEAPON"
+      }
+    },
+    {
+      "key": "ObstacleItem",
+      "value": {
+        "pos": {
+          "x": 4.0,
+          "y": 5.0
+        },
+        "name": "Key",
+        "fileName": "file:src/main/resources/img/Items/key.png",
+        "description": "Key for gate"
+      }
+    },
+    {
+      "key": "Obstacle",
+      "value": {
+        "pos": {
+          "x": 30.0,
+          "y": 2.0
+        },
+        "name": "Gate",
+        "fileName": "file:src/main/resources/img/Obstacle/door_closed.png",
+        "collision": true,
+        "resolveItem": {
+          "pos": {
+            "x": 30.0,
+            "y": 2.0
+          },
+          "name": "Key",
+          "fileName": "file:src/main/resources/img/Items/key.png",
+          "description": "Key for gate"
+        }
+      }
+    },
+    {
+      "key": "Equipment",
+      "value": {
+        "pos": {
+          "x": 35.0,
+          "y": 5.0
+        },
+        "name": "Sword",
+        "fileName": "file:src/main/resources/img/Items/weapons/weapon01crystalsword.png",
+        "description": "Sword",
+        "statIncrease": {
+          "maxHealth": 10,
+          "maxMana": 10,
+          "strength": 10,
+          "intelligence": 10,
+          "agility": 10,
+          "armor": 10,
+          "magicArmor": 10
+        },
+        "type": "WEAPON"
+      }
+    },
+    {
+      "key": "NPC",
+      "value": {
+        "pos": {
+          "x": 21.0,
+          "y": 9.0
+        },
+        "name": "Monk",
+        "fileName": "file:src/main/resources/img/NPC/monk.png",
+        "dialogues": [
+          "Hello",
+          "I have a quest for you"
+        ],
+        "dialogueIndex": 0,
+        "questForHero": {
+          "name": "Quest",
+          "description": "Find the key",
+          "monsterToKill": "Goblin",
+          "completed": false
+        },
+        "itemForHero": {
+          "pos": {
+            "x": 21.0,
+            "y": 9.0
+          },
+          "name": "Key",
+          "fileName": "file:src/main/resources/img/Items/key.png",
+          "description": "Key for gate"
+        },
+        "questGiven": false
+      }
+    },
+    {
+      "key": "Consumable",
+      "value": {
+        "pos": {
+          "x": 6.0,
+          "y": 10.0
+        },
+        "name": "Potion",
+        "fileName": "file:src/main/resources/img/Items/flasks_red.png",
+        "description": "Health Potion",
+        "health": 10,
+        "mana": 10
+      }
+    },
+    {
+      "key": "Equipment",
+      "value": {
+        "pos": {
+          "x": 35.0,
+          "y": 7.0
+        },
+        "name": "Sword",
+        "fileName": "file:src/main/resources/img/Items/weapons/weapon01crystalsword.png",
+        "description": "Sword",
+        "statIncrease": {
+          "maxHealth": 10,
+          "maxMana": 10,
+          "strength": 10,
+          "intelligence": 10,
+          "agility": 10,
+          "armor": 10,
+          "magicArmor": 10
+        },
+        "type": "WEAPON"
+      }
+    },
+    {
+      "key": "Consumable",
+      "value": {
+        "pos": {
+          "x": 6.0,
+          "y": 9.0
+        },
+        "name": "Potion",
+        "fileName": "file:src/main/resources/img/Items/flasks_red.png",
+        "description": "Health Potion",
+        "health": 10,
+        "mana": 10
+      }
+    },
+    {
+      "key": "Equipment",
+      "value": {
+        "pos": {
+          "x": 4.0,
+          "y": 6.0
+        },
+        "name": "Sword",
+        "fileName": "file:src/main/resources/img/Items/weapons/weapon01crystalsword.png",
+        "description": "Sword",
+        "statIncrease": {
+          "maxHealth": 10,
+          "maxMana": 10,
+          "strength": 10,
+          "intelligence": 10,
+          "agility": 10,
+          "armor": 10,
+          "magicArmor": 10
+        },
+        "type": "WEAPON"
+      }
+    },
+    {
+      "key": "Obstacle",
+      "value": {
+        "pos": {
+          "x": 5.0,
+          "y": 7.0
+        },
+        "name": "Gate",
+        "fileName": "file:src/main/resources/img/Obstacle/door_closed.png",
+        "collision": true,
+        "resolveItem": {
+          "pos": {
+            "x": 5.0,
+            "y": 7.0
+          },
+          "name": "Key",
+          "fileName": "file:src/main/resources/img/Items/key.png",
+          "description": "Key for gate"
+        }
+      }
+    },
+    {
+      "key": "Equipment",
+      "value": {
+        "pos": {
+          "x": 8.0,
+          "y": 1.0
+        },
+        "name": "Sword",
+        "fileName": "file:src/main/resources/img/Items/weapons/weapon01crystalsword.png",
+        "description": "Sword",
+        "statIncrease": {
+          "maxHealth": 10,
+          "maxMana": 10,
+          "strength": 10,
+          "intelligence": 10,
+          "agility": 10,
+          "armor": 10,
+          "magicArmor": 10
+        },
+        "type": "WEAPON"
+      }
+    },
+    {
+      "key": "ObstacleItem",
+      "value": {
+        "pos": {
+          "x": 1.0,
+          "y": 2.0
+        },
+        "name": "Key",
+        "fileName": "file:src/main/resources/img/Items/key.png",
+        "description": "Key for gate"
+      }
+    },
+    {
+      "key": "Equipment",
+      "value": {
+        "pos": {
+          "x": 35.0,
+          "y": 1.0
+        },
+        "name": "Sword",
+        "fileName": "file:src/main/resources/img/Items/weapons/weapon01crystalsword.png",
+        "description": "Sword",
+        "statIncrease": {
+          "maxHealth": 10,
+          "maxMana": 10,
+          "strength": 10,
+          "intelligence": 10,
+          "agility": 10,
+          "armor": 10,
+          "magicArmor": 10
+        },
+        "type": "WEAPON"
+      }
+    },
+    {
+      "key": "NPC",
+      "value": {
+        "pos": {
+          "x": 9.0,
+          "y": 2.0
+        },
+        "name": "Monk",
+        "fileName": "file:src/main/resources/img/NPC/monk.png",
+        "dialogues": [
+          "Hello",
+          "I have a quest for you"
+        ],
+        "dialogueIndex": 0,
+        "questForHero": {
+          "name": "Quest",
+          "description": "Find the key",
+          "monsterToKill": "Goblin",
+          "completed": false
+        },
+        "itemForHero": {
+          "pos": {
+            "x": 9.0,
+            "y": 2.0
+          },
+          "name": "Key",
+          "fileName": "file:src/main/resources/img/Items/key.png",
+          "description": "Key for gate"
+        },
+        "questGiven": false
+      }
+    },
+    {
+      "key": "NPC",
+      "value": {
+        "pos": {
+          "x": 37.0,
+          "y": 4.0
+        },
+        "name": "Monk",
+        "fileName": "file:src/main/resources/img/NPC/monk.png",
+        "dialogues": [
+          "Hello",
+          "I have a quest for you"
+        ],
+        "dialogueIndex": 0,
+        "questForHero": {
+          "name": "Quest",
+          "description": "Find the key",
+          "monsterToKill": "Goblin",
+          "completed": false
+        },
+        "itemForHero": {
+          "pos": {
+            "x": 37.0,
+            "y": 4.0
+          },
+          "name": "Key",
+          "fileName": "file:src/main/resources/img/Items/key.png",
+          "description": "Key for gate"
+        },
+        "questGiven": false
+      }
+    },
+    {
+      "key": "Equipment",
+      "value": {
+        "pos": {
+          "x": 39.0,
+          "y": 1.0
+        },
+        "name": "Sword",
+        "fileName": "file:src/main/resources/img/Items/weapons/weapon01crystalsword.png",
+        "description": "Sword",
+        "statIncrease": {
+          "maxHealth": 10,
+          "maxMana": 10,
+          "strength": 10,
+          "intelligence": 10,
+          "agility": 10,
+          "armor": 10,
+          "magicArmor": 10
+        },
+        "type": "WEAPON"
+      }
+    },
+    {
+      "key": "NPC",
+      "value": {
+        "pos": {
+          "x": 37.0,
+          "y": 6.0
+        },
+        "name": "Monk",
+        "fileName": "file:src/main/resources/img/NPC/monk.png",
+        "dialogues": [
+          "Hello",
+          "I have a quest for you"
+        ],
+        "dialogueIndex": 0,
+        "questForHero": {
+          "name": "Quest",
+          "description": "Find the key",
+          "monsterToKill": "Goblin",
+          "completed": false
+        },
+        "itemForHero": {
+          "pos": {
+            "x": 37.0,
+            "y": 6.0
+          },
+          "name": "Key",
+          "fileName": "file:src/main/resources/img/Items/key.png",
+          "description": "Key for gate"
+        },
+        "questGiven": false
+      }
+    },
+    {
+      "key": "NPC",
+      "value": {
+        "pos": {
+          "x": 37.0,
+          "y": 5.0
+        },
+        "name": "Monk",
+        "fileName": "file:src/main/resources/img/NPC/monk.png",
+        "dialogues": [
+          "Hello",
+          "I have a quest for you"
+        ],
+        "dialogueIndex": 0,
+        "questForHero": {
+          "name": "Quest",
+          "description": "Find the key",
+          "monsterToKill": "Goblin",
+          "completed": false
+        },
+        "itemForHero": {
+          "pos": {
+            "x": 37.0,
+            "y": 5.0
+          },
+          "name": "Key",
+          "fileName": "file:src/main/resources/img/Items/key.png",
+          "description": "Key for gate"
+        },
+        "questGiven": false
+      }
+    },
+    {
+      "key": "Obstacle",
+      "value": {
+        "pos": {
+          "x": 25.0,
+          "y": 3.0
+        },
+        "name": "Gate",
+        "fileName": "file:src/main/resources/img/Obstacle/door_closed.png",
+        "collision": true,
+        "resolveItem": {
+          "pos": {
+            "x": 25.0,
+            "y": 3.0
+          },
+          "name": "Key",
+          "fileName": "file:src/main/resources/img/Items/key.png",
+          "description": "Key for gate"
+        }
+      }
+    },
+    {
+      "key": "NPC",
+      "value": {
+        "pos": {
+          "x": 22.0,
+          "y": 10.0
+        },
+        "name": "Monk",
+        "fileName": "file:src/main/resources/img/NPC/monk.png",
+        "dialogues": [
+          "Hello",
+          "I have a quest for you"
+        ],
+        "dialogueIndex": 0,
+        "questForHero": {
+          "name": "Quest",
+          "description": "Find the key",
+          "monsterToKill": "Goblin",
+          "completed": false
+        },
+        "itemForHero": {
+          "pos": {
+            "x": 22.0,
+            "y": 10.0
+          },
+          "name": "Key",
+          "fileName": "file:src/main/resources/img/Items/key.png",
+          "description": "Key for gate"
+        },
+        "questGiven": false
+      }
+    },
+    {
+      "key": "Consumable",
+      "value": {
+        "pos": {
+          "x": 7.0,
+          "y": 3.0
+        },
+        "name": "Potion",
+        "fileName": "file:src/main/resources/img/Items/flasks_red.png",
+        "description": "Health Potion",
+        "health": 10,
+        "mana": 10
+      }
+    },
+    {
+      "key": "Equipment",
+      "value": {
+        "pos": {
+          "x": 23.0,
+          "y": 2.0
+        },
+        "name": "Sword",
+        "fileName": "file:src/main/resources/img/Items/weapons/weapon01crystalsword.png",
+        "description": "Sword",
+        "statIncrease": {
+          "maxHealth": 10,
+          "maxMana": 10,
+          "strength": 10,
+          "intelligence": 10,
+          "agility": 10,
+          "armor": 10,
+          "magicArmor": 10
+        },
+        "type": "WEAPON"
+      }
+    },
+    {
+      "key": "NPC",
+      "value": {
+        "pos": {
+          "x": 37.0,
+          "y": 7.0
+        },
+        "name": "Monk",
+        "fileName": "file:src/main/resources/img/NPC/monk.png",
+        "dialogues": [
+          "Hello",
+          "I have a quest for you"
+        ],
+        "dialogueIndex": 0,
+        "questForHero": {
+          "name": "Quest",
+          "description": "Find the key",
+          "monsterToKill": "Goblin",
+          "completed": false
+        },
+        "itemForHero": {
+          "pos": {
+            "x": 37.0,
+            "y": 7.0
+          },
+          "name": "Key",
+          "fileName": "file:src/main/resources/img/Items/key.png",
+          "description": "Key for gate"
+        },
+        "questGiven": false
+      }
+    },
+    {
+      "key": "NPC",
+      "value": {
+        "pos": {
+          "x": 22.0,
+          "y": 13.0
+        },
+        "name": "Monk",
+        "fileName": "file:src/main/resources/img/NPC/monk.png",
+        "dialogues": [
+          "Hello",
+          "I have a quest for you"
+        ],
+        "dialogueIndex": 0,
+        "questForHero": {
+          "name": "Quest",
+          "description": "Find the key",
+          "monsterToKill": "Goblin",
+          "completed": false
+        },
+        "itemForHero": {
+          "pos": {
+            "x": 22.0,
+            "y": 13.0
+          },
+          "name": "Key",
+          "fileName": "file:src/main/resources/img/Items/key.png",
+          "description": "Key for gate"
+        },
+        "questGiven": false
+      }
+    },
+    {
+      "key": "NPC",
+      "value": {
+        "pos": {
+          "x": 22.0,
+          "y": 12.0
+        },
+        "name": "Monk",
+        "fileName": "file:src/main/resources/img/NPC/monk.png",
+        "dialogues": [
+          "Hello",
+          "I have a quest for you"
+        ],
+        "dialogueIndex": 0,
+        "questForHero": {
+          "name": "Quest",
+          "description": "Find the key",
+          "monsterToKill": "Goblin",
+          "completed": false
+        },
+        "itemForHero": {
+          "pos": {
+            "x": 22.0,
+            "y": 12.0
+          },
+          "name": "Key",
+          "fileName": "file:src/main/resources/img/Items/key.png",
+          "description": "Key for gate"
+        },
+        "questGiven": false
+      }
+    },
+    {
+      "key": "Consumable",
+      "value": {
+        "pos": {
+          "x": 6.0,
+          "y": 3.0
+        },
+        "name": "Potion",
+        "fileName": "file:src/main/resources/img/Items/flasks_red.png",
+        "description": "Health Potion",
+        "health": 10,
+        "mana": 10
+      }
+    },
+    {
+      "key": "NPC",
+      "value": {
+        "pos": {
+          "x": 22.0,
+          "y": 11.0
+        },
+        "name": "Monk",
+        "fileName": "file:src/main/resources/img/NPC/monk.png",
+        "dialogues": [
+          "Hello",
+          "I have a quest for you"
+        ],
+        "dialogueIndex": 0,
+        "questForHero": {
+          "name": "Quest",
+          "description": "Find the key",
+          "monsterToKill": "Goblin",
+          "completed": false
+        },
+        "itemForHero": {
+          "pos": {
+            "x": 22.0,
+            "y": 11.0
+          },
+          "name": "Key",
+          "fileName": "file:src/main/resources/img/Items/key.png",
+          "description": "Key for gate"
+        },
+        "questGiven": false
+      }
+    },
+    {
+      "key": "Equipment",
+      "value": {
+        "pos": {
+          "x": 35.0,
+          "y": 4.0
+        },
+        "name": "Sword",
+        "fileName": "file:src/main/resources/img/Items/weapons/weapon01crystalsword.png",
+        "description": "Sword",
+        "statIncrease": {
+          "maxHealth": 10,
+          "maxMana": 10,
+          "strength": 10,
+          "intelligence": 10,
+          "agility": 10,
+          "armor": 10,
+          "magicArmor": 10
+        },
+        "type": "WEAPON"
+      }
+    },
+    {
+      "key": "Consumable",
+      "value": {
+        "pos": {
+          "x": 7.0,
+          "y": 6.0
+        },
+        "name": "Potion",
+        "fileName": "file:src/main/resources/img/Items/flasks_red.png",
+        "description": "Health Potion",
+        "health": 10,
+        "mana": 10
+      }
+    }
+  ],
+  "monsters": [
+    {
+      "pos": {
+        "x": 8.0,
+        "y": 4.0
+      },
+      "name": "Goblin",
+      "fileName": "file:src/main/resources/img/Monster/goblin_run.png",
+      "speed": 1.0,
+      "direction": null,
+      "stat": {
+        "maxHealth": 10,
+        "maxMana": 10,
+        "strength": 10,
+        "intelligence": 10,
+        "agility": 10,
+        "armor": 10,
+        "magicArmor": 10
+      },
+      "currentHealth": 10,
+      "currentMana": 10,
+      "expWorth": 10,
+      "level": 1,
+      "dead": false
+    },
+    {
+      "pos": {
+        "x": 4.0,
+        "y": 8.0
+      },
+      "name": "Goblin",
+      "fileName": "file:src/main/resources/img/Monster/goblin_run.png",
+      "speed": 1.0,
+      "direction": null,
+      "stat": {
+        "maxHealth": 10,
+        "maxMana": 10,
+        "strength": 10,
+        "intelligence": 10,
+        "agility": 10,
+        "armor": 10,
+        "magicArmor": 10
+      },
+      "currentHealth": 10,
+      "currentMana": 10,
+      "expWorth": 10,
+      "level": 1,
+      "dead": false
+    },
+    {
+      "pos": {
+        "x": 8.0,
+        "y": 8.0
+      },
+      "name": "Goblin",
+      "fileName": "file:src/main/resources/img/Monster/goblin_run.png",
+      "speed": 1.0,
+      "direction": null,
+      "stat": {
+        "maxHealth": 10,
+        "maxMana": 10,
+        "strength": 10,
+        "intelligence": 10,
+        "agility": 10,
+        "armor": 10,
+        "magicArmor": 10
+      },
+      "currentHealth": 10,
+      "currentMana": 10,
+      "expWorth": 10,
+      "level": 1,
+      "dead": false
+    }
+  ],
+  "hero": {
+    "pos": {
+      "x": 32.0,
+      "y": 32.0
+    },
+    "name": "Knight",
+    "fileName": "file:src/main/resources/img/Heroes/knight_run.png",
+    "speed": 4.0,
+    "direction": null,
+    "stat": {
+      "maxHealth": 10,
+      "maxMana": 10,
+      "strength": 10,
+      "intelligence": 10,
+      "agility": 10,
+      "armor": 10,
+      "magicArmor": 10
+    },
+    "currentHealth": 10,
+    "currentMana": 10,
+    "quests": [],
+    "equipments": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "exp": 0,
+    "level": 1,
+    "nextLevelExp": 100,
+    "screenPos": {
+      "x": 284.0,
+      "y": 184.0
+    },
+    "dead": false
+  },
+  "inventory": []
+}

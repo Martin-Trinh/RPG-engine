@@ -2,6 +2,7 @@
 
   "Consumable": [
     {
+      "char": "h",
       "name": "Health Potion",
       "fileName": "file:src/main/resources/img/Items/flasks_red.png",
       "description": "Health Potion",
@@ -9,6 +10,7 @@
       "mana": 0
     },
     {
+      "char": "m",
       "name": "Mana Potion",
       "fileName": "file:src/main/resources/img/Items/flasks_blue.png",
       "description": "Mana Potion",
@@ -18,6 +20,7 @@
   ],
   "Equipment": [
     {
+      "char": "s",
       "name": "Sword",
       "fileName": "file:src/main/resources/img/Items/sword_1_new.png",
       "description": "Sword",
@@ -33,6 +36,7 @@
       "type": "Weapon"
     },
     {
+      "char": "p",
     "name": "Spear",
     "fileName": "file:src/main/resources/img/Items/sword_1_new.png",
     "description": "Spear",
@@ -48,6 +52,7 @@
     "type": "Weapon"
     },
     {
+        "char": "b",
       "name": "Bow",
       "fileName": "file:src/main/resources/img/Items/sword_1_new.png",
       "description": "Bow",
@@ -63,6 +68,7 @@
       "type": "Weapon"
     },
     {
+        "char": "a",
       "name": "Shield",
       "fileName": "file:src/main/resources/img/Items/shield_1_new.png",
       "description": "Shield",
@@ -78,6 +84,7 @@
         "type": "SHIELD"
     },
     {
+        "char": "r",
       "name": "Boots",
       "fileName": "file:src/main/resources/img/Items/shield_1_new.png",
       "description": "Boots",
@@ -93,6 +100,7 @@
       "type": "Boots"
     },
     {
+        "char": "l",
         "name": "Helmet",
         "fileName": "file:src/main/resources/img/Items/shield_1_new.png",
         "description": "Helmet",
@@ -108,6 +116,7 @@
         "type": "Helmet"
         },
         {
+        "char": "g",
         "name": "Plate mail",
         "fileName": "file:src/main/resources/img/Items/shield_1_new.png",
         "description": "Plate mail",
@@ -123,6 +132,7 @@
         "type": "Armor"
         },
         {
+        "char": "c",
         "name": "Amulet",
         "fileName": "file:src/main/resources/img/Items/shield_1_new.png",
         "description": "Amulet",

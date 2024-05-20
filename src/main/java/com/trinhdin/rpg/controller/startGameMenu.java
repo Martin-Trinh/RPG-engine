@@ -1,5 +1,6 @@
 package com.trinhdin.rpg.controller;
 
+import com.trinhdin.rpg.model.GameConfig;
 import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -78,6 +79,7 @@ public class startGameMenu extends menuController implements Initializable {
         // render game screen
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         new GameScreen(stage);
+
 
 
 

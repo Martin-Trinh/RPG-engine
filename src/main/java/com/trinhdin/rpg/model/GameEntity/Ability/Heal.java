@@ -1,5 +1,6 @@
 package com.trinhdin.rpg.model.GameEntity.Ability;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.trinhdin.rpg.model.GameEntity.Character.Character;
 
 public class Heal extends Ability{
@@ -10,7 +11,10 @@ public class Heal extends Ability{
             throw new IllegalArgumentException("Invalid health or mana value");
       this.amount = amount;
     }
-
+    public Heal(JsonNode node){
+        super(node);
+        this.amount = node.get("amount").asInt();
+    }
     @Override
     public void use(Character caster, Character target) {
         if(caster.getCurrentMana() < cost) {

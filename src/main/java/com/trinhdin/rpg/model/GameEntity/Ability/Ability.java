@@ -16,7 +16,7 @@ public abstract class Ability implements LogGameMsg {
          this.cost = cost;
          this.cooldown = cooldown;
      }
-     public Ability(JsonNode node){
+    public Ability(JsonNode node){
             name = node.get("name").asText();
             cost = node.get("cost").asInt();
             cooldown = node.get("cooldown").asInt();
@@ -31,6 +31,7 @@ public abstract class Ability implements LogGameMsg {
     public int getCooldown(){
         return cooldown;
     }
+
     public abstract void use(Character caster, Character target);
      @Override
     public String getGameMsg(){

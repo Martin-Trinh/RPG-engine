@@ -31,14 +31,6 @@ public class Hero extends Character {
     }
     public Hero(JsonNode node){
         super(node);
-//        for(JsonNode abilityNode : node.get("abilities")){
-//            if(abilityNode.get("name").asText().equals("AttackAbility"))
-//                abilities.add(new AttackAbility(abilityNode));
-//            else if(abilityNode.get("name").asText().equals("ModifyStatAbility"))
-//                abilities.add(new ModifyStatAbility(abilityNode));
-//            else
-//                throw new IllegalArgumentException("Invalid ability name" + node.get("name").asText());
-//        }
         for(JsonNode questNode : node.get("quests")){
             quests.add(new Quest(questNode));
         }

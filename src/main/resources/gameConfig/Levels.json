@@ -1,6 +1,4 @@
-{
-  "levels": {
-    "level1": "file:src/main/resources/levels/level1.tmx",
-    "level2": "file:src/main/resources/levels/level2.tmx"
-  }
-}
+[
+    "file:src/main/resources/levels/level1.tmx",
+    "file:src/main/resources/levels/level2.tmx"
+]

@@ -66,9 +66,7 @@ public class MainKeyHandler implements EventHandler<KeyEvent>{
                 GameSaveLoad gameSaveLoad = new GameSaveLoad();
                 GameData gameData = new GameData(map.getEntities(), map.getMonsters(), hero);
                 gameSaveLoad.saveGame(gameData, "game1.json");
-                gameSaveLoad.loadGame("game1.json");
-
-            gameScreen.exit();
+                gameScreen.exit();
         }
 
     }

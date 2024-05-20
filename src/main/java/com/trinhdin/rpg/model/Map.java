@@ -15,31 +15,22 @@ import com.trinhdin.rpg.model.GameEntity.Item.EquipmentType;
 import com.trinhdin.rpg.model.GameEntity.Item.ObstacleItem;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import lombok.Getter;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class Map {
+    @Getter
     private final HashMap<Point2D, Tile> tiles = new HashMap<>();
+    @Getter
     private final HashMap<Point2D, Entity> entities = new HashMap<>();
+    @Getter
     private final HashMap<Point2D, Monster> monsters = new HashMap<>();
+    @Getter
     private Hero hero;
     private static final String prefixImgPath = "file:src/main/resources/img/";
-    public Hero getHero() {return hero;}
-    public HashMap<Point2D, Tile> getTiles() {
-        return tiles;
-    }
-    public HashMap<Point2D, Entity> getEntities() {
-        return entities;
-    }
-    public HashMap<Point2D, Monster> getMonsters() {return monsters;}
-
-    public void addTile(Point2D pos, Tile entity){
-        tiles.put(pos, entity);
-    }
+    public void addTile(Point2D pos, Tile entity){tiles.put(pos, entity);}
     public void addMapEntity(Point2D pos, Entity entity){
         entities.put(pos, entity);
     }
@@ -149,14 +140,16 @@ public class Map {
     public void loadTileMap(String mapFileName) throws IOException {
         int maxLength = 0;
         int lineCnt;
-        ArrayList<ArrayList<String>> map = new ArrayList<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        StringBuilder json = new StringBuilder("[\n");
         try {
             FileInputStream inputStream = new FileInputStream(mapFileName);
             Scanner scanner = new Scanner(inputStream);
             for (lineCnt = 0; scanner.hasNextLine(); lineCnt++) {
                 ArrayList<String> tmp = new ArrayList<>();
                 String line = scanner.nextLine();
-                if(line.length() > maxLength){
+                if (line.length() > maxLength) {
                     maxLength = line.length();
                 }
                 for (int i = 0; i < line.length(); i++) {
@@ -165,16 +158,25 @@ public class Map {
                     loadCharToEntity(pos, c);
                     tmp.add(String.valueOf(c));
                 }
-                map.add(tmp);
-//                System.out.println(line);
+                if(scanner.hasNextLine())
+                    json.append(objectMapper.writeValueAsString(tmp)).append(",\n");
+                else
+                    json.append(objectMapper.writeValueAsString(tmp)).append("\n");
             }
+            json.append("]");
+            try (FileWriter writer = new FileWriter("src/main/resources/map.json")) {
+                writer.write(json.toString());
+                System.out.println("String written to file successfully.");
+            } catch (IOException e) {
+                System.err.println("Error writing string to file: " + e.getMessage());
+            }
+
             scanner.close();
             inputStream.close();
         } catch (FileNotFoundException e) {
             throw new IOException("File not found");
         }
     }
-
     public void loadCharToEntity(Point2D pos, char c){
         Stat stat = new Stat(10, 10, 10, 10, 10, 10, 10);
         ObstacleItem key = new ObstacleItem(pos, "Key", prefixImgPath + "Items/key.png", "Key for gate");

@@ -2,6 +2,8 @@ module com.trinhdin.rpg {
     requires javafx.controls;
     requires javafx.fxml;
     requires com.fasterxml.jackson.databind;
+    requires org.slf4j;
+    requires static lombok;
 
 
     exports com.trinhdin.rpg;

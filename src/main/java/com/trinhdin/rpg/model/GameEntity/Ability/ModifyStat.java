@@ -30,4 +30,8 @@ public class ModifyStat extends Ability{
     public int getDuration() {
         return duration;
     }
+
+    public Stat getStat() {
+        return stat;
+    }
 }

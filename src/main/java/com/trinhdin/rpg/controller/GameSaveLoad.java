@@ -1,31 +1,26 @@
 package com.trinhdin.rpg.controller;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trinhdin.rpg.model.GameData;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Character.Monster;
-import com.trinhdin.rpg.model.GameEntity.Character.Stat;
 import com.trinhdin.rpg.model.GameEntity.Entity;
 import com.trinhdin.rpg.model.GameEntity.Item.*;
 import com.trinhdin.rpg.model.GameEntity.NPC;
 import com.trinhdin.rpg.model.GameEntity.Obstacle;
+import com.trinhdin.rpg.model.Map;
 import javafx.geometry.Point2D;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
 
 public class GameSaveLoad {
     ObjectMapper objectMapper = new ObjectMapper();
     private static final String PATH_PREFIX = "src/main/resources/gameData/";
 
-    public void loadGame(String fileName) {
+    public void loadGame(String fileName, Map map) {
         try {
             JsonNode node = objectMapper.readTree(new File(PATH_PREFIX + fileName));
             Hero hero = loadHero(node);

@@ -18,32 +18,40 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
-
+@Slf4j
 public class GameScreen {
-    private final Canvas canvas;
+    private Canvas canvas;
     private Stage stage;
     private final Pane mainPane = new Pane();
-    private BorderPane root = new BorderPane();
+    private final BorderPane root = new BorderPane();
     SplitPane splitPane = new SplitPane();
     SidePane sidePane;
-    private GameLog gameLog = new GameLog();
+    private final GameLog gameLog = new GameLog();
     private final int WIN_WIDTH = 800;
     private final int WIN_HEIGHT = 600;
     private final int CANVAS_WIDTH = 600;
     private final int CANVAS_HEIGHT = 400;
+    @Getter
     private Map map;
-    private final Hero hero;
+    private Hero hero;
     private boolean isInventoryOpen = false;
     private boolean nearMonster = false;
     private boolean questViewOpen = false;
-
     private Combat combat = null;
-
-    private final AnimationTimer animationTimer;
+    private AnimationTimer animationTimer;
     public GameScreen(Stage stage) {
         this.stage = stage;
+    }
+    public void loadGame(String fileName){
+        GameSaveLoad gameSaveLoad = new GameSaveLoad();
+        gameSaveLoad.loadGame(fileName, map);
+    }
+    public void start(){
+        log.info("Starting game...");
         configureMap();
         hero = map.getHero();
         createHero();
@@ -67,10 +75,8 @@ public class GameScreen {
         root.setCenter(splitPane);
         root.setRight(sidePane);
 
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-
         scene.setOnKeyPressed(new MainKeyHandler(this));
-         animationTimer = new AnimationTimer() {
+        animationTimer = new AnimationTimer() {
             long lastFrameTime = 0;
             final int FPS = 60;
             final double timePerFrame = 1000_000_000.0 / FPS;
@@ -86,7 +92,7 @@ public class GameScreen {
                 }
             }
         };
-         // start game loop
+        // start game loop
         animationTimer.start();
         stage.setScene(scene);
         stage.show();
@@ -97,7 +103,7 @@ public class GameScreen {
             String mapFileName = "src/main/resources/configMap/map1.map";
             map.loadTileMap(mapFileName);
         } catch (IOException e) {
-            System.out.println("Error loading map");
+            log.error("Error loading map");
         }
     }
     private void onUpdate() {
@@ -117,11 +123,11 @@ public class GameScreen {
                 if(monster != null){
                     map.removeMonster(monster);
                     gameLog.displayLogMsg("Hero won");
-                    System.out.println("Hero won");
+                    log.info("Hero won");
                 }else{
                     gameLog.displayLogMsg("Hero lost");
+                    log.info("Hero lost");
                     // exit out of the game
-                    System.out.println("Hero lost");
                 }
                 combat = null;
             }
@@ -138,9 +144,6 @@ public class GameScreen {
                 nearMonster = false;
             }
         }
-    }
-    public Map getMap() {
-        return map;
     }
     public void createHero(){
         // set screen position for hero to middle of canvas
@@ -185,7 +188,7 @@ public class GameScreen {
     }
     public void openInventory(){
         gameLog.displayLogMsg("Open inventory");
-        System.out.println("Open inventory");
+        log.info("Open inventory");
         isInventoryOpen = true;
         HBox splitPane = new HBox();
         // remove canvas from mainPane
@@ -210,14 +213,14 @@ public class GameScreen {
     }
     public void closeInventory(){
         gameLog.displayLogMsg("Close inventory");
-        System.out.println("Close inventory");
+        log.info("Close inventory");
         isInventoryOpen = false;
         mainPane.getChildren().remove(0);
         mainPane.getChildren().add(canvas);
     }
     public void openQuestView(){
         gameLog.displayLogMsg("Open quest view");
-        System.out.println("Open quest view");
+        log.info("Open quest view");
         mainPane.getChildren().remove(canvas);
         QuestView questView = new QuestView(hero.getQuests());
         mainPane.getChildren().add(questView.createQuestPane());
@@ -225,7 +228,7 @@ public class GameScreen {
     }
     public void closeQuestView(){
         gameLog.displayLogMsg("Close quest view");
-        System.out.println("Close quest view");
+        log.info("Close quest view");
         mainPane.getChildren().remove(mainPane.lookup("#questPane"));
         mainPane.getChildren().add(canvas);
         questViewOpen = false;
@@ -243,14 +246,14 @@ public class GameScreen {
             gameLog.displayLogMsg(entity.getGameMsg());
         } else {
             gameLog.displayLogMsg("No entity to interact with!");
-            System.out.println("No entity to interact with!");
+            log.info("No entity to interact with!");
         }
     }
     public void checkMonsterForCombat(){
         Monster monster = map.isMonsterNearby();
         if(monster != null){
             gameLog.displayLogMsg("Entering combat with " + monster.getName());
-            System.out.println("Entering combat with " + monster.getName());
+            log.info("Entering combat with " + monster.getName());
 
             combat = new Combat(hero, mainPane, sidePane, gameLog);
             combat.start(monster);
@@ -259,7 +262,7 @@ public class GameScreen {
     }
     public void exit(){
         gameLog.displayLogMsg("Exit game");
-        System.out.println("Exit game");
+        log.info("Exit game");
         stage.close();
     }
 }

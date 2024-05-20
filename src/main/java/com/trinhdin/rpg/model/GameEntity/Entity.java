@@ -9,16 +9,25 @@ import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
 
 public class Entity implements LogGameMsg {
     static protected final int HEIGHT = 32;
     static protected final int WIDTH = 32;
+    @Getter
+    @Setter
+    protected char symbol;
+    @Getter
     protected Point2D pos;
+    @Getter
     protected String name;
+    @Getter
     protected String fileName;
     @JsonIgnore
+    @Getter
     protected Image image;
     @JsonIgnore
     protected String gameMsg = "";
@@ -50,24 +59,11 @@ public class Entity implements LogGameMsg {
         return WIDTH;
     }
     static public int getHeight() {return HEIGHT;}
-    public Point2D getPos() {return pos;}
-    public String getFileName() {
-        return fileName;
-    }
-    public Image getImage() {
-        return image;
-    }
     public Point2D calculateCenter() {
         return new Point2D(pos.getX() * WIDTH + WIDTH /2.0, pos.getY() * HEIGHT +  HEIGHT /2.0);
     }
-    public String getName() {
-        return name;
-    }
     public Rectangle bounds() {
         return new Rectangle(pos.getX() * WIDTH, pos.getY() * HEIGHT, WIDTH, HEIGHT);
-    }
-    public void setPos(Point2D pos) {
-        this.pos = pos;
     }
 
 }

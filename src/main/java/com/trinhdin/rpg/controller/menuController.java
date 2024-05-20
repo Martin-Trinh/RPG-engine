@@ -36,7 +36,6 @@ public class menuController {
             stage.close();
         }
     }
-
     public void loadGameMenu(ActionEvent event) throws IOException{
         switchToScene(event, "loadGame.fxml");
     }
