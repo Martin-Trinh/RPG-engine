@@ -139,6 +139,7 @@ public class GameScreen {
         renderEntities();
         // render hero
         drawHero();
+        // check if hero is in combat
         combatController();
     }
     private void combatController(){

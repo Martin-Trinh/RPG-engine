@@ -1,39 +1,94 @@
-# Game menu navigation
-## Main menu
-* **New game** - Navigate to the hero configuration menu
-    * Select the hero class from the list `Hero type`
-    * Configure hero stats by increasing or decreasing the values
-    * Start the game by clicking the `Start Game` button
-* **Load game** - Navigate to the load game menu
-    * Enter the name of the saved game file and click the `Load Game` button
-* **Exit** - Close the game app
-# In game menu
-Press `ESC` to open the in game menu
-* **Save game** - Navigate to the save game menu
-  * Enter the name of the save file and click the `Save` button
-* **Resume** - Resume the game
-* **Quit game** - Quit game to and navigate to main menu without saving
-# In game key controls
-Game communicate with player through game log window, where messages are displayed.
-* Use `WASD` to move the hero
-* Press `E` to interact with the game entity.
-* Interactions:
-  * Open gate when the hero has the key in inventory.
-  * Get through obstacles when the hero has the required item in inventory.
-  * Pick up the item when the hero is near the item.
-  * Talk to the NPC when the hero is near the NPC.
-    Press `Space` to continue the conversation.
-  * Enter the combat when the hero is near the monster.
-* Press `Tab` to open the inventory view.
-  * `Arrow keys` to navigate through the items in inventory.
-  * Press `E` to use the item.
-  * Press `D` to drop the item.
-* Press `C` to open the character view.
-  * `Arrow keys` to navigate through the character equipments.
-  * Press `E` to unequip the item.
-* Use the skills in combat:
-  * Press `1` to use the first skill (primary attack).
-  * Press `2` to use the second skill (support skill).
-  * Press `3` to use the third skill (ultimate).
+# Využité technologie
 
+**JavaFx** - realizace grafického rozhraní
 
+**Maven** - správa závislostí
+
+**JUnit** - testování
+
+**GitLab** - verzování
+
+**Lombok** - generování getterů a setterů
+
+**Slfj4** - kombinací s lombokem pro logování
+
+**LogBack** - konfigurace logování
+
+**Jackson** - serializace a deserializace objektů
+
+**Mockito** - mockování objektů pro testování
+
+# Základní návrh OOP modelu hry
+
+![RPG-OOP](uploads/da12c442533e6397110e71d5d18708fb/RPG-OOP.png)
+
+## Popis třídy.
+
+**Mapa**
+- Třída sloužící k uložení pozic jednotlivé entity ve hře.
+
+**Position**
+- Reprezentuje x,y souřadnic na mapě.
+
+**Quest**
+- Reprezetuje úkol, který bude hrdina dostávat od NPC.
+
+**Entity**
+- Abstraktní třída reprezentující jednotlivý objekt, který se bude zobrazovat na mapě.
+
+**NPC**
+- NPC, který provede dialog s hrdinou a dává hrdině úkol.
+
+**Obstacle**
+- Reprezentuje, překážka na mapě překonatelná pomocí předmětu.
+
+**Wall**
+- Reprezetuje, zeď na mapě, přes kterou nelze projít.
+
+**Item**
+
+- Abstraktní třída reprezentující předmět sbíratelné hrdinou.
+
+**ObstacleItem**
+
+- Třída, která reprezentuje překážku ve světě hry, kterou hrdina může odstranit, pokud má v inventáři požadovaný předmět.
+
+**Consumable**
+
+-Třída, která reprezentuje předmět, který může hrdina použít k obnovení života nebo many.
+
+**Inventory**
+
+- Třída, která reprezentuje inventář hrdiny. Umožňuje přidávání a odstranění předmětu.
+
+**Equipment**
+
+- Třída, která reprezentuje vybavení hrdiny. Zvyšuje vlastnost hrdiny při nošení.
+
+**Character**
+
+- Třída, která reprezentuje pohybující postavu.
+
+**Hero**
+
+- Třída, která reprezentuje hrdinu ve světě hry.
+
+**Monster**
+
+- Třída, která reprezentuje příšeru ve hře.
+
+**Stat**
+
+- Třída, která reprezentuje vlastnost hrdiny.
+
+**Ability**
+
+- Abstraktní třída, která reprezentuje schopnosti postavy.
+
+**AttackAbility**
+
+- Třída, která reprezentuje útočnou schopnost hrdiny.
+
+**ModifyStatsAbility**
+
+- Třída, která reprezentuje schopnost hrdiny modifikovat své vlastnosti.
