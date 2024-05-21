@@ -23,13 +23,10 @@ public class loadGameMenu extends menuController{
         try{
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             GameScreen gameScreen = new GameScreen(stage);
-            scene = gameScreen.loadGameFromFile(fileName + ".json");
-            stage.setScene(scene);
-            stage.show();
+            gameScreen.loadGameFromFile(fileName + ".json");
         }catch (IOException e){
             errorMsg.setText("Error loading game from: " + fileName);
             log.error(e.getMessage());
         }
     }
-
 }

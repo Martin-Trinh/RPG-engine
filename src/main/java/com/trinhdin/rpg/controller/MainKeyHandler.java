@@ -4,6 +4,7 @@ import com.trinhdin.rpg.model.GameData;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.Map;
 import com.trinhdin.rpg.model.MoveDirection;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
@@ -81,18 +82,13 @@ public class MainKeyHandler implements EventHandler<KeyEvent>{
         }
         // save game using ctrl + s
         if(keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.S) {
-                GameSaveLoad gameSaveLoad = new GameSaveLoad();
-                // convert attribute from map class to game data
-                GameData gameData = new GameData(map.getEntities(), map.getMonsters(), hero, map.getLevel());
-                try{
-                    gameSaveLoad.saveGame(gameData, "game1.json");
-                    log.info("Game saved to " + "game1.json");
-                    gameScreen.returnToMenu();
-                }catch (IOException e){
-                    log.error("Error saving game: " + e.getMessage());
-                }
+                gameScreen.showSavingView();
         } else if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.C) {
-            gameScreen.exit();
+            if(gameScreen.showAlert("Exit out of this game", "Do you want to exit?"))
+                gameScreen.exit();
+        } else if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.W) {
+            if(gameScreen.showAlert("Return to menu", "Quit game without saving?"))
+                gameScreen.returnToMenu();
         }
     }
 }

@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="258.0" prefWidth="314.0" styleClass="menuPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.trinhdin.rpg.controller.loadGameMenu">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="62.0" prefWidth="318.0" style="-fx-background-color: lightyellow;" styleClass="menuTitle" text="Load Game ">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="62.0" prefWidth="318.0" style="-fx-background-color: lightyellow;" styleClass="menuTitle" text="Load Game">
          <font>
             <Font size="24.0" />
          </font>
@@ -22,9 +22,9 @@
                <font>
                   <Font size="14.0" />
                </font></Text>
-            <Button fx:id="loadGameBtn" layoutX="90.0" layoutY="129.0" mnemonicParsing="false" onAction="#loadGame" prefHeight="25.0" prefWidth="118.0" text="Load Game" />
-            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="75.0" layoutY="177.0" mnemonicParsing="false" onAction="#returnToMenu" prefHeight="26.0" prefWidth="149.0" text="Return to Main Menu" />
-            <Text fx:id="errorMsg" fill="#d91818" layoutX="39.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="101.336669921875" />
+            <Button fx:id="loadGameBtn" layoutX="90.0" layoutY="153.0" mnemonicParsing="false" onAction="#loadGame" prefHeight="25.0" prefWidth="118.0" text="Load Game" />
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="75.0" layoutY="190.0" mnemonicParsing="false" onAction="#returnToMenu" prefHeight="26.0" prefWidth="149.0" text="Return to menu" />
+            <Text fx:id="errorMsg" fill="#d91818" layoutX="26.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="266.1366729736328" />
          </children>
       </Pane>
    </children>

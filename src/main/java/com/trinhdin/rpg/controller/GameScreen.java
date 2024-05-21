@@ -3,6 +3,7 @@ package com.trinhdin.rpg.controller;
 import com.trinhdin.rpg.App;
 import com.trinhdin.rpg.model.Combat;
 import com.trinhdin.rpg.model.GameConfig;
+import com.trinhdin.rpg.model.GameData;
 import com.trinhdin.rpg.model.GameEntity.Character.Character;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Character.Monster;
@@ -11,16 +12,20 @@ import com.trinhdin.rpg.model.GameEntity.Interactable;
 import com.trinhdin.rpg.model.Map;
 import com.trinhdin.rpg.view.*;
 import javafx.animation.AnimationTimer;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Orientation;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.SplitPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +40,7 @@ import java.io.*;
 public class GameScreen {
     private Stage stage;
     private Canvas canvas;
+    BorderPane root = new BorderPane();
     private final Pane mainPane = new Pane();
     private Scene scene;
     SidePane sidePane;
@@ -101,7 +107,6 @@ public class GameScreen {
         mainPane.setId("mainPane");
 
         sidePane.displayAbility(hero.getAbilities());
-        BorderPane root = new BorderPane();
         scene = new Scene(root, WIN_WIDTH, WIN_HEIGHT);
         scene.getStylesheets().add(getClass().getResource("/fxml/gameStyle.css").toExternalForm());
         root.setCenter(splitPane);
@@ -126,6 +131,8 @@ public class GameScreen {
         };
         // start game loop
         animationTimer.start();
+        stage.setScene(scene);
+        stage.show();
     }
 
     private void onUpdate() {
@@ -287,12 +294,18 @@ public class GameScreen {
         log.info("Exit game");
         stage.close();
     }
+    public boolean showAlert(String title, String question){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(question);
+        return alert.showAndWait().get() == ButtonType.OK;
+    }
     public void returnToMenu(){
         String path = "MainMenu.fxml";
         try{
             FXMLLoader loader = new FXMLLoader(App.class.getResource("/fxml/" + path));
             Parent root = loader.load();
-            scene = new Scene(root);
+            Scene scene = new Scene(root);
             String css = App.class.getResource("/fxml/mainMenu.css").toExternalForm();
             scene.getStylesheets().add(css);
             stage.setScene(scene);
@@ -302,5 +315,42 @@ public class GameScreen {
         }catch (IOException e){
             log.error("Error loading scene from file: " + path + " " + e.getMessage());
         }
+    }
+    public void showSavingView(){
+        String fxmlPath = "/fxml/savingView.fxml";
+        try{
+            FXMLLoader loader = new FXMLLoader(App.class.getResource(fxmlPath));
+            Parent root = loader.load();
+            TextField fileNameInput = (TextField) root.lookup("#fileNameInput");
+            Button saveGameBtn = (Button) root.lookup("#saveGameBtn");
+            Button returnToGameBtn = (Button) root.lookup("#returnToGameBtn");
+            Text errorMsg = (Text) root.lookup("#errorMsg");
+            saveGameBtn.setOnAction((event) ->this.saveGame(fileNameInput.getText(), errorMsg));
+            returnToGameBtn.setOnAction(this::returnToGame);
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }catch (IOException e){
+            log.error("Error loading scene from file: " + fxmlPath + "\n" + e.getMessage());
+        }
+    }
+    public void saveGame(String filename, Text errorMsg) {
+        try {
+            System.out.println("Saving game to: " + filename + ".json");
+            GameSaveLoad gameSaveLoad = new GameSaveLoad();
+            // convert attribute from map class to game data
+            GameData gameData = new GameData(map.getEntities(), map.getMonsters(), hero, map.getLevel());
+            gameSaveLoad.saveGame(gameData, "game1.json");
+            log.info("Game saved to " + "game1.json");
+            // return to menu after saving
+            returnToMenu();
+        }catch (IOException e){
+            errorMsg.setText("Error saving game to: " + filename + ".json");
+            log.error(e.getMessage());
+        }
+    }
+    public void returnToGame(ActionEvent event){
+        stage.setScene(scene);
+        stage.show();
     }
 }

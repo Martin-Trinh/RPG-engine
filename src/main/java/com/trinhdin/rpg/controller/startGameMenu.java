@@ -79,8 +79,6 @@ public class startGameMenu extends menuController implements Initializable {
         // render game screen
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         GameScreen gameScreen = new GameScreen(stage);
-        scene  = gameScreen.loadNewGame(heroType.getValue());
-        stage.setScene(scene);
-        stage.show();
+        gameScreen.loadNewGame(heroType.getValue());
     }
 }
