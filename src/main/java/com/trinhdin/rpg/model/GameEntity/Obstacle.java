@@ -24,8 +24,7 @@ public class Obstacle extends Tile implements Interactable{
 
     @Override
     public boolean interact(Hero hero) {
-        System.out.println(resolveItem.getName());
-      Item item = hero.getInventory().findItem(resolveItem);
+        Item item = hero.getInventory().findItem(resolveItem);
         if(item != null){
             gameMsg = "Obstacle resolved";
             resolveObstacle();
@@ -34,7 +33,6 @@ public class Obstacle extends Tile implements Interactable{
         }
 
         gameMsg = "You need " + resolveItem.getName() + " to resolve this obstacle";
-        System.out.println("You need " + resolveItem.getName() + " to resolve this obstacle");
         return false;
     }
 

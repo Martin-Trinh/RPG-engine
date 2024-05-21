@@ -25,7 +25,7 @@ public abstract class Ability implements LogGameMsg {
      }
     @Override
     public String toString() {
-        return "Name: " + name + " - Cost: " + cost + " - Cooldown: " + cooldown;
+        return "Name: " + name + "\n - Cost: " + cost + "  Cooldown: " + cooldown;
     }
     public String getName(){
         return name;

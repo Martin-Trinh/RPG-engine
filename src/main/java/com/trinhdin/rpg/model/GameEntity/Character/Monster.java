@@ -29,6 +29,10 @@ public class Monster extends Character {
         expWorth = node.get("expWorth").asInt();
         level = node.get("level").asInt();
     }
+    public void castAbility(Hero target){
+        ability.use(this, target);
+        gameMsg = ability.getGameMsg();
+    }
     public boolean equals(Monster monster){
         return this.getName().equals(monster.getName());
     }

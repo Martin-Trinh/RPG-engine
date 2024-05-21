@@ -129,7 +129,6 @@ public class EquipmentView {
      * @param color color to highlight
      */
     private void highlightRow(int index, String color){
-        System.out.println("Highlight row " + index);
         HBox row = (HBox) equipmentPane.getChildren().get(index+1);
         row.getChildren().get(1).setStyle("-fx-border-color: " + color); ;
     }

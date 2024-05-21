@@ -1,23 +1,19 @@
 package com.trinhdin.rpg.controller;
 
 import com.trinhdin.rpg.App;
-import com.trinhdin.rpg.model.Combat;
-import com.trinhdin.rpg.model.GameConfig;
-import com.trinhdin.rpg.model.GameData;
+import com.trinhdin.rpg.model.*;
 import com.trinhdin.rpg.model.GameEntity.Character.Character;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Character.Monster;
 import com.trinhdin.rpg.model.GameEntity.Entity;
 import com.trinhdin.rpg.model.GameEntity.Interactable;
-import com.trinhdin.rpg.model.Map;
 import com.trinhdin.rpg.view.*;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Orientation;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -45,15 +41,17 @@ public class GameScreen {
     private Scene scene;
     SidePane sidePane;
     private final GameLog gameLog = new GameLog();
-    private final int WIN_WIDTH = 800;
+    private final int WIN_WIDTH = 850;
     private final int WIN_HEIGHT = 600;
     private final int CANVAS_WIDTH = 600;
     private final int CANVAS_HEIGHT = 400;
     @Getter
     private final Map map = new Map();
     private Hero hero;
+    @Getter
     private boolean isInventoryOpen = false;
     private boolean nearMonster = false;
+    @Getter
     private boolean questViewOpen = false;
     private Combat combat = null;
     private AnimationTimer animationTimer;
@@ -69,16 +67,14 @@ public class GameScreen {
             log.error("Invalid Level: " + level);
         }
     }
-    public Scene loadGameFromFile(String fileName) throws IOException{
+    public void loadGameFromFile(String fileName) throws IOException{
         GameSaveLoad gameSaveLoad = new GameSaveLoad();
         gameSaveLoad.loadGame(fileName, map);
         initGame(false, map.getLevel());
         hero = map.getHero();
         start();
-
-        return scene;
     }
-    public Scene loadNewGame(String heroName){
+    public void loadNewGame(String heroName){
         log.info("Loading new game...");
         try{
             map.configureHero(heroName);
@@ -88,16 +84,18 @@ public class GameScreen {
         }catch (IllegalArgumentException e){
             log.error(e.getMessage());
         }
-        return scene;
     }
     private void start(){
         log.info("Starting game...");
-        setPositionHero();
+
+        hero.setScreenPos(CANVAS_WIDTH, CANVAS_HEIGHT);
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         canvas.setId("canvas");
 
         sidePane = new SidePane(WIN_WIDTH - CANVAS_WIDTH);
         sidePane.displayHeroStat(hero);
+        sidePane.displayAbility(hero.getAbilities());
+
         SplitPane splitPane = new SplitPane();
         splitPane.setOrientation(Orientation.VERTICAL);
         splitPane.setDividerPositions(0.7);
@@ -106,12 +104,11 @@ public class GameScreen {
         mainPane.getChildren().addAll(canvas);
         mainPane.setId("mainPane");
 
-        sidePane.displayAbility(hero.getAbilities());
         scene = new Scene(root, WIN_WIDTH, WIN_HEIGHT);
         scene.getStylesheets().add(getClass().getResource("/fxml/gameStyle.css").toExternalForm());
         root.setCenter(splitPane);
         root.setRight(sidePane);
-
+        // set key handler
         scene.setOnKeyPressed(new MainKeyHandler(this));
         animationTimer = new AnimationTimer() {
             long lastFrameTime = 0;
@@ -146,17 +143,29 @@ public class GameScreen {
     }
     private void combatController(){
         if(combat != null){
+            // in Combat
+            if(combat.isEnded()){
             // check if combat is ended
-            if(combat.ended()){
                 Monster monster = combat.getKilledMonster();
                 if(monster != null){
                     map.removeMonster(monster);
-                    gameLog.displayLogMsg("Hero won");
-                    log.info("Hero won");
-                }else{
-                    gameLog.displayLogMsg("Hero lost");
-                    log.info("Hero lost");
-                    // exit out of the game
+                }
+                if(hero.isDead()){
+                    // hero is dead
+                    Platform.runLater(() -> {
+                        if(showAlert("Game Over", "You lost! Play Again"))
+                            returnToMenu();
+                        else
+                            exit();
+                    });
+                }else if(map.getMonsters().isEmpty()){
+                    // all monsters have been killed -> hero won
+                    Platform.runLater(() -> {
+                        if(showAlert("Game Over", "You won! Play Again?"))
+                            returnToMenu();
+                        else
+                            exit();
+                    });
                 }
                 combat = null;
             }
@@ -174,13 +183,7 @@ public class GameScreen {
             }
         }
     }
-    public void setPositionHero(){
-        // set screen position for hero to middle of canvas
-        double screenX = CANVAS_WIDTH/2.0 - Entity.getWidth()/2.0;
-        double screenY = CANVAS_HEIGHT/2.0 - Entity.getHeight()/2.0;
-        Point2D screenPos = new Point2D(screenX, screenY);
-        hero.setScreenPos(screenPos);
-    }
+
     private void drawEntity(Entity entity) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         double entityX = entity.getPos().getX()* Entity.getWidth();
@@ -198,7 +201,6 @@ public class GameScreen {
             gc.strokeRect(  screenTileX, screenTileY, Entity.getWidth(), Entity.getHeight());
         }
     }
-
     private void drawHero() {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         double spriteSize = hero.getImage().getHeight();
@@ -262,10 +264,6 @@ public class GameScreen {
         mainPane.getChildren().add(canvas);
         questViewOpen = false;
     }
-    public boolean isInventoryOpen() {
-        return isInventoryOpen;
-    }
-    public boolean isQuestViewOpen() {return questViewOpen;}
     public void interactionWithFKey(){
         Entity entity = map.isCollideWithEntity();
         if (entity != null) {
@@ -336,7 +334,7 @@ public class GameScreen {
     }
     public void saveGame(String filename, Text errorMsg) {
         try {
-            System.out.println("Saving game to: " + filename + ".json");
+            log.info("Saving game to: " + filename + ".json");
             GameSaveLoad gameSaveLoad = new GameSaveLoad();
             // convert attribute from map class to game data
             GameData gameData = new GameData(map.getEntities(), map.getMonsters(), hero, map.getLevel());

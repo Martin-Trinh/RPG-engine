@@ -3,6 +3,7 @@ package com.trinhdin.rpg.model.GameEntity.Character;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.trinhdin.rpg.model.GameEntity.Ability.Ability;
+import com.trinhdin.rpg.model.GameEntity.Entity;
 import com.trinhdin.rpg.model.GameEntity.Item.Equipment;
 import com.trinhdin.rpg.model.GameEntity.Item.EquipmentType;
 import com.trinhdin.rpg.model.GameEntity.Item.Inventory;
@@ -60,6 +61,12 @@ public class Hero extends Character {
         level = node.get("level").asInt();
         screenPos = new Point2D(node.get("screenPos").get("x").asDouble(), node.get("screenPos").get("y").asDouble());
     }
+    public void setScreenPos(int canvasWidth, int canvasHeight) {
+        // set screen position for hero to middle of canvas
+        double screenX = canvasWidth/2.0 - Entity.getWidth()/2.0;
+        double screenY = canvasHeight/2.0 - Entity.getHeight()/2.0;
+        screenPos = new Point2D(screenX, screenY);
+    }
     /**
      * Add ability to hero
      * @param ability
@@ -78,14 +85,14 @@ public class Hero extends Character {
         if (index >= abilities.size() || index < 0) {
             gameMsg = "Ability not found";
         } else {
-            gameMsg = abilities.get(index).getName() + " used on " + target.getName();
+            gameMsg = abilities.get(index).getName() + " cast " + abilities.get(index).getName() + " on " + target.getName();
             abilities.get(index).use(this, target);
             gameMsg += "\n" + abilities.get(index).getGameMsg();
         }
     }
     /**
      * Equip equipment to hero
-     * @param equipment
+     * @param equipment equipment to equip
      * @return true if equipped
      */
     public boolean equip(Equipment equipment) {
@@ -108,7 +115,7 @@ public class Hero extends Character {
     /**
      * Helper function to equip equipment to hero
      * @param index index of equipment
-     * @param equipment
+     * @param equipment equipment to equip
      * @return true if equipped
      */
     private boolean equip(int index, Equipment equipment) {
@@ -175,24 +182,39 @@ public class Hero extends Character {
      * @param index
      * @param monsterKilled
      */
-    public void completeQuest(int index, Monster monsterKilled) {
-        quests.get(index).complete(monsterKilled);
+    public boolean completeQuest(Monster monsterKilled) {
+        for(Quest quest : quests){
+            if(quest.complete(monsterKilled)){
+                gameMsg = "Quest " + quest.getName() + " completed";
+                return true;
+            }
+        }
+        return false;
     }
-
+    public boolean allQuestCompleted(){
+        for(Quest quest : quests){
+            if(!quest.isCompleted())
+                return false;
+        }
+        return true;
+    }
     public boolean isQuestCompleted(Quest quest) {
-        return quests.contains(quest) && quest.getCompleted();
+        return quests.contains(quest) && quest.isCompleted();
     }
-
     /**
      * Gain exp after killing monster
-     * @param exp
+     * @param exp exp gained
+     * @return true if leveled up
      */
-    public void gainExp(int exp) {
+    public boolean gainExp(int exp) {
         gameMsg = "You gain " + exp + " exp";
         this.exp += exp;
         if (this.exp >= nextLevelExp) {
             levelUp();
+            gameMsg = "Hero leveled up to " + level;
+            return true;
         }
+        return false;
     }
     /**
      * Level up hero increase stats by level coefficient

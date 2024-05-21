@@ -127,6 +127,14 @@ public class GameConfig {
             }
         }
     }
+
+    /**
+     * Get hero from config file using jsonNode
+     * @param pos position
+     * @param name hero name
+     * @return Hero
+     * @throws IllegalArgumentException not found hero in config file
+     */
     public Hero getHeroFromConfig(Point2D pos, String name) throws IllegalArgumentException{
         for(JsonNode node : heroNode){
             if(node.get("name").asText().equals(name)){
@@ -143,6 +151,13 @@ public class GameConfig {
         }
         throw new IllegalArgumentException("Hero not found, name is invalid: " + name);
     }
+
+    /**
+     * Get monster from config file using jsonNode
+     * @param pos position
+     * @param c character on config map
+     * @return Monster
+     */
     public Monster getMonsterFromConfig(Point2D pos, Character c) {
         for(JsonNode node : monstersNode){
             if(node.get("char").asText().equals(c.toString())){
@@ -174,6 +189,13 @@ public class GameConfig {
         }
         return null;
     }
+
+    /**
+     * Get item from config file using jsonNode
+     * @param pos position
+     * @param c character representation on map
+     * @return
+     */
     public Item getItemFromConfig(Point2D pos, Character c) {
         JsonNode consumableNode = itemsNode.get("Consumable");
         JsonNode node = getNodeFromArray(c, consumableNode);
@@ -205,6 +227,13 @@ public class GameConfig {
         }
         return null;
     }
+
+    /**
+     * Get NPC from config file using jsonNode
+     * @param pos position
+     * @param c character representation on map
+     * @return NPC
+     */
     public NPC getNPCFromConfig(Point2D pos, Character c) {
         JsonNode node = getNodeFromArray(c, npcsNode);
         if(node != null){
@@ -218,6 +247,14 @@ public class GameConfig {
         }
         return null;
     }
+
+    /**
+     * Get obstacle from config file using jsonNode
+     * @param pos position
+     * @param c character representation on map
+     * @return  Obstacle
+     * @throws IllegalArgumentException cannot find resolve item
+     */
     public Obstacle getObstacleFromConfig(Point2D pos, Character c) throws IllegalArgumentException{
         JsonNode node = getNodeFromArray(c, obstaclesNode);
         if(node != null){
@@ -228,6 +265,13 @@ public class GameConfig {
         }
         return null;
     }
+
+    /**
+     * Get obstacle item from config file using index
+     * @param index index
+     * @return ObstacleItem
+     * @throws IllegalArgumentException invalid index
+     */
     private ObstacleItem getObstacleItemFromConfig(int index) throws IllegalArgumentException{
         if(index < 0){
             throw new IllegalArgumentException("Invalid index: " + index);

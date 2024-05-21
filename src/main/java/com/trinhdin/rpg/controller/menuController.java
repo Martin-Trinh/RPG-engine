@@ -23,6 +23,11 @@ public class menuController {
     protected Scene scene;
     protected Parent root;
 
+    /**
+     * Switch to scene using fxml file
+     * @param event action event
+     * @param path fxml file path
+     */
     private void switchToScene(ActionEvent event, String path) {
         try{
             FXMLLoader loader = new FXMLLoader(App.class.getResource("/fxml/" + path));
@@ -39,6 +44,10 @@ public class menuController {
             log.error("Error loading scene from file: " + path + " " + e.getMessage());
         }
     }
+    /**
+     * Exit the game action
+     * @param event action event
+     */
     public void ExitAction(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Exit out of this game");
@@ -48,14 +57,24 @@ public class menuController {
             stage.close();
         }
     }
+    /**
+     * Load game menu button handling
+     * @param event action event
+     */
     public void loadGameMenu(ActionEvent event){
         switchToScene(event, "loadGame.fxml");
     }
-
+    /**
+     * New game menu button handling
+     * @param event action event
+     */
     public void newGameAction(ActionEvent event)  {
         switchToScene(event, "HeroConfig.fxml");
-
     }
+    /**
+     * Return to main menu button handling
+     * @param event action event
+     */
     public void returnToMenu(ActionEvent event) {
         switchToScene(event, "MainMenu.fxml");
     }

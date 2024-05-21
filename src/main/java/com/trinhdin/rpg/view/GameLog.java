@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 @Slf4j
 public class GameLog extends VBox {
-    private final int MAX_LOG_MSG = 5;
+    private final int MAX_LOG_MSG = 6;
     public GameLog(){
         this.setSpacing(10); // Spacing between log items
         this.setStyle("-fx-border-color: brown; -fx-padding: 10px");

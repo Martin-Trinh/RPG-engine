@@ -29,7 +29,7 @@ public class MainKeyHandler implements EventHandler<KeyEvent>{
         this.hero = map.getHero();
     }
     /**
-     * Handle key event for canvas
+     * Handles key event for canvas
      * @param keyEvent
      */
     @Override
@@ -83,9 +83,11 @@ public class MainKeyHandler implements EventHandler<KeyEvent>{
         // save game using ctrl + s
         if(keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.S) {
                 gameScreen.showSavingView();
+        // exit game using ctrl + c
         } else if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.C) {
             if(gameScreen.showAlert("Exit out of this game", "Do you want to exit?"))
                 gameScreen.exit();
+        // return to menu using ctrl + w
         } else if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.W) {
             if(gameScreen.showAlert("Return to menu", "Quit game without saving?"))
                 gameScreen.returnToMenu();

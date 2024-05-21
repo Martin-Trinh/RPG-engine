@@ -1,4 +1,7 @@
 package com.trinhdin.rpg.controller;
+/**
+ * Controller for start game menu
+ */
 
 import com.trinhdin.rpg.model.GameConfig;
 import com.trinhdin.rpg.model.GameEntity.Character.Stat;
@@ -61,6 +64,9 @@ public class startGameMenu extends menuController implements Initializable {
         });
 
     }
+    /**
+     * Show stats of selected hero type
+     */
     private void showStats(){
         Stat stat = heroes.get(heroType.getValue());
         maxHealth.setText("Max Health: " + stat.getMaxHealth());;
@@ -71,6 +77,10 @@ public class startGameMenu extends menuController implements Initializable {
         armor.setText("Armor: " + stat.getArmor());
         magicArmor.setText("Magic Armor: " + stat.getMagicArmor());
     }
+    /**
+     * Start game action
+     * @param event action event
+     */
     public void startGame(ActionEvent event){
         if(heroType.getValue().equals( "Select a hero type")){
             errorMsg.setText("Please select a hero type");

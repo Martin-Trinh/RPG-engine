@@ -36,7 +36,6 @@ public class GameSaveLoad {
         try {
             log.info("Loading game from " + fileName);
             JsonNode node = objectMapper.readTree(new File(PATH_PREFIX + fileName));
-            System.out.println(node.get("level").asInt());
             map.setLevel(node.get("level").asInt());
             map.setHero(loadHero(node));
             map.setEntities(loadEntities(node.get("entities")));

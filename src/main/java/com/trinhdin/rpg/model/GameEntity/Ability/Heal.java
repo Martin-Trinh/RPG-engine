@@ -21,7 +21,6 @@ public class Heal extends Ability{
     public void use(Character caster, Character target) {
         if(caster.getCurrentMana() < cost) {
             gameMsg = "Not enough mana";
-            System.out.println("Not enough mana");
         }else{
             gameMsg = caster.getName() + " healed " + target.getName() + " for " + amount + " health";
             target.setCurrentHealth(target.getCurrentHealth() + amount);

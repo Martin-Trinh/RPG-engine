@@ -2,9 +2,12 @@ package com.trinhdin.rpg.model;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.trinhdin.rpg.model.GameEntity.Character.Monster;
+import lombok.Getter;
+
 /**
  * Quest class to represent hero quest in game
  */
+@Getter
 public class Quest {
     private String name;
     private String description;
@@ -21,23 +24,15 @@ public class Quest {
         description = node.get("description").asText();
         monsterToKill = node.get("monsterToKill").asText();
     }
-    public String getDescription() {
-        return description;
-    }
-    public String getName(){
-        return name;
-    }
 
-    public String getMonsterToKill() {
-        return monsterToKill;
-    }
     public String toString(){
         return "Name: " + name + " - Description: " + description + " - Monster to kill" + monsterToKill;
     }
-    public boolean getCompleted() {
-        return isCompleted;
-    }
-
+    /**
+     * Complete quest base on killed monster
+     * @param monsterKilled
+     * @return
+     */
     public boolean complete(Monster monsterKilled) {
         if(monsterKilled.getName().equals(monsterToKill))
             return isCompleted = true;

@@ -69,7 +69,7 @@ public class SidePane extends VBox {
         VBox vBox1 = createStatPane(monster);
         vBox2.getChildren().addAll(
                 new Label("Level: " + monster.getLevel()),
-                new Label("Exp: " + monster.getExpWorth())
+                new Label("ExpWorth: " + monster.getExpWorth())
         );
         splitPane.getItems().addAll(vBox1,vBox2);
         splitPane.setDividerPositions(0.65);

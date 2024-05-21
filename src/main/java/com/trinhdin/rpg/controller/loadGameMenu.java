@@ -18,6 +18,11 @@ public class loadGameMenu extends menuController{
     private TextField fileNameInput;
     @FXML
     private Text errorMsg;
+
+    /**
+     * load game button handler
+     * @param event action event to get stage
+     */
     public void loadGame(ActionEvent event) {
         String fileName = fileNameInput.getText();
         try{

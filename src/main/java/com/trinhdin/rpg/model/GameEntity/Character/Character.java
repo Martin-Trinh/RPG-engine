@@ -98,7 +98,7 @@ public abstract class Character extends Entity {
     }
     /**
      * Calculate the bounds of the entity with offset which is smaller than the entity size
-     * @param pos
+     * @param pos position of the entity
      * @return bounds of the entity
      */
     public Rectangle offsetBounds(Point2D pos){

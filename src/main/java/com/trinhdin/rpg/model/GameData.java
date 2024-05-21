@@ -24,6 +24,14 @@ public class GameData {
     private ArrayList<Monster> monsters;
     private Hero hero;
     private ArrayList<Pair<String, Item>> inventory = new ArrayList<>();
+
+    /**
+     * Constructor for GameData convert object to serializable format
+     * @param entities
+     * @param monsters
+     * @param hero
+     * @param level
+     */
     public GameData(HashMap<Point2D, Entity> entities,
                     HashMap<Point2D,Monster> monsters,
                     Hero hero, int level) {
