@@ -266,7 +266,7 @@ public class GameScreen {
         questViewOpen = false;
     }
     public void interactionWithFKey(){
-        Entity entity = map.isCollideWithEntity();
+        Entity entity = map.isEntityNearby();
         if (entity != null) {
             if(((Interactable)entity).interact(hero)){
                 map.removeEntity(entity);
@@ -339,8 +339,8 @@ public class GameScreen {
             GameSaveLoad gameSaveLoad = new GameSaveLoad();
             // convert attribute from map class to game data
             GameData gameData = new GameData(map.getEntities(), map.getMonsters(), hero, map.getLevel());
-            gameSaveLoad.saveGame(gameData, "game1.json");
-            log.info("Game saved to " + "game1.json");
+            gameSaveLoad.saveGame(gameData, filename + ".json");
+            log.info("Game saved to " + filename + ".json");
             // return to menu after saving
             returnToMenu();
         }catch (IOException e){

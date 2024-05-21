@@ -102,16 +102,16 @@ public class Map {
     }
 
     /**
-     * Check if character is collided with entity using rectangle intersection
+     * Check if character is nearby entity by calculating distance between center of entity
      * @return entity if hero is collided with entity, null otherwise
      */
-    public Entity isCollideWithEntity(){
-        Bounds heroBound = hero.bounds().getBoundsInParent();
-       for (Entity entity : entities.values()) {
-           if(heroBound.intersects(entity.bounds().getBoundsInParent())){
-               return entity;
-           }
-       }
+    public Entity isEntityNearby(){
+        for (Entity entity : entities.values()) {
+            // distance from entity to hero is less than Entity size
+            if(hero.calculateCenter().distance(entity.calculateCenter()) < Entity.getWidth()){
+                return entity;
+            }
+        }
        return null;
     }
     /**
@@ -119,10 +119,9 @@ public class Map {
      * @return monster if monster is nearby, null otherwise
      */
     public Monster isMonsterNearby(){
-        // distance from monster
-        int distance = 30;
         for (Monster monster : monsters.values()) {
-            if(hero.calculateCenter().distance(monster.calculateCenter()) < distance){
+            // distance from monster to hero is less than 30
+            if(hero.calculateCenter().distance(monster.calculateCenter()) < Entity.getWidth()){
                 return monster;
             }
         }

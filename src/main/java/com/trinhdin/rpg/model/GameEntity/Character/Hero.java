@@ -227,17 +227,8 @@ public class Hero extends Character {
         stat.add(levelUpStat);
     }
     /**
-     * Check if hero is in the bounds of the rectangle
-     * @param rect
-     * @return rectangle around hero
-     */
-    public Rectangle bounds() {
-        return new Rectangle(pos.getX(), pos.getY(), WIDTH, HEIGHT);
-    }
-    /**
      * Calculate the center of the hero
      * @return center point
-
      */
     public Point2D calculateCenter() {
         return new Point2D(pos.getX() + WIDTH / 2.0, pos.getY() + HEIGHT / 2.0);

@@ -76,13 +76,4 @@ public class Entity implements LogGameMsg {
     public Point2D calculateCenter() {
         return new Point2D(pos.getX() * WIDTH + WIDTH /2.0, pos.getY() * HEIGHT +  HEIGHT /2.0);
     }
-    /**
-     * Return the rectangle around the entity
-     * @param entity
-     * @return rectangle around entity
-     */
-    public Rectangle bounds() {
-        return new Rectangle(pos.getX() * WIDTH, pos.getY() * HEIGHT, WIDTH, HEIGHT);
-    }
-
 }
