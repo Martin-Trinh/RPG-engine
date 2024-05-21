@@ -1,21 +1,28 @@
 package com.trinhdin.rpg;
 
-import com.trinhdin.rpg.controller.GameScreen;
+import ch.qos.logback.classic.Logger;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
-
-import java.io.IOException;
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.LoggerContext;
+import org.slf4j.LoggerFactory;
+/**
+ * JavaFX App
+ Start the application
+ */
 @Slf4j
 public class App extends Application {
+    public static void setLogLevel(String logLevel){
+        LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
+        Logger rootLogger = loggerContext.getLogger("ROOT");
+        rootLogger.setLevel(Level.toLevel(logLevel));
+    }
     @Override
     public void start(Stage stage){
         try{
@@ -44,6 +51,9 @@ public class App extends Application {
         }
     }
     public static void main(String[] args) {
+        if(args.length > 0){
+            setLogLevel(args[0]);
+        }
         launch(args);
     }
 }

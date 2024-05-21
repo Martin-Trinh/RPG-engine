@@ -37,6 +37,13 @@ public class InventoryView{
     private EquipmentView equipmentView;
     private final GameLog gameLog;
     private final SidePane sidepane;
+
+    /**
+     * Constructor for InventoryView , create inventory pane and add key handler to it
+     * @param hero hero
+     * @param gameLog game log
+     * @param sidePane  side pane
+     */
     public InventoryView(Hero hero, GameLog gameLog, SidePane sidePane) {
         this.hero = hero;
         this.inventory = hero.getInventory();
@@ -116,11 +123,19 @@ public class InventoryView{
             }
         });
     }
+
+    /**
+     * Display inventory from model again
+     */
     public void refreshInventoryPane(){
         gridPane = new GridPane();
         inventoryPane.getChildren().remove(1);
         inventoryPane.getChildren().add(createInventoryPane());
     }
+    /**
+     * Create inventory pane
+     * @return inventory pane
+     */
     private GridPane createInventoryPane(){
         gridPane.setVgap(20);
         gridPane.setHgap(20);

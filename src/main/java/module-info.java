@@ -4,11 +4,12 @@ module com.trinhdin.rpg {
     requires com.fasterxml.jackson.databind;
     requires org.slf4j;
     requires static lombok;
+    requires ch.qos.logback.classic;
 
-
+//
     exports com.trinhdin.rpg;
-    exports com.trinhdin.rpg.controller;
-    exports com.trinhdin.rpg.view;
+//    exports com.trinhdin.rpg.controller;
+//    exports com.trinhdin.rpg.view;
     opens com.trinhdin.rpg to javafx.fxml;
     opens com.trinhdin.rpg.controller to javafx.fxml;
     opens com.trinhdin.rpg.view to javafx.fxml;

@@ -13,18 +13,30 @@ public class Quest {
     private String description;
     private boolean isCompleted = false;
     private String monsterToKill;
-
+    /**
+     * Constructor for Quest
+     * @param name quest name
+     * @param description quest description
+     * @param monsterToKill monster to kill
+     */
     public Quest(String name, String description, String monsterToKill) {
         this.name = name;
         this.description = description;
         this.monsterToKill = monsterToKill;
     }
+    /**
+     * Create a quest from json node
+     * @param node json node
+     */
     public Quest(JsonNode node){
         name = node.get("name").asText();
         description = node.get("description").asText();
         monsterToKill = node.get("monsterToKill").asText();
     }
-
+    /**
+     * Override toString method
+     * @return string representation of quest
+     */
     public String toString(){
         return "Name: " + name + " - Description: " + description + " - Monster to kill" + monsterToKill;
     }

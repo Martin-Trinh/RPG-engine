@@ -27,10 +27,10 @@ public class GameData {
 
     /**
      * Constructor for GameData convert object to serializable format
-     * @param entities
-     * @param monsters
-     * @param hero
-     * @param level
+     * @param entities list of entities
+     * @param monsters list of monsters
+     * @param hero hero
+     * @param level level
      */
     public GameData(HashMap<Point2D, Entity> entities,
                     HashMap<Point2D,Monster> monsters,

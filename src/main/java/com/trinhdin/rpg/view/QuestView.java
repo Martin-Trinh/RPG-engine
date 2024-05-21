@@ -11,9 +11,18 @@ import java.util.ArrayList;
  */
 public class QuestView {
     private ArrayList<Quest> quests;
+    /**
+     * Constructor for QuestView
+     * Assign list of quests to quests
+     * @param quests list of quests
+     */
     public QuestView(ArrayList<Quest> quests) {
         this.quests = quests;
     }
+    /**
+     * Create quest pane to display all hero's quests
+     * @return quest pane
+     */
     public VBox createQuestPane(){
         Label heading = new Label("All quests: ");
         heading.getStyleClass().add("heading");

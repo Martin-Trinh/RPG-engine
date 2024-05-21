@@ -11,6 +11,9 @@ import java.util.ArrayList;
 @Slf4j
 public class GameLog extends VBox {
     private final int MAX_LOG_MSG = 6;
+    /**
+     * Constructor for GameLog, add style to log box
+     */
     public GameLog(){
         this.setSpacing(10); // Spacing between log items
         this.setStyle("-fx-border-color: brown; -fx-padding: 10px");
@@ -18,7 +21,6 @@ public class GameLog extends VBox {
     public void clearLog(){
         this.getChildren().clear();
     }
-
     /**
      * Display log message on log box
      * @param logMsg log message to display

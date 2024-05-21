@@ -102,6 +102,10 @@ public class EquipmentView {
         equipmentRow.getChildren().addAll(label, itemPane, equipButton);
         return equipmentRow;
     }
+
+    /**
+     * Display equipment from hero model again
+     */
     public void refreshEquipmentPane(){
         equipmentPane.getChildren().clear();
         createEquipmentPane();
