@@ -138,6 +138,7 @@ public class Hero extends Character {
             equipments[index] = null;
             return true;
         }
+        gameMsg = "Nothing to unequip!";
         return false;
     }
     /**

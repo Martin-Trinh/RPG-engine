@@ -15,15 +15,20 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * EquipmentView class to display hero equipment and handle key event
  */
 public class EquipmentView {
     private final Hero hero;
+    @Getter
     private final VBox equipmentPane = new VBox();
     private final int equipmentRowCnt = 6;
     private int index = 0;
     private int prevIndex = 0;
+    @Setter
     private InventoryView inventoryView;
     private GameLog gameLog;
     private SidePane sidePane;
@@ -34,6 +39,10 @@ public class EquipmentView {
         createEquipmentPane();
         addKeyHandler();
     }
+
+    /**
+     * Add key handler for equipment pane
+     */
     private void addKeyHandler(){
         equipmentPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -50,17 +59,16 @@ public class EquipmentView {
                         }
                         break;
                     case E:
+                        // unequip equipment
                         if(hero.unequip(index)){
-                            System.out.println("Unequip success");
                             gameLog.displayLogMsg(hero.getGameMsg());
                             refreshEquipmentPane();
                             inventoryView.refreshInventoryPane();
                             sidePane.displayHeroStat(hero);
-                        }else{
-                            System.out.println("Unequip fail");
                         }
                         break;
                     case TAB:
+                        // switching focus to inventory pane
                         Node node = equipmentPane.getParent().lookup("#inventory");
                         node.requestFocus();
                         break;
@@ -72,6 +80,7 @@ public class EquipmentView {
                 highlightRow(index,"red");
                 // Prevent event from bubbling up
                 if(event.getCode() != KeyCode.I) {
+                    // Prevent event from bubbling up to main event handler
                     event.consume();
                 }
             }
@@ -114,17 +123,14 @@ public class EquipmentView {
             createEquipmentRow("Accessory", hero.getEquipments()[5])
         );
     }
+    /**
+     * Highlight row at index
+     * @param index index of row to highlight
+     * @param color color to highlight
+     */
     private void highlightRow(int index, String color){
         System.out.println("Highlight row " + index);
         HBox row = (HBox) equipmentPane.getChildren().get(index+1);
         row.getChildren().get(1).setStyle("-fx-border-color: " + color); ;
     }
-    public VBox getEquipmentPane() {
-        return equipmentPane;
-    }
-    public void setInventoryView(InventoryView inventoryView) {
-        this.inventoryView = inventoryView;
-    }
-
-
 }

@@ -39,7 +39,10 @@ public class GameConfig {
     private ArrayList<String> maps;
     @Getter
     private final static GameConfig instance = new GameConfig();
-    JsonNode abilitiesNode, heroNode, itemsNode, monstersNode, npcsNode, obstaclesNode, levelsNode;
+    JsonNode abilitiesNode, heroNode, itemsNode, monstersNode, npcsNode, obstaclesNode;
+    /**
+     * Constructor to load game configuration from json files to jsonNode
+     */
     private GameConfig(){
         try{
             abilitiesNode = objectMapper.readTree(new File(PATH_PREFIX + abilityFile));
@@ -49,12 +52,7 @@ public class GameConfig {
             npcsNode = objectMapper.readTree(new File(PATH_PREFIX + npcFile));
             obstaclesNode = objectMapper.readTree(new File(PATH_PREFIX + obstacleFile));
             maps = objectMapper.readValue(new File(PATH_PREFIX + "Levels.json"), ArrayList.class);
-            for (String map : maps){
-                System.out.println(map);
-            }
-            System.out.println(
-                    maps.size()
-            );
+            // load hero names and stats for view
             loadHeroNamesAndStats();
         }
         catch (IOException e){
@@ -62,6 +60,9 @@ public class GameConfig {
             e.printStackTrace();
         }
     }
+    /**
+     * Load hero names and stats from json file
+     */
     public void loadHeroNamesAndStats(){
         heroNode.forEach(node -> {
             heroes.put(node.get("name").asText(), objectMapper.convertValue(node.get("stat"), Stat.class));
@@ -108,6 +109,24 @@ public class GameConfig {
         }
         return null;
     }
+    public void setAbilityForHero(Hero hero){
+        for(JsonNode node : heroNode){
+            if(node.get("name").asText().equals(hero.getName())){
+                JsonNode abilityNode = node.get("abilities");
+                for (JsonNode ability : abilityNode){
+                    hero.addAbility(getAbilityFromConfig(ability.fields().next().getKey(), ability.asInt()));
+                }
+            }
+        }
+    }
+    public void setAbilityForMonster(Monster monster){
+        for(JsonNode node: monstersNode){
+            if(node.get("name").asText().equals(monster.getName())){
+                JsonNode abilityNode = node.get("abilities");
+                monster.setAbility(getAbilityFromConfig(abilityNode.fields().next().getKey(), abilityNode.asInt()));
+            }
+        }
+    }
     public Hero getHeroFromConfig(Point2D pos, String name) throws IllegalArgumentException{
         for(JsonNode node : heroNode){
             if(node.get("name").asText().equals(name)){
@@ -141,6 +160,12 @@ public class GameConfig {
         }
         return null;
     }
+    /**
+     * Get node from array of jsonNode base on character representation on map
+     * @param c character
+     * @param node jsonNode
+     * @return jsonNode
+     */
     private JsonNode getNodeFromArray(Character c, JsonNode node){
         for(JsonNode n : node){
             if(n.get("char").asText().equals(c.toString())){

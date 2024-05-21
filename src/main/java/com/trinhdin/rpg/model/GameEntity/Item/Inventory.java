@@ -74,18 +74,21 @@ public class Inventory implements LogGameMsg {
     }
     /**
      * Use item from inventory by index on target if item is used successfully remove it from inventory
-     * @param index
-     * @param target
+     * @param index index of item in inventory
+     * @param target target to use item on
+     * @return true if item is used, false if index is out of bound or item is not used
      */
-    public void useItem(int index, Hero target){
+    public boolean useItem(int index, Hero target){
         if(index >= 0 && index < items.size()){
             if(items.get(index).use(target)){
                 gameMsg = items.get(index).getName() + " used";
                 removeItem(index);
+                return true;
             }
-        }else{
-            gameMsg = "No item to use";
+            return false;
         }
+        gameMsg = "No item to use";
+        return false;
     }
     /**
      * Find item in inventory by item name
@@ -94,7 +97,7 @@ public class Inventory implements LogGameMsg {
      */
     public Item findItem(Item itemToFind){
         for(Item item : items){
-            if(item == itemToFind){
+            if(item.equals(itemToFind)){
                 return item;
             }
         }

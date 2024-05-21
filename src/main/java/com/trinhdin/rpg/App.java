@@ -17,8 +17,7 @@ import java.io.IOException;
 @Slf4j
 public class App extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
-//        new GameScreen(stage);
+    public void start(Stage stage){
         try{
             FXMLLoader loader = new FXMLLoader(App.class.getResource("/fxml/MainMenu.fxml"));
             Parent root = loader.load();

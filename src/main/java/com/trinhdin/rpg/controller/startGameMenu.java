@@ -14,6 +14,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -76,9 +77,10 @@ public class startGameMenu extends menuController implements Initializable {
             return;
         }
         // render game screen
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         GameScreen gameScreen = new GameScreen(stage);
-        gameScreen.loadNewGame(heroType.getValue());
-
+        scene  = gameScreen.loadNewGame(heroType.getValue());
+        stage.setScene(scene);
+        stage.show();
     }
 }

@@ -1,5 +1,6 @@
 package com.trinhdin.rpg.controller;
 
+import com.trinhdin.rpg.App;
 import com.trinhdin.rpg.model.Combat;
 import com.trinhdin.rpg.model.GameConfig;
 import com.trinhdin.rpg.model.GameEntity.Character.Character;
@@ -10,8 +11,10 @@ import com.trinhdin.rpg.model.GameEntity.Interactable;
 import com.trinhdin.rpg.model.Map;
 import com.trinhdin.rpg.view.*;
 import javafx.animation.AnimationTimer;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Orientation;
 import javafx.geometry.Point2D;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -30,11 +33,10 @@ import java.io.*;
  */
 @Slf4j
 public class GameScreen {
-    private Canvas canvas;
     private Stage stage;
+    private Canvas canvas;
     private final Pane mainPane = new Pane();
-    private final BorderPane root = new BorderPane();
-    SplitPane splitPane = new SplitPane();
+    private Scene scene;
     SidePane sidePane;
     private final GameLog gameLog = new GameLog();
     private final int WIN_WIDTH = 800;
@@ -42,7 +44,7 @@ public class GameScreen {
     private final int CANVAS_WIDTH = 600;
     private final int CANVAS_HEIGHT = 400;
     @Getter
-    private Map map = new Map();
+    private final Map map = new Map();
     private Hero hero;
     private boolean isInventoryOpen = false;
     private boolean nearMonster = false;
@@ -61,14 +63,16 @@ public class GameScreen {
             log.error("Invalid Level: " + level);
         }
     }
-    public void loadGameFromFile(String fileName) throws IOException{
+    public Scene loadGameFromFile(String fileName) throws IOException{
         GameSaveLoad gameSaveLoad = new GameSaveLoad();
         gameSaveLoad.loadGame(fileName, map);
         initGame(false, map.getLevel());
         hero = map.getHero();
         start();
+
+        return scene;
     }
-    public void loadNewGame(String heroName){
+    public Scene loadNewGame(String heroName){
         log.info("Loading new game...");
         try{
             map.configureHero(heroName);
@@ -78,6 +82,7 @@ public class GameScreen {
         }catch (IllegalArgumentException e){
             log.error(e.getMessage());
         }
+        return scene;
     }
     private void start(){
         log.info("Starting game...");
@@ -87,7 +92,7 @@ public class GameScreen {
 
         sidePane = new SidePane(WIN_WIDTH - CANVAS_WIDTH);
         sidePane.displayHeroStat(hero);
-
+        SplitPane splitPane = new SplitPane();
         splitPane.setOrientation(Orientation.VERTICAL);
         splitPane.setDividerPositions(0.7);
         splitPane.getItems().addAll(mainPane,gameLog);
@@ -96,8 +101,8 @@ public class GameScreen {
         mainPane.setId("mainPane");
 
         sidePane.displayAbility(hero.getAbilities());
-
-        Scene scene = new Scene(root, WIN_WIDTH, WIN_HEIGHT);
+        BorderPane root = new BorderPane();
+        scene = new Scene(root, WIN_WIDTH, WIN_HEIGHT);
         scene.getStylesheets().add(getClass().getResource("/fxml/gameStyle.css").toExternalForm());
         root.setCenter(splitPane);
         root.setRight(sidePane);
@@ -121,8 +126,6 @@ public class GameScreen {
         };
         // start game loop
         animationTimer.start();
-        stage.setScene(scene);
-        stage.show();
     }
 
     private void onUpdate() {
@@ -283,5 +286,21 @@ public class GameScreen {
         gameLog.displayLogMsg("Exit game");
         log.info("Exit game");
         stage.close();
+    }
+    public void returnToMenu(){
+        String path = "MainMenu.fxml";
+        try{
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("/fxml/" + path));
+            Parent root = loader.load();
+            scene = new Scene(root);
+            String css = App.class.getResource("/fxml/mainMenu.css").toExternalForm();
+            scene.getStylesheets().add(css);
+            stage.setScene(scene);
+            stage.show();
+        }catch (NullPointerException e){
+            log.error("Error switching scene from file: " + path + " " + e.getMessage());
+        }catch (IOException e){
+            log.error("Error loading scene from file: " + path + " " + e.getMessage());
+        }
     }
 }

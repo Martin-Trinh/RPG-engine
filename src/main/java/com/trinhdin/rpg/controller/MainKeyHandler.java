@@ -5,8 +5,10 @@ import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.Map;
 import com.trinhdin.rpg.model.MoveDirection;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -80,14 +82,17 @@ public class MainKeyHandler implements EventHandler<KeyEvent>{
         // save game using ctrl + s
         if(keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.S) {
                 GameSaveLoad gameSaveLoad = new GameSaveLoad();
-                GameData gameData = new GameData(map.getEntities(), map.getMonsters(), hero);
+                // convert attribute from map class to game data
+                GameData gameData = new GameData(map.getEntities(), map.getMonsters(), hero, map.getLevel());
                 try{
                     gameSaveLoad.saveGame(gameData, "game1.json");
-                    log.info("Game saved");
-                    gameScreen.exit();
+                    log.info("Game saved to " + "game1.json");
+                    gameScreen.returnToMenu();
                 }catch (IOException e){
                     log.error("Error saving game: " + e.getMessage());
                 }
+        } else if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.C) {
+            gameScreen.exit();
         }
     }
 }

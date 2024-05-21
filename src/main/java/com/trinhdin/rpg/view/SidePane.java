@@ -1,8 +1,10 @@
 package com.trinhdin.rpg.view;
 
 import com.trinhdin.rpg.model.GameEntity.Ability.Ability;
+import com.trinhdin.rpg.model.GameEntity.Character.Character;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Character.Monster;
+import com.trinhdin.rpg.model.GameEntity.Character.Stat;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
@@ -14,9 +16,9 @@ import java.util.ArrayList;
  * SidePane class to display hero and monster stat and abilities
  */
 public class SidePane extends VBox {
-    private VBox heroStatPane = new VBox();
-    private VBox monsterStatPane = new VBox();
-    private VBox abilityPane = new VBox();
+    private final VBox heroStatPane = new VBox();
+    private final VBox monsterStatPane = new VBox();
+    private final VBox abilityPane = new VBox();
     public SidePane(int width){
         this.setStyle("-fx-border-color: black");
         this.setPrefWidth(width);
@@ -28,25 +30,28 @@ public class SidePane extends VBox {
         monsterStatPane.setPrefHeight(200);
         abilityPane.setPrefHeight(200);
     }
-
+    private VBox createStatPane(Character character){
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(
+        new Label("Current Health: " + character.getCurrentHealth()),
+                new Label("Current Mana: " + character.getCurrentMana()),
+                new Label("Max Health: " + character.getStat().getMaxHealth()),
+                new Label("Max Mana: " + character.getStat().getMaxMana()),
+                new Label("Strength: " + character.getStat().getStrength()),
+                new Label("Intelligence: " + character.getStat().getIntelligence()),
+                new Label("Agility: " + character.getStat().getAgility()),
+                new Label("Armor: " + character.getStat().getArmor()),
+                new Label("Magic Armor: " + character.getStat().getMagicArmor())
+        );
+        return vBox;
+    }
     public void displayHeroStat(Hero hero){
         SplitPane splitPane = new SplitPane();
-        VBox vBox1 = new VBox();
         VBox vBox2 = new VBox();
         heroStatPane.getChildren().clear();
-        Label heroLabel = new Label("Hero Stat:");
+        Label heroLabel = new Label(hero.getName() + " stat: ");
         heroLabel.getStyleClass().add("stat-heading");
-        vBox1.getChildren().addAll(
-            new Label("Current Health: " + hero.getCurrentHealth()),
-            new Label("Current Mana: " + hero.getCurrentMana()),
-            new Label("Max Health: " + hero.getStat().getMaxHealth()),
-            new Label("Max Mana: " + hero.getStat().getMaxMana()),
-            new Label("Strength: " + hero.getStat().getStrength()),
-            new Label("Intelligence: " + hero.getStat().getIntelligence()),
-            new Label("Agility: " + hero.getStat().getAgility()),
-            new Label("Armor: " + hero.getStat().getArmor()),
-            new Label("Magic Armor: " + hero.getStat().getMagicArmor())
-        );
+        VBox vBox1 = createStatPane(hero);
         vBox2.getChildren().addAll(
             new Label("Level: " + hero.getLevel()),
             new Label("Exp: " + hero.getExp())
@@ -57,22 +62,11 @@ public class SidePane extends VBox {
     }
     public void displayMonsterStat(Monster monster){
         SplitPane splitPane = new SplitPane();
-        VBox vBox1 = new VBox();
         VBox vBox2 = new VBox();
         monsterStatPane.getChildren().clear();
-        Label monsterLabel = new Label("Monster Stat:");
+        Label monsterLabel = new Label(monster.getName() + " stat: ");
         monsterLabel.getStyleClass().add("stat-heading");
-        vBox1.getChildren().addAll(
-                new Label("Current Health: " + monster.getCurrentHealth()),
-                new Label("Current Mana: " + monster.getCurrentMana()),
-                new Label("Max Health: " + monster.getStat().getMaxHealth()),
-                new Label("Max Mana: " + monster.getStat().getMaxMana()),
-                new Label("Strength: " + monster.getStat().getStrength()),
-                new Label("Intelligence: " + monster.getStat().getIntelligence()),
-                new Label("Agility: " + monster.getStat().getAgility()),
-                new Label("Armor: " + monster.getStat().getArmor()),
-                new Label("Magic Armor: " + monster.getStat().getMagicArmor())
-        );
+        VBox vBox1 = createStatPane(monster);
         vBox2.getChildren().addAll(
                 new Label("Level: " + monster.getLevel()),
                 new Label("Exp: " + monster.getExpWorth())

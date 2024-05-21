@@ -21,6 +21,7 @@ public class Map {
     private static final String PATH_PREFIX= "src/main/resources/gameMap/";
     @Setter
     // level of the map
+    @Getter
     private int level;
     private final HashMap<Point2D, Tile> tiles = new HashMap<>();
     @Setter
@@ -169,6 +170,7 @@ public class Map {
      * @throws IOException error reading map file
      */
     public void loadMap(int level, boolean loadEntity) throws IndexOutOfBoundsException, IOException{
+        this.level = level;
         log.info("Loading map level: " + level);
         String mapPath = GameConfig.getInstance().getMapPath(level);
         try {
@@ -185,7 +187,7 @@ public class Map {
                 for (int i = 0; i < line.length(); i++) {
                     Point2D pos = new Point2D(i, lineCnt);
                     char c = line.charAt(i);
-                    if(loadEntity && !loadCharToTile(pos, c)){
+                    if(!loadCharToTile(pos, c) && loadEntity){
                         loadCharToEntity(pos, c);
                     }
                 }

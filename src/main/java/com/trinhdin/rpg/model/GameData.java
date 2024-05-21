@@ -10,20 +10,23 @@ import com.trinhdin.rpg.model.GameEntity.Item.Inventory;
 import com.trinhdin.rpg.model.GameEntity.Item.Item;
 import javafx.geometry.Point2D;
 import javafx.util.Pair;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 /**
  * GameData class to store game data using Jackson
  */
+@Getter
 public class GameData {
+    private int level;
     private ArrayList<Pair<String, Entity>> entities = new ArrayList<>();
     private ArrayList<Monster> monsters;
     private Hero hero;
     private ArrayList<Pair<String, Item>> inventory = new ArrayList<>();
     public GameData(HashMap<Point2D, Entity> entities,
                     HashMap<Point2D,Monster> monsters,
-                    Hero hero) {
+                    Hero hero, int level) {
         for(Entity entity : entities.values()){
             this.entities.add(new Pair<>(entity.getClass().getSimpleName(), entity));
         }
@@ -32,20 +35,6 @@ public class GameData {
         for(Item item : hero.getInventory().getItems()){
             inventory.add(new Pair<>(item.getClass().getSimpleName(), item));
         }
-    }
-    public ArrayList<Pair<String, Entity>> getEntities() {
-        return entities;
-    }
-
-    public ArrayList<Monster> getMonsters() {
-        return monsters;
-    }
-
-    public Hero getHero() {
-        return hero;
-    }
-
-    public ArrayList<Pair<String, Item>> getInventory() {
-        return inventory;
+        this.level = level;
     }
 }

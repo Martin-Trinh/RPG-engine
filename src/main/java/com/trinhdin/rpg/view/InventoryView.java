@@ -19,25 +19,30 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * InventoryView class to display hero inventory and handle key event
  */
 public class InventoryView{
     Hero hero;
+    @Getter
     VBox inventoryPane = new VBox();
     GridPane gridPane = new GridPane();
     private final int MAX_COL = 4;
-    private final int maxRow;
+    private final int MAX_ROW;
     private final Inventory inventory;
+    @Setter
     private EquipmentView equipmentView;
-    private GameLog gameLog;
-    private SidePane sidepane;
+    private final GameLog gameLog;
+    private final SidePane sidepane;
     public InventoryView(Hero hero, GameLog gameLog, SidePane sidePane) {
         this.hero = hero;
         this.inventory = hero.getInventory();
         this.gameLog = gameLog;
         this.sidepane = sidePane;
-        maxRow = (int) Math.ceil(inventory.getMaxSlot() * 1.0 / MAX_COL);
+        MAX_ROW = (int) Math.ceil(inventory.getMaxSlot() * 1.0 / MAX_COL);
         Label text = new Label("Hero Inventory");
         text.getStyleClass().add("heading");
         inventoryPane.setPrefSize(300,250);
@@ -45,9 +50,10 @@ public class InventoryView{
         inventoryPane.getChildren().addAll(text, createInventoryPane());
         addKeyHandler();
     }
-    public VBox getInventoryPane() {
-        return inventoryPane;
-    }
+
+    /**
+     * Add key handler to inventory pane
+     */
     private void addKeyHandler(){
         inventoryPane.requestFocus();
         inventoryPane.setFocusTraversable(true);
@@ -70,23 +76,25 @@ public class InventoryView{
                         break;
                     case UP:
                         if(--currentRow < 0){
-                            currentRow = maxRow - 1;
+                            currentRow = MAX_ROW - 1;
                         }
                         break;
                     case DOWN:
-                        if(++currentRow > maxRow - 1){
+                        if(++currentRow > MAX_ROW - 1){
                             currentRow = 0;
                         }
                         break;
                     case E:
-                        System.out.println("Use " + selectedIndex);
-                        inventory.useItem(selectedIndex, hero);
+                        // use item in inventory
+                        if(inventory.useItem(selectedIndex, hero)){
+                            refreshInventoryPane();
+                            equipmentView.refreshEquipmentPane();
+                            sidepane.displayHeroStat(hero);
+                        }
                         gameLog.displayLogMsg(inventory.getGameMsg());
-                        refreshInventoryPane();
-                        equipmentView.refreshEquipmentPane();
-                        sidepane.displayHeroStat(hero);
                         break;
                     case D:
+                        // remove item from inventory
                         inventory.removeItem(selectedIndex);
                         gameLog.displayLogMsg(inventory.getGameMsg());
                         refreshInventoryPane();
@@ -103,6 +111,7 @@ public class InventoryView{
                 highlightItem(selectedIndex,"red");
                 // prevent event from bubbling up
                 if(event.getCode() != KeyCode.I)
+                    // prevent event from bubbling up to main key handler
                     event.consume();
             }
         });
@@ -116,7 +125,7 @@ public class InventoryView{
         gridPane.setVgap(20);
         gridPane.setHgap(20);
 
-        for(int row = 0; row < maxRow; row++){
+        for(int row = 0; row < MAX_ROW; row++){
             for (int col = 0; col < MAX_COL; col++) {
                 int index = row * MAX_COL + col;
                 StackPane pane = new StackPane();
@@ -132,11 +141,13 @@ public class InventoryView{
         highlightItem(0,"red");
         return gridPane;
     }
+
+    /**
+     * Highlight item in inventory
+     * @param index index of item
+     * @param color color to highlight
+     */
     private void highlightItem(int index,String color){
         gridPane.getChildren().get(index).setStyle("-fx-border-color: " + color);
     }
-    public void setEquipmentView(EquipmentView equipmentView) {
-        this.equipmentView = equipmentView;
-    }
-
 }

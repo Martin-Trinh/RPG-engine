@@ -2,6 +2,7 @@ package com.trinhdin.rpg.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.trinhdin.rpg.model.GameConfig;
 import com.trinhdin.rpg.model.GameData;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Character.Monster;
@@ -22,10 +23,21 @@ import java.util.HashMap;
 @Slf4j
 public class GameSaveLoad {
     ObjectMapper objectMapper = new ObjectMapper();
+    GameConfig gameConfig = GameConfig.getInstance();
     private static final String PATH_PREFIX = "src/main/resources/gameData/";
+
+    /**
+     * Load game data from json file to jsonNode using Jackson library
+     * @param fileName file name
+     * @param map map object
+     * @throws IOException if file not found
+     */
     public void loadGame(String fileName, Map map) throws IOException{
         try {
+            log.info("Loading game from " + fileName);
             JsonNode node = objectMapper.readTree(new File(PATH_PREFIX + fileName));
+            System.out.println(node.get("level").asInt());
+            map.setLevel(node.get("level").asInt());
             map.setHero(loadHero(node));
             map.setEntities(loadEntities(node.get("entities")));
             map.setMonsters(loadMonsters(node.get("monsters")));
@@ -35,6 +47,12 @@ public class GameSaveLoad {
         }
     }
 
+    /**
+     * Save game data to json file using Jackson library
+     * @param data game data
+     * @param fileName file name
+     * @throws IOException if file not found
+     */
     public void saveGame(GameData data, String fileName) throws IOException{
         try {
             objectMapper.writeValue(new File(PATH_PREFIX + fileName), data);
@@ -43,14 +61,45 @@ public class GameSaveLoad {
             throw new IOException("Error saving game to file: " + PATH_PREFIX + fileName);
         }
     }
+
+    /**
+     * Load hero from json node
+     * @param node json node
+     * @return hero object
+     */
     private Hero loadHero(JsonNode node) {
         Inventory inventory = new Inventory(node.get("inventory"));
         Hero hero = new Hero(node.get("hero"));
+        gameConfig.setAbilityForHero(hero);
         for(Item item : inventory.getItems()){
             hero.getInventory().addItem(item);
         }
+        log.info("Hero loaded: " + hero.getName());
         return hero;
     }
+
+    /**
+     * Load all monsters from json node to hashmap
+     * @param node json node
+     * @return monsters hashmap
+     */
+    private HashMap<Point2D, Monster> loadMonsters(JsonNode node) {
+        HashMap<Point2D, Monster> monsters = new HashMap<>();
+        for (JsonNode monsterNode : node) {
+            Monster monster = new Monster(monsterNode);
+            gameConfig.setAbilityForMonster(monster);
+            monsters.put(monster.getPos(), monster);
+        }
+        log.info("Monsters loaded: " + monsters.size());
+        return monsters;
+    }
+
+    /**
+     * Load all entities from json node to hashmap
+     * @param node json node
+     * @return entities hashmap
+     * @throws IllegalArgumentException if entity name is invalid
+     */
     private HashMap<Point2D, Entity> loadEntities(JsonNode node) throws IllegalArgumentException{
         HashMap<Point2D, Entity> entities = new HashMap<>();
         for (JsonNode entityNode : node) {
@@ -80,16 +129,8 @@ public class GameSaveLoad {
                     throw new IllegalArgumentException("Invalid entity name" + entityNode.get("key").asText());
             }
         }
-        System.out.println(entities.size());
+        log.info("Entities loaded: " + entities.size());
         return entities;
     }
-    private HashMap<Point2D, Monster> loadMonsters(JsonNode node) {
-        HashMap<Point2D, Monster> monsters = new HashMap<>();
-        for (JsonNode monsterNode : node) {
-            Monster monster = new Monster(monsterNode);
-            monsters.put(monster.getPos(), monster);
-        }
-        System.out.println(monsters.size());
-        return monsters;
-    }
+
 }

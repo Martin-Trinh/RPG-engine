@@ -2,11 +2,13 @@ package com.trinhdin.rpg.view;
 
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 /**
  * GameLog class for displaying game log on screen
  */
+@Slf4j
 public class GameLog extends VBox {
     private final int MAX_LOG_MSG = 5;
     public GameLog(){
@@ -16,7 +18,16 @@ public class GameLog extends VBox {
     public void clearLog(){
         this.getChildren().clear();
     }
+
+    /**
+     * Display log message on log box
+     * @param logMsg log message to display
+     */
     public void displayLogMsg(String logMsg){
+        if(logMsg.trim().isEmpty()){
+            log.warn("No message to display");
+            return;
+        }
         String []output = logMsg.split("\n");
         for(String msg : output){
             addLogMsg(msg);
@@ -27,10 +38,5 @@ public class GameLog extends VBox {
             this.getChildren().remove(0);
         }
         this.getChildren().add(new Text(logMsg));
-    }
-    public void displayLogMsg(ArrayList<String> logMsgs){
-        for(String logMsg : logMsgs){
-            displayLogMsg(logMsg);
-        }
     }
 }
