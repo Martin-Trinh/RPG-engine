@@ -1,0 +1,9 @@
+module:com.trinhdin.rpg
+com.trinhdin.rpg
+com.trinhdin.rpg.controller
+com.trinhdin.rpg.model
+com.trinhdin.rpg.model.GameEntity
+com.trinhdin.rpg.model.GameEntity.Ability
+com.trinhdin.rpg.model.GameEntity.Character
+com.trinhdin.rpg.model.GameEntity.Item
+com.trinhdin.rpg.view
