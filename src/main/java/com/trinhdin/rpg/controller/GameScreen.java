@@ -67,6 +67,12 @@ public class GameScreen {
             log.error("Invalid Level: " + level);
         }
     }
+
+    /**
+     * Load saved game from file
+     * @param fileName name of the file to load
+     * @throws IOException if error occurs while loading file
+     */
     public void loadGameFromFile(String fileName) throws IOException{
         GameSaveLoad gameSaveLoad = new GameSaveLoad();
         gameSaveLoad.loadGame(fileName, map);
@@ -74,6 +80,11 @@ public class GameScreen {
         hero = map.getHero();
         start();
     }
+
+    /**
+     * Load new game from configuration file
+     * @param heroName name of the hero
+     */
     public void loadNewGame(String heroName){
         log.info("Loading new game...");
         try{
@@ -218,6 +229,10 @@ public class GameScreen {
         map.getEntities().values().forEach(this::drawEntity);
         map.getMonsters().values().forEach(this::drawEntity);
     }
+
+    /**
+     * Open inventory view and equipment view to display all items from hero
+     */
     public void openInventory(){
         gameLog.displayLogMsg("Open inventory");
         log.info("Open inventory");
@@ -243,6 +258,10 @@ public class GameScreen {
         splitPane.setLayoutY(10);
         splitPane.setSpacing(10);
     }
+
+    /**
+     * Close inventory view
+     */
     public void closeInventory(){
         gameLog.displayLogMsg("Close inventory");
         log.info("Close inventory");
@@ -250,6 +269,10 @@ public class GameScreen {
         mainPane.getChildren().remove(0);
         mainPane.getChildren().add(canvas);
     }
+
+    /**
+     * Open quest view to display all quests from hero
+     */
     public void openQuestView(){
         gameLog.displayLogMsg("Open quest view");
         log.info("Open quest view");
@@ -258,6 +281,10 @@ public class GameScreen {
         mainPane.getChildren().add(questView.createQuestPane());
         questViewOpen = true;
     }
+
+    /**
+     * Close quest view
+     */
     public void closeQuestView(){
         gameLog.displayLogMsg("Close quest view");
         log.info("Close quest view");
@@ -265,6 +292,10 @@ public class GameScreen {
         mainPane.getChildren().add(canvas);
         questViewOpen = false;
     }
+
+    /**
+     * Trigger interaction with entity nearby
+     */
     public void interactionWithFKey(){
         Entity entity = map.isEntityNearby();
         if (entity != null) {
@@ -277,6 +308,10 @@ public class GameScreen {
             log.info("No entity to interact with!");
         }
     }
+
+    /**
+     * Enter combat if monster nearby
+     */
     public void enterCombatWithMonster(){
         Monster monster = map.isMonsterNearby();
         if(monster != null){
@@ -288,17 +323,32 @@ public class GameScreen {
             sidePane.displayMonsterStat(monster);
         }
     }
+
+    /**
+     * Exit application
+     */
     public void exit(){
         gameLog.displayLogMsg("Exit game");
         log.info("Exit game");
         stage.close();
     }
+
+    /**
+     * Show alert dialog with title and question to confirm
+     * @param title title of the alert
+     * @param question question to ask
+     * @return true if user click OK, false if user click cancel
+     */
     public boolean showAlert(String title, String question){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
         alert.setHeaderText(question);
         return alert.showAndWait().get() == ButtonType.OK;
     }
+
+    /**
+     * Return to main menu loaded from MainMenu.fxml
+     */
     public void returnToMenu(){
         String path = "MainMenu.fxml";
         try{
@@ -315,6 +365,10 @@ public class GameScreen {
             log.error("Error loading scene from file: " + path + " " + e.getMessage());
         }
     }
+
+    /**
+     * Display saving dialog for user to enter file name
+     */
     public void showSavingView(){
         String fxmlPath = "/fxml/savingView.fxml";
         try{
@@ -333,6 +387,12 @@ public class GameScreen {
             log.error("Error loading scene from file: " + fxmlPath + "\n" + e.getMessage());
         }
     }
+
+    /**
+     * Save game to file then return to main menu
+     * @param filename name of the file to save
+     * @param errorMsg error message to display if error occurs
+     */
     public void saveGame(String filename, Text errorMsg) {
         try {
             log.info("Saving game to: " + filename + ".json");
@@ -348,6 +408,11 @@ public class GameScreen {
             log.error(e.getMessage());
         }
     }
+
+    /**
+     * Return to game screen
+     * @param event action event
+     */
     public void returnToGame(ActionEvent event){
         stage.setScene(scene);
         stage.show();

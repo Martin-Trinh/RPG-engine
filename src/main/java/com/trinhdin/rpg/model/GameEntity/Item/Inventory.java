@@ -42,7 +42,7 @@ public class Inventory implements LogGameMsg {
     }
     /**
      * Add item to inventory
-     * @param item
+     * @param item item to add
      * @return true if item is added, false if inventory is full
      */
     public boolean addItem(Item item){
@@ -53,7 +53,7 @@ public class Inventory implements LogGameMsg {
     }
     /**
      * Remove item from inventory by index
-     * @param index
+     * @param index index of item in inventory
      * @return true if item is removed, false if index is out of bound
      */
     public boolean removeItem(int index){
@@ -66,7 +66,7 @@ public class Inventory implements LogGameMsg {
     }
     /**
      * Remove item from inventory by item base on item name
-     * @param item
+     * @param item  item to remove
      * @return true if item is removed, false if item is not found
      */
     public boolean removeItem(Item item){
@@ -94,7 +94,7 @@ public class Inventory implements LogGameMsg {
     }
     /**
      * Find item in inventory by item name
-     * @param itemToFind
+     * @param itemToFind item to find
      * @return item if found, null if not found
      */
     public Item findItem(Item itemToFind){

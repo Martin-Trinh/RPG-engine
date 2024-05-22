@@ -63,6 +63,12 @@ public class Hero extends Character {
         level = node.get("level").asInt();
         screenPos = new Point2D(node.get("screenPos").get("x").asDouble(), node.get("screenPos").get("y").asDouble());
     }
+
+    /**
+     * Set screen position for hero for displaying in the middle of canvas
+     * @param canvasWidth canvas width
+     * @param canvasHeight canvas height
+     */
     public void setScreenPos(int canvasWidth, int canvasHeight) {
         // set screen position for hero to middle of canvas
         double screenX = canvasWidth/2.0 - Entity.getWidth()/2.0;
@@ -71,7 +77,7 @@ public class Hero extends Character {
     }
     /**
      * Add ability to hero
-     * @param ability
+     * @param ability ability to add
      */
     public void addAbility(Ability ability) {
         if (abilities.size() < MAX_ABILITY) {
@@ -155,7 +161,7 @@ public class Hero extends Character {
     }
     /**
      * Unequip equipment from hero
-     * @param type
+     * @param type type of equipment
      * @return true if unequipped
      */
     public boolean unequip(EquipmentType type) {
@@ -177,15 +183,15 @@ public class Hero extends Character {
     }
     /**
      * Add quest to the hero from npc
-     * @param quest
+     * @param quest quest to add
      */
     public void addQuest(Quest quest) {
         quests.add(quest);
     }
     /**
      * Complete quest after killing monster
-     * @param index
-     * @param monsterKilled
+     * @param index index of quest
+     * @param monsterKilled monster killed
      */
     public boolean completeQuest(Monster monsterKilled) {
         for(Quest quest : quests){
@@ -197,13 +203,11 @@ public class Hero extends Character {
         }
         return false;
     }
-    public boolean allQuestCompleted(){
-        for(Quest quest : quests){
-            if(!quest.isCompleted())
-                return false;
-        }
-        return true;
-    }
+    /**
+     * Check if quest is completed
+     * @param quest quest to check
+     * @return true if quest is completed, false otherwise
+     */
     public boolean isQuestCompleted(Quest quest) {
         for(Quest q : quests){
             if(q.equals(quest))

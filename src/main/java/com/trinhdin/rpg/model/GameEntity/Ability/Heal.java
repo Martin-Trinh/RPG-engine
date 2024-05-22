@@ -13,6 +13,11 @@ public class Heal extends Ability{
             throw new IllegalArgumentException("Invalid health or mana value");
       this.amount = amount;
     }
+
+    /**
+     * Load heal ability from json node
+     * @param node json node
+     */
     public Heal(JsonNode node){
         super(node);
         this.amount = node.get("amount").asInt();

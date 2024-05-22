@@ -69,9 +69,22 @@ public class GameConfig {
             heroes.put(node.get("name").asText(), objectMapper.convertValue(node.get("stat"), Stat.class));
         });
     }
+
+    /**
+     * Get map path from config file
+     * @param level level
+     * @return map path
+     */
     public String getMapPath(int level){
         return maps.get(level);
     }
+
+    /**
+     * Load abilities from config file
+     * @param type ability type
+     * @param index index of ability
+     * @return Ability
+     */
     public Ability getAbilityFromConfig(String type, int index){
         Ability newAbility = null;
         try{
@@ -110,6 +123,10 @@ public class GameConfig {
         }
         return null;
     }
+    /**
+     * Load ability for hero from config file
+     * @param hero hero
+     */
     public void setAbilityForHero(Hero hero){
         for(JsonNode node : heroNode){
             if(node.get("name").asText().equals(hero.getName())){
@@ -123,6 +140,11 @@ public class GameConfig {
             }
         }
     }
+
+    /**
+     * Load ability for monster from config file
+     * @param monster monster
+     */
     public void setAbilityForMonster(Monster monster){
         for(JsonNode node: monstersNode){
             if(node.get("name").asText().equals(monster.getName())){
