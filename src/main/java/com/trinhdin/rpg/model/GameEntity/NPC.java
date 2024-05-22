@@ -2,15 +2,14 @@ package com.trinhdin.rpg.model.GameEntity;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
-import com.trinhdin.rpg.model.GameEntity.Item.Item;
 import com.trinhdin.rpg.model.GameEntity.Item.ObstacleItem;
-import com.trinhdin.rpg.model.Quest;
+import com.trinhdin.rpg.model.GameEntity.Character.Quest;
 import javafx.geometry.Point2D;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
 /**
  * NPC class to represent NPC entity
  */

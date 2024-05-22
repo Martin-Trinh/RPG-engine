@@ -66,12 +66,6 @@ public class Combat {
                         monster.castAbility(hero);
                         gameLog.displayLogMsg(monster.getGameMsg());
                     break;
-                case KeyCode.R:
-                        hero.castAbility(3, monster);
-                        gameLog.displayLogMsg(hero.getGameMsg());
-                        monster.castAbility(hero);
-                        gameLog.displayLogMsg(monster.getGameMsg());
-                    break;
                 case KeyCode.ESCAPE:
                     // escape from combat
                     this.end();

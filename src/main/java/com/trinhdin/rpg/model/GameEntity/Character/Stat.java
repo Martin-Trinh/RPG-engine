@@ -31,7 +31,7 @@ public class Stat {
         this.magicArmor = magicArmor;
     }
 
-    public void add(Stat stat) {
+    public Stat add(Stat stat) {
         maxHealth += stat.maxHealth;
         maxMana += stat.maxMana;
         strength += stat.strength;
@@ -39,6 +39,24 @@ public class Stat {
         agility += stat.agility;
         armor += stat.armor;
         magicArmor += stat.magicArmor;
+        negativeStatCheck();
+        return this;
+    }
+    private void negativeStatCheck(){
+        if(maxHealth < 0)
+            maxHealth = 0;
+        if(maxMana < 0)
+            maxMana = 0;
+        if(strength < 0)
+            strength = 0;
+        if(intelligence < 0)
+            intelligence = 0;
+        if(agility < 0)
+            agility = 0;
+        if(armor < 0)
+            armor = 0;
+        if(magicArmor < 0)
+            magicArmor = 0;
     }
     public Stat subtract(Stat stat) {
         if(stat.maxHealth >= 0) {
@@ -52,16 +70,7 @@ public class Stat {
         agility -= stat.agility;
         armor -= stat.armor;
         magicArmor -= stat.magicArmor;
-        if(strength < 0)
-            strength = 0;
-        if(intelligence < 0)
-            intelligence = 0;
-        if(agility < 0)
-            agility = 0;
-        if(armor < 0)
-            armor = 0;
-        if(magicArmor < 0)
-            magicArmor = 0;
+        negativeStatCheck();
         return this;
     }
     public Stat multiply(int num) {
@@ -99,5 +108,14 @@ public class Stat {
     }
     public int getMagicArmor() {
         return magicArmor;
+    }
+    public boolean equals(Stat other) {
+        return maxHealth == other.maxHealth &&
+                maxMana == other.maxMana &&
+                strength == other.strength &&
+                intelligence == other.intelligence &&
+                agility == other.agility &&
+                armor == other.armor &&
+                magicArmor == other.magicArmor;
     }
 }

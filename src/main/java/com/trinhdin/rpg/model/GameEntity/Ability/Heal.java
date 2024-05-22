@@ -7,7 +7,7 @@ import com.trinhdin.rpg.model.GameEntity.Character.Character;
  */
 public class Heal extends Ability{
     private int amount = 0;
-    public Heal(String name, int cost, int cooldown, int amount, int mana){
+    public Heal(String name, int cost, int cooldown, int amount){
         super(name, cost, cooldown);
         if(amount <= 0)
             throw new IllegalArgumentException("Invalid health or mana value");

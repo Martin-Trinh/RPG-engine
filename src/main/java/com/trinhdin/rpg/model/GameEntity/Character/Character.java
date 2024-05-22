@@ -1,5 +1,6 @@
 package com.trinhdin.rpg.model.GameEntity.Character;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trinhdin.rpg.model.GameEntity.Entity;
@@ -10,20 +11,18 @@ import lombok.Getter;
 /**
  * Character class to represent monsters and hero in game
  */
+@Getter
 public abstract class Character extends Entity {
     protected double speed;
     protected MoveDirection direction;
-    @Getter
     protected Stat stat;
-    @Getter
     protected int currentHealth;
-    @Getter
     protected int currentMana;
+    @JsonIgnore
     static protected int boundOffset = 8;
    static public int getOffset() {
         return boundOffset;
     }
-
     public Character(Point2D pos, String name, String fileName, double speed, Stat stat) {
         super(pos, name, fileName);
         this.speed = speed;
@@ -38,12 +37,6 @@ public abstract class Character extends Entity {
         this.stat = objectMapper.convertValue(node.get("stat"), Stat.class);
         this.currentHealth = node.get("currentHealth").asInt();
         this.currentMana = node.get("currentMana").asInt();
-    }
-    public double getSpeed() {
-        return speed;
-    }
-    public MoveDirection getDirection() {
-        return direction;
     }
     public void moveUp() {
         direction = MoveDirection.UP;

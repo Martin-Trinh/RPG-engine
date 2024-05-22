@@ -1,7 +1,6 @@
-package com.trinhdin.rpg.model;
+package com.trinhdin.rpg.model.GameEntity.Character;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.trinhdin.rpg.model.GameEntity.Character.Monster;
 import lombok.Getter;
 
 /**

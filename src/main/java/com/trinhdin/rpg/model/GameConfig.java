@@ -8,6 +8,7 @@ import com.trinhdin.rpg.model.GameEntity.Ability.Heal;
 import com.trinhdin.rpg.model.GameEntity.Ability.ModifyStat;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Character.Monster;
+import com.trinhdin.rpg.model.GameEntity.Character.Quest;
 import com.trinhdin.rpg.model.GameEntity.Character.Stat;
 import com.trinhdin.rpg.model.GameEntity.Item.*;
 import com.trinhdin.rpg.model.GameEntity.NPC;

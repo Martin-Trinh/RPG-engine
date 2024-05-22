@@ -1,6 +1,6 @@
 package com.trinhdin.rpg.view;
 
-import com.trinhdin.rpg.model.Quest;
+import com.trinhdin.rpg.model.GameEntity.Character.Quest;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
