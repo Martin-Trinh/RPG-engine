@@ -33,6 +33,7 @@ public class Consumable extends Item {
         if(hero.getCurrentHealth() < hero.getStat().getMaxHealth() || hero.getCurrentMana() < hero.getStat().getMaxMana()){
             hero.setCurrentHealth(hero.getCurrentHealth() + health);
             hero.setCurrentMana(hero.getCurrentMana() + mana);
+            gameMsg = "Used " + this.getName() + " health +" + health + " mana +" + mana;
             return true;
         }
         gameMsg = "Cannot use " + this.getName() + " hero is full health and mana";

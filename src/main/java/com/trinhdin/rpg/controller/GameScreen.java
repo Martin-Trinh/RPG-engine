@@ -277,7 +277,7 @@ public class GameScreen {
             log.info("No entity to interact with!");
         }
     }
-    public void checkMonsterForCombat(){
+    public void enterCombatWithMonster(){
         Monster monster = map.isMonsterNearby();
         if(monster != null){
             gameLog.displayLogMsg("Entering combat with " + monster.getName());

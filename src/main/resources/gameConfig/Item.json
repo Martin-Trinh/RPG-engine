@@ -5,7 +5,7 @@
       "name": "Health Potion",
       "fileName": "Items/flasks_red.png",
       "description": "Health Potion",
-      "health": 10,
+      "health": 50,
       "mana": 0
     },
     {
@@ -14,7 +14,7 @@
       "fileName": "Items/flasks_blue.png",
       "description": "Mana Potion",
       "health": 0,
-      "mana": 10
+      "mana": 50
     }
   ],
   "Equipment": [
@@ -43,7 +43,7 @@
         "maxHealth": 0,
         "maxMana": 100,
         "strength": 0,
-        "intelligence": 50,
+        "intelligence": 10,
         "agility": 0,
         "armor": 0,
         "magicArmor": 0
@@ -58,11 +58,11 @@
       "stat": {
         "maxHealth": 0,
         "maxMana": 0,
-        "strength": 50,
-        "intelligence": 50,
+        "strength": 5,
+        "intelligence": 5,
         "agility": 0,
-        "armor": 10,
-        "magicArmor": 10
+        "armor": 0,
+        "magicArmor": 0
       },
       "type": "WEAPON"
     },
@@ -77,7 +77,7 @@
         "strength": 0,
         "intelligence": 0,
         "agility": 0,
-        "armor": 30,
+        "armor": 10,
         "magicArmor": 10
       },
       "type": "SHIELD"
@@ -88,13 +88,13 @@
       "fileName": "Items/armory/boots.png",
       "description": "Boots",
       "stat": {
-        "maxHealth": 100,
+        "maxHealth": 200,
         "maxMana": 0,
         "strength": 0,
         "intelligence": 0,
         "agility": 10,
-        "armor": 30,
-        "magicArmor": 10
+        "armor": 0,
+        "magicArmor": 0
       },
       "type": "BOOTS"
     },
@@ -104,12 +104,12 @@
       "fileName": "Items/armory/helmet.png",
       "description": "Helmet",
       "stat": {
-        "maxHealth": 100,
+        "maxHealth": 200,
         "maxMana": 0,
         "strength": 0,
         "intelligence": 0,
         "agility": 0,
-        "armor": 30,
+        "armor": 10,
         "magicArmor": 10
       },
       "type": "HELMET"
@@ -120,12 +120,12 @@
       "fileName": "Items/armory/platemail.png",
       "description": "Plate mail",
       "stat": {
-        "maxHealth": 200,
+        "maxHealth": 300,
         "maxMana": 0,
         "strength": 0,
         "intelligence": 0,
         "agility": 0,
-        "armor": 50,
+        "armor": 20,
         "magicArmor": 20
       },
       "type": "ARMOR"
@@ -136,10 +136,10 @@
       "fileName": "Items/accessory/ring.png",
       "description": "Amulet",
       "stat": {
-        "maxHealth": 0,
-        "maxMana": 10,
+        "maxHealth": 50,
+        "maxMana": 20,
         "strength": 0,
-        "intelligence": 20,
+        "intelligence": 10,
         "agility": 0,
         "armor": 0,
         "magicArmor": 10

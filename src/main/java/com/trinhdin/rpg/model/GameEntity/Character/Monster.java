@@ -23,6 +23,8 @@ public class Monster extends Character {
         this.expWorth = expWorth * level;
         this.level = level;
         this.stat = stat.multiply(level);
+        currentHealth = stat.getMaxHealth();
+        currentMana = stat.getMaxMana();
     }
     public Monster(JsonNode node){
         super(node);

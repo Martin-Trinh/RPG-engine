@@ -8,11 +8,11 @@
       "I have a quest for you"
     ],
     "questForHero": {
-      "name": "Quest",
+      "name": "Quest kill goblin",
       "description": "Find the key",
       "monsterToKill": "Goblin"
     },
-    "itemForHero": 1
+    "itemForHero": 0
   },
   {
     "char": "!",
@@ -23,7 +23,7 @@
       "I have a quest for you"
     ],
     "questForHero": {
-      "name": "Quest",
+      "name": "Quest kill orc",
       "description": "Kill monster orc to get a bomb, that you can use to destroy the barrel",
       "monsterToKill": "Orc"
     },

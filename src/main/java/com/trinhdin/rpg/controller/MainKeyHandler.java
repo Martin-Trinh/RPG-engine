@@ -68,8 +68,8 @@ public class MainKeyHandler implements EventHandler<KeyEvent>{
                 }
                 break;
             case E:
-                // enter comabat with monster if monster is nearby
-                gameScreen.checkMonsterForCombat();
+                // enter combat with monster if monster is nearby
+                gameScreen.enterCombatWithMonster();
                 break;
             case Q:
                 // open or close quest view

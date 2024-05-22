@@ -75,7 +75,7 @@ public class Combat {
             }
             sidePane.displayHeroStat(hero);
             sidePane.displayMonsterStat(monster);
-            event.consume();
+
             // check if combat ended
             if(monster.isDead()){
                 gameLog.displayLogMsg("You defeated " + monster.getName());
@@ -85,8 +85,11 @@ public class Combat {
                 // gain exp
                 gameLog.displayLogMsg("You gained " + monster.getExpWorth() + " exp");
                 // check if hero leveled up
-                if(hero.gainExp(monster.getExpWorth()))
+                if(hero.gainExp(monster.getExpWorth())){
                     gameLog.displayLogMsg(hero.getGameMsg());
+                }
+                sidePane.displayHeroStat(hero);
+
                 // check killed monster complete any quest
                 if(hero.completeQuest(monster)){
                     gameLog.displayLogMsg(monster.getGameMsg());
@@ -98,6 +101,8 @@ public class Combat {
                 log.info("You have been defeated by " + monster.getName());
                 this.end();
             }
+            if(event.getCode() != KeyCode.ESCAPE)
+                event.consume();
         });
     }
 

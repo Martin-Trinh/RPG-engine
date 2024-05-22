@@ -10,11 +10,13 @@ import com.trinhdin.rpg.model.GameEntity.Item.Inventory;
 import javafx.geometry.Point2D;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 /**
  * Hero class to represent hero in game
  */
+@Slf4j
 public class Hero extends Character {
     @JsonIgnore
     @Getter
@@ -85,9 +87,8 @@ public class Hero extends Character {
         if (index >= abilities.size() || index < 0) {
             gameMsg = "Ability not found";
         } else {
-            gameMsg = name + " cast " + abilities.get(index).getName() + " on " + target.getName();
             abilities.get(index).use(this, target);
-            gameMsg += "\n" + abilities.get(index).getGameMsg();
+            gameMsg = abilities.get(index).getGameMsg();
         }
     }
     /**
@@ -120,10 +121,14 @@ public class Hero extends Character {
      */
     private boolean equip(int index, Equipment equipment) {
         if (equipments[index] == null) {
+            gameMsg = equipment.getName() + " equipped to " + equipment.getType().name() ;
             stat.add(equipment.getStatIncrease());
+            setCurrentHealth(currentHealth += equipment.getStatIncrease().getMaxHealth() / 2);
+            setCurrentMana(currentMana += equipment.getStatIncrease().getMaxMana() / 2);
             equipments[index] = equipment;
             return true;
         }
+        gameMsg = "Equipment slot is occupied!";
         return false;
     }
     /**
@@ -186,6 +191,7 @@ public class Hero extends Character {
         for(Quest quest : quests){
             if(quest.complete(monsterKilled)){
                 gameMsg = "Quest " + quest.getName() + " completed";
+                log.info(gameMsg);
                 return true;
             }
         }
@@ -199,7 +205,11 @@ public class Hero extends Character {
         return true;
     }
     public boolean isQuestCompleted(Quest quest) {
-        return quests.contains(quest) && quest.isCompleted();
+        for(Quest q : quests){
+            if(q.equals(quest))
+                return q.isCompleted();
+        }
+        return false;
     }
     /**
      * Gain exp after killing monster
@@ -227,6 +237,9 @@ public class Hero extends Character {
         // reset exp
         exp = 0;
         stat.add(levelUpStat);
+        // increase current health and mana by half of max health and mana
+        setCurrentHealth(currentHealth + levelUpStat.getMaxHealth()/2);
+        setCurrentMana(currentMana + levelUpStat.getMaxMana()/2);
     }
     /**
      * Calculate the center of the hero

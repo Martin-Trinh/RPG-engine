@@ -33,15 +33,13 @@ public class SidePane extends VBox {
     private VBox createStatPane(Character character){
         VBox vBox = new VBox();
         vBox.getChildren().addAll(
-        new Label("Current Health: " + character.getCurrentHealth()),
-                new Label("Current Mana: " + character.getCurrentMana()),
-                new Label("Max Health: " + character.getStat().getMaxHealth()),
-                new Label("Max Mana: " + character.getStat().getMaxMana()),
-                new Label("Strength: " + character.getStat().getStrength()),
-                new Label("Intelligence: " + character.getStat().getIntelligence()),
-                new Label("Agility: " + character.getStat().getAgility()),
-                new Label("Armor: " + character.getStat().getArmor()),
-                new Label("Magic Armor: " + character.getStat().getMagicArmor())
+        new Label("Health: " + character.getCurrentHealth() + " / " + character.getStat().getMaxHealth()),
+        new Label("Mana: " + character.getCurrentMana() + " / " + character.getStat().getMaxMana()),
+        new Label("Strength: " + character.getStat().getStrength()),
+        new Label("Intelligence: " + character.getStat().getIntelligence()),
+        new Label("Agility: " + character.getStat().getAgility()),
+        new Label("Armor: " + character.getStat().getArmor()),
+        new Label("Magic Armor: " + character.getStat().getMagicArmor())
         );
         return vBox;
     }
@@ -85,6 +83,8 @@ public class SidePane extends VBox {
                 abilityPane.getChildren().add(new Label(s));
             }
         }
+        abilityPane.getChildren().addAll(new Label("Press Q-W-E to use ability"),
+                new Label("Press ESC to escape from combat"));
     }
 
 

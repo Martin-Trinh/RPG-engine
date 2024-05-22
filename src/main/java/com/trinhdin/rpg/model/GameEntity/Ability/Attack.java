@@ -23,17 +23,20 @@ public class Attack extends Ability{
         if(caster.getCurrentMana() < cost) {
             gameMsg = "Not enough mana";
         }else{
-            gameMsg = caster.getName() + " dealt " + calculateDamage(caster, target) + " damage to " + target.getName();
+            gameMsg = name + " used - ";
+            gameMsg += caster.getName() + " dealt " + calculateDamage(caster, target) + " damage to " + target.getName();
             target.setCurrentHealth(target.getCurrentHealth() - calculateDamage(caster, target));
             caster.setCurrentMana(caster.getCurrentMana() - cost);
         }
     }
 
     private int calculateDamage(Character caster, Character target){
+        int res;
         if(type == AttackType.PHYSICAL){
-            return caster.getStat().getStrength() * damage - target.getStat().getArmor();
+            res = caster.getStat().getStrength() * damage - target.getStat().getArmor();
         }else{
-            return caster.getStat().getIntelligence() * damage - target.getStat().getMagicArmor();
+            res = caster.getStat().getIntelligence() * damage - target.getStat().getMagicArmor();
         }
+        return Math.max(res, 0);
     }
 }

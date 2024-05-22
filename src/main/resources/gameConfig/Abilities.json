@@ -4,28 +4,28 @@
       "name": "Primary attack",
       "cost": 1,
       "cooldown": 1,
-      "damage": 10,
+      "damage": 2,
       "attackType": "PHYSICAL"
     },
     {
       "name": "FireBall",
       "cost": 5,
       "cooldown": 5,
-      "damage": 20,
+      "damage": 5,
       "attackType": "MAGICAL"
     },
     {
       "name": "IceBolt",
       "cost": 5,
       "cooldown": 5,
-      "damage": 10,
+      "damage": 5,
       "attackType": "MAGICAL"
     },
     {
       "name": "Lightning",
       "cost": 5,
       "cooldown": 5,
-      "damage": 5,
+      "damage": 10,
       "attackType": "MAGICAL"
     }
   ],
@@ -40,8 +40,8 @@
         "strength": 0,
         "intelligence": 0,
         "agility": 0,
-        "armor": 5,
-        "magicArmor": 5
+        "armor": 2,
+        "magicArmor": 2
       },
       "duration": 5
     },
@@ -52,7 +52,7 @@
       "stat": {
         "maxHealth": 0,
         "maxMana": 0,
-        "strength": 5,
+        "strength": 2,
         "intelligence": 0,
         "agility": 0,
         "armor": 0,
@@ -68,7 +68,7 @@
         "maxHealth": 0,
         "maxMana": 0,
         "strength": 0,
-        "intelligence": 5,
+        "intelligence": 2,
         "agility": 0,
         "armor": 0,
         "magicArmor": 0
@@ -81,13 +81,13 @@
       "name": "Heal",
       "cost": 5,
       "cooldown": 5,
-      "amount": 20
+      "amount": 50
     },
     {
       "name": "MonsterHeal",
       "cost": 5,
       "cooldown": 5,
-      "amount": 10
+      "amount": 20
     }
   ]
 }

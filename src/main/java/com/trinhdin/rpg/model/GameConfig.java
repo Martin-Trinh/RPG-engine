@@ -115,7 +115,10 @@ public class GameConfig {
             if(node.get("name").asText().equals(hero.getName())){
                 JsonNode abilityNode = node.get("abilities");
                 for (JsonNode ability : abilityNode){
-                    hero.addAbility(getAbilityFromConfig(ability.fields().next().getKey(), ability.asInt()));
+                    String type = ability.fields().next().getKey();
+                    int index = ability.get(type).asInt();
+                    hero.addAbility(getAbilityFromConfig(type, index));
+                    log.info("Add ability: " + type + " index: " + index);
                 }
             }
         }
@@ -124,7 +127,10 @@ public class GameConfig {
         for(JsonNode node: monstersNode){
             if(node.get("name").asText().equals(monster.getName())){
                 JsonNode abilityNode = node.get("abilities");
-                monster.setAbility(getAbilityFromConfig(abilityNode.fields().next().getKey(), abilityNode.asInt()));
+                String type = abilityNode.fields().next().getKey();
+                int index = abilityNode.get(type).asInt();
+                monster.setAbility(getAbilityFromConfig(type, index));
+                log.info("Add ability: " + type + " index: " + index);
             }
         }
     }
@@ -143,10 +149,7 @@ public class GameConfig {
                 int speed = node.get("speed").asInt();
                 Stat stat = objectMapper.convertValue(node.get("stat"), Stat.class);
                 Hero hero =  new Hero(pos, name, fileName, speed, stat);
-                JsonNode abilityNode = node.get("abilities");
-                for (JsonNode ability : abilityNode){
-                    hero.addAbility(getAbilityFromConfig(ability.fields().next().getKey(), ability.asInt()));
-                }
+                setAbilityForHero(hero);
                 return hero;
             }
         }
@@ -169,8 +172,7 @@ public class GameConfig {
                 int expWorth = node.get("expWorth").asInt();
                 int level = node.get("level").asInt();
                 Monster monster = new Monster(pos, name, fileName, speed, stat, expWorth, level);
-                JsonNode abilityNode = node.get("abilities");
-                monster.setAbility(getAbilityFromConfig(abilityNode.fields().next().getKey(), abilityNode.asInt()));
+                setAbilityForMonster(monster);
                 return monster;
             }
         }

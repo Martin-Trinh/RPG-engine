@@ -5,8 +5,8 @@
     "fileName": "Monster/goblin.png",
     "speed": 2.0,
     "stat": {
-      "maxHealth": 50,
-      "maxMana": 10,
+      "maxHealth": 200,
+      "maxMana": 100,
       "strength": 10,
       "intelligence": 0,
       "agility": 2,
@@ -25,8 +25,8 @@
     "fileName": "Monster/orc.png",
     "speed": 2.0,
     "stat": {
-      "maxHealth": 100,
-      "maxMana": 20,
+      "maxHealth": 200,
+      "maxMana": 30,
       "strength": 20,
       "intelligence": 0,
       "agility": 2,
@@ -48,7 +48,7 @@
       "maxHealth": 150,
       "maxMana": 50,
       "strength": 30,
-      "intelligence": 0,
+      "intelligence": 10,
       "agility": 2,
       "armor": 15,
       "magicArmor": 0
@@ -76,7 +76,7 @@
     "expWorth": 30,
     "level": 3,
     "abilities": {
-      "Attack": 2
+      "Heal": 1
     }
   }
 ]

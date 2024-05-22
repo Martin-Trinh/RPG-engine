@@ -24,7 +24,8 @@ public class ModifyStat extends Ability{
         if(caster.getCurrentMana() < cost) {
             gameMsg = "Not enough mana";
         }else{
-            gameMsg = caster.getName() + " buffed " + target.getName();
+            gameMsg = name + " used - ";
+            gameMsg += caster.getName() + " buffed " + target.getName();
             target.getStat().add(stat);
             caster.setCurrentMana(caster.getCurrentMana() - cost);
         }

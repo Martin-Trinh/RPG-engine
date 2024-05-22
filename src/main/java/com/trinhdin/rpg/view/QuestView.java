@@ -2,6 +2,7 @@ package com.trinhdin.rpg.view;
 
 import com.trinhdin.rpg.model.GameEntity.Character.Quest;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -23,30 +24,28 @@ public class QuestView {
      * Create quest pane to display all hero's quests
      * @return quest pane
      */
-    public VBox createQuestPane(){
+    public ScrollPane createQuestPane(){
         Label heading = new Label("All quests: ");
         heading.getStyleClass().add("heading");
         VBox questPane = new VBox();
         questPane.setLayoutX(20);
         questPane.setLayoutY(20);
         questPane.setSpacing(10);
-        questPane.setId("questPane");
         questPane.getChildren().add(heading);
-        HBox columDesc = new HBox();
-        columDesc.getStyleClass().add("questBox");
-        columDesc.getStyleClass().add("stat-heading");
-        columDesc.setSpacing(30);
-        columDesc.getChildren().addAll(new Label("Name"), new Label("Description"), new Label("Monster to kill"));
-        questPane.getChildren().add(columDesc);
         for(Quest q: quests){
-            HBox questBox = new HBox();
-            questBox.setSpacing(20);
+            VBox questBox = new VBox();
             questBox.getStyleClass().add("questBox");
-            questBox.getChildren().addAll(new Label(q.getName()),
-                                        new Label(q.getDescription()),
-                                        new Label(q.getMonsterToKill()));
+            questBox.getChildren().addAll(new Label("Name: " + q.getName()),
+                                        new Label("Description: " + q.getDescription()),
+                                        new Label("Monster to kill: " + q.getMonsterToKill()),
+                                        new Label("State: " + (q.isCompleted() ? "Completed" : "Not completed"))
+            );
             questPane.getChildren().add(questBox);
+
         }
-        return questPane;
+        ScrollPane scrollPane = new ScrollPane(questPane);
+        scrollPane.setPrefSize(600, 350);
+        scrollPane.setId("questPane");
+        return scrollPane;
     }
 }

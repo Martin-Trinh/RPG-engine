@@ -81,11 +81,13 @@ public class Inventory implements LogGameMsg {
     public boolean useItem(int index, Hero target){
         if(index >= 0 && index < items.size()){
             if(items.get(index).use(target)){
-                gameMsg = items.get(index).getName() + " used";
+                String msg = items.get(index).getGameMsg();
                 removeItem(index);
-                return true;
+                gameMsg += "\n" + msg;
+             }else{
+                gameMsg = items.get(index).getGameMsg();
             }
-            return false;
+            return true;
         }
         gameMsg = "No item to use";
         return false;
