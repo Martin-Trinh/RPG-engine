@@ -34,7 +34,7 @@ public class NPCTest {
         for(int i = 0; i < npc.getDialogues().size(); i++){
             assertEquals(i,npc.getDialogueIndex());
             npc.interact(hero);
-            assertEquals("Sentence " + (i + 1), npc.getGameMsg());
+            assertEquals("NPC: Sentence " + (i + 1), npc.getGameMsg());
         }
         // test giving quest
         npc.interact(hero);

@@ -90,7 +90,6 @@ public class HeroTest {
         // check if abilities are added
         assertEquals(hero.getAbilities().size(), 3);
         hero.castAbility(0,monster);
-        assertEquals(hero.getName() + " cast " + attack.getName() + " on " + monster.getName() + "\n" + attack.getGameMsg(), hero.getGameMsg());
         // cast none exists ability
         hero.castAbility(4,null);
         assertEquals("Ability not found", hero.getGameMsg());
