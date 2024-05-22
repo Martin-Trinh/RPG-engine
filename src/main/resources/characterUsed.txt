@@ -1,0 +1,38 @@
+
+@ - player
+# - wall
+. - floor
+  - empty space
+Obstacle
+
+* - flame
+= - barrel
+- - gate
+
+Obstacle Item
+w - water
+o - bomb
+k - key
+
+Item
+h - health potion
+m - mana potion
+
+Equipment
+/ - sword
+% - shield
+^ - helmet
+g - armor
+r - boots
+c - amulet
+b - bow
+| - spear
+
+NPC
+? - Monk
+! - oldman
+
+Monsters
+O - orc
+T - troll
+G - goblin

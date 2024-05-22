@@ -1,0 +1,32 @@
+[
+  {
+    "char": "?",
+    "name": "Monk",
+    "fileName": "NPC/Monk.png",
+    "dialogues": [
+      "Hello",
+      "I have a quest for you"
+    ],
+    "questForHero": {
+      "name": "Quest",
+      "description": "Find the key",
+      "monsterToKill": "Goblin"
+    },
+    "itemForHero": 1
+  },
+  {
+    "char": "!",
+    "name": "Oldman",
+    "fileName": "NPC/oldman.png",
+    "dialogues": [
+      "Hello",
+      "I have a quest for you"
+    ],
+    "questForHero": {
+      "name": "Quest",
+      "description": "Kill monster orc to get a bomb, that you can use to destroy the barrel",
+      "monsterToKill": "Orc"
+    },
+    "itemForHero": 2
+  }
+]

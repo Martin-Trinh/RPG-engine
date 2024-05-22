@@ -1,24 +1,40 @@
 package com.trinhdin.rpg.model.GameEntity.Character;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.trinhdin.rpg.model.GameEntity.Ability.Ability;
-import com.trinhdin.rpg.model.Position;
-
-import java.util.ArrayList;
-
-public class Monster extends Character{
+import com.trinhdin.rpg.model.GameEntity.Item.Item;
+import com.trinhdin.rpg.model.GameEntity.Item.ObstacleItem;
+import javafx.geometry.Point2D;
+import lombok.Getter;
+import lombok.Setter;
+/**
+ * Monster class to represent monster in game
+ */
+public class Monster extends Character {
+    @Getter
     private int expWorth;
-    Ability ability;
+    @Getter
+    private int level;
+    @Setter
+    private Ability ability;
 
-    public Monster(Position pos, String name, int speed, Stat stat, int expWorth, int level, Ability ability) {
-        super(pos, name, speed, stat);
+    public Monster(Point2D pos, String name, String fileName, double speed, Stat stat, int expWorth, int level) {
+        super(pos, name, fileName, speed, stat);
         this.expWorth = expWorth * level;
-        this.ability = ability;
-        int levelCount = level - 1;
-        Stat levelStat = new Stat(5*levelCount, 5*levelCount, 1*levelCount, 1*levelCount,1*levelCount,1*levelCount,1*levelCount);
-        stat.modifyStat(levelStat);
+        this.level = level;
+        this.stat = stat.multiply(level);
+    }
+    public Monster(JsonNode node){
+        super(node);
+        expWorth = node.get("expWorth").asInt();
+        level = node.get("level").asInt();
+    }
+    public void castAbility(Hero target){
+        ability.use(this, target);
+        gameMsg = ability.getGameMsg();
+    }
+    public boolean equals(Monster monster){
+        return this.getName().equals(monster.getName());
     }
 
-    public int getExpWorth() {
-        return expWorth;
-    }
 }

@@ -1,0 +1,20 @@
+[
+  {
+    "char": "-",
+    "name": "Gate",
+    "fileName": "Obstacle/door_closed.png",
+    "resolveItem": 0
+  },
+  {
+    "char": "*",
+    "name": "flame",
+    "fileName": "Obstacle/flame.png",
+    "resolveItem": 1
+  },
+  {
+    "char": "=",
+    "name": "Barrel",
+    "fileName": "Obstacle/barrel.png",
+    "resolveItem": 2
+  }
+]

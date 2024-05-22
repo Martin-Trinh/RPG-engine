@@ -1,0 +1,93 @@
+{
+  "Attack": [
+    {
+      "name": "Primary attack",
+      "cost": 1,
+      "cooldown": 1,
+      "damage": 10,
+      "attackType": "PHYSICAL"
+    },
+    {
+      "name": "FireBall",
+      "cost": 5,
+      "cooldown": 5,
+      "damage": 20,
+      "attackType": "MAGICAL"
+    },
+    {
+      "name": "IceBolt",
+      "cost": 5,
+      "cooldown": 5,
+      "damage": 10,
+      "attackType": "MAGICAL"
+    },
+    {
+      "name": "Lightning",
+      "cost": 5,
+      "cooldown": 5,
+      "damage": 5,
+      "attackType": "MAGICAL"
+    }
+  ],
+  "ModifyStat": [
+    {
+      "name": "ArmorBoost",
+      "cost": 2,
+      "cooldown": 2,
+      "stat": {
+        "maxHealth": 0,
+        "maxMana": 0,
+        "strength": 0,
+        "intelligence": 0,
+        "agility": 0,
+        "armor": 5,
+        "magicArmor": 5
+      },
+      "duration": 5
+    },
+    {
+      "name": "StrengthBoost",
+      "cost": 2,
+      "cooldown": 2,
+      "stat": {
+        "maxHealth": 0,
+        "maxMana": 0,
+        "strength": 5,
+        "intelligence": 0,
+        "agility": 0,
+        "armor": 0,
+        "magicArmor": 0
+      },
+      "duration": 5
+    },
+    {
+      "name": "IntelligenceBoost",
+      "cost": 2,
+      "cooldown": 2,
+      "stat": {
+        "maxHealth": 0,
+        "maxMana": 0,
+        "strength": 0,
+        "intelligence": 5,
+        "agility": 0,
+        "armor": 0,
+        "magicArmor": 0
+      },
+      "duration": 5
+    }
+  ],
+  "Heal": [
+    {
+      "name": "Heal",
+      "cost": 5,
+      "cooldown": 5,
+      "amount": 20
+    },
+    {
+      "name": "MonsterHeal",
+      "cost": 5,
+      "cooldown": 5,
+      "amount": 10
+    }
+  ]
+}

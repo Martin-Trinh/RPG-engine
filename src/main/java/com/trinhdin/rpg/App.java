@@ -1,48 +1,45 @@
 package com.trinhdin.rpg;
 
+import ch.qos.logback.classic.Logger;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-
+import lombok.extern.slf4j.Slf4j;
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.LoggerContext;
+import org.slf4j.LoggerFactory;
+/**
+ * JavaFX App
+ Start the application
+ */
+@Slf4j
 public class App extends Application {
+    public static void setLogLevel(String logLevel){
+        LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
+        Logger rootLogger = loggerContext.getLogger("ROOT");
+        rootLogger.setLevel(Level.toLevel(logLevel));
+    }
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage){
         try{
-            FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/MainMenu.fxml"));
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("/fxml/MainMenu.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
-            String css = getClass().getResource("fxml/mainMenu.css").toExternalForm();
-            scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                @Override
-                public void handle(KeyEvent keyEvent) {
-                    if(keyEvent.getCode() == KeyCode.UP){
-
-                    }else if(keyEvent.getCode() == KeyCode.DOWN){
-
-                    }
-                }
-            });
+            String css = getClass().getResource("/fxml/mainMenu.css").toExternalForm();
             scene.getStylesheets().add(css);
             stage.setScene(scene);
             stage.setTitle("RPG");
             stage.show();
-
             stage.setOnCloseRequest(event -> {
                 event.consume();
                 this.exit(stage);
             });
-
         }catch (Exception e){
-            e.printStackTrace();
+            log.error("Error starting game: " + e.getMessage());
         }
     }
     public void exit (Stage stage){
@@ -52,9 +49,11 @@ public class App extends Application {
         if(alert.showAndWait().get() == ButtonType.OK){
             stage.close();
         }
-
     }
     public static void main(String[] args) {
+        if(args.length > 0){
+            setLogLevel(args[0]);
+        }
         launch(args);
     }
 }
