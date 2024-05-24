@@ -1,24 +1,18 @@
 package com.trinhdin.rpg.controller;
 
-import com.trinhdin.rpg.model.GameData;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.Map;
 import com.trinhdin.rpg.model.MoveDirection;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
-
-import java.io.IOException;
 
 /**
  * Handle main key event for canvas
  */
 @Slf4j
-public class MainKeyHandler implements EventHandler<KeyEvent>{
+public class MainKeyHandler implements EventHandler<KeyEvent> {
     private GameScreen gameScreen;
     private Map map;
     private Hero hero;
@@ -28,8 +22,10 @@ public class MainKeyHandler implements EventHandler<KeyEvent>{
         this.map = gameScreen.getMap();
         this.hero = map.getHero();
     }
+
     /**
      * Handles key event for canvas
+     *
      * @param keyEvent
      */
     @Override
@@ -81,15 +77,15 @@ public class MainKeyHandler implements EventHandler<KeyEvent>{
                 break;
         }
         // save game using ctrl + s
-        if(keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.S) {
-                gameScreen.showSavingView();
-        // exit game using ctrl + c
+        if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.S) {
+            gameScreen.showSavingView();
+            // exit game using ctrl + c
         } else if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.C) {
-            if(gameScreen.showAlert("Exit out of this game", "Do you want to exit?"))
+            if (gameScreen.showAlert("Exit out of this game", "Do you want to exit?"))
                 gameScreen.exit();
-        // return to menu using ctrl + w
+            // return to menu using ctrl + w
         } else if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.W) {
-            if(gameScreen.showAlert("Return to menu", "Quit game without saving?"))
+            if (gameScreen.showAlert("Return to menu", "Quit game without saving?"))
                 gameScreen.returnToMenu();
         }
     }

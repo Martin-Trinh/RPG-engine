@@ -5,31 +5,19 @@ package com.trinhdin.rpg.controller;
 
 import com.trinhdin.rpg.model.GameConfig;
 import com.trinhdin.rpg.model.GameEntity.Character.Stat;
-import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.scene.Node;
-import javafx.scene.canvas.Canvas;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+
 public class startGameMenu extends menuController implements Initializable {
     @FXML
     private ChoiceBox<String> heroType;
@@ -64,12 +52,14 @@ public class startGameMenu extends menuController implements Initializable {
         });
 
     }
+
     /**
      * Show stats of selected hero type
      */
-    private void showStats(){
+    private void showStats() {
         Stat stat = heroes.get(heroType.getValue());
-        maxHealth.setText("Max Health: " + stat.getMaxHealth());;
+        maxHealth.setText("Max Health: " + stat.getMaxHealth());
+        ;
         maxMana.setText("Max Mana: " + stat.getMaxMana());
         strength.setText("Strength: " + stat.getStrength());
         intelligence.setText("Intelligence: " + stat.getIntelligence());
@@ -77,12 +67,14 @@ public class startGameMenu extends menuController implements Initializable {
         armor.setText("Armor: " + stat.getArmor());
         magicArmor.setText("Magic Armor: " + stat.getMagicArmor());
     }
+
     /**
      * Start game action
+     *
      * @param event action event
      */
-    public void startGame(ActionEvent event){
-        if(heroType.getValue().equals( "Select a hero type")){
+    public void startGame(ActionEvent event) {
+        if (heroType.getValue().equals("Select a hero type")) {
             errorMsg.setText("Please select a hero type");
             return;
         }

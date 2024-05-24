@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+
 /**
  * Class to save and load game from json file
  */
@@ -28,11 +29,12 @@ public class GameSaveLoad {
 
     /**
      * Load game data from json file to jsonNode using Jackson library
+     *
      * @param fileName file name
-     * @param map map object
+     * @param map      map object
      * @throws IOException if file not found
      */
-    public void loadGame(String fileName, Map map) throws IOException{
+    public void loadGame(String fileName, Map map) throws IOException {
         try {
             log.info("Loading game from " + fileName);
             JsonNode node = objectMapper.readTree(new File(PATH_PREFIX + fileName));
@@ -48,11 +50,12 @@ public class GameSaveLoad {
 
     /**
      * Save game data to json file using Jackson library
-     * @param data game data
+     *
+     * @param data     game data
      * @param fileName file name
      * @throws IOException if file not found
      */
-    public void saveGame(GameData data, String fileName) throws IOException{
+    public void saveGame(GameData data, String fileName) throws IOException {
         try {
             objectMapper.writeValue(new File(PATH_PREFIX + fileName), data);
         } catch (IOException e) {
@@ -63,6 +66,7 @@ public class GameSaveLoad {
 
     /**
      * Load hero from json node
+     *
      * @param node json node
      * @return hero object
      */
@@ -70,7 +74,7 @@ public class GameSaveLoad {
         Inventory inventory = new Inventory(node.get("inventory"));
         Hero hero = new Hero(node.get("hero"));
         gameConfig.setAbilityForHero(hero);
-        for(Item item : inventory.getItems()){
+        for (Item item : inventory.getItems()) {
             hero.getInventory().addItem(item);
         }
         log.info("Hero loaded: " + hero.getName());
@@ -79,6 +83,7 @@ public class GameSaveLoad {
 
     /**
      * Load all monsters from json node to hashmap
+     *
      * @param node json node
      * @return monsters hashmap
      */
@@ -95,11 +100,12 @@ public class GameSaveLoad {
 
     /**
      * Load all entities from json node to hashmap
+     *
      * @param node json node
      * @return entities hashmap
      * @throws IllegalArgumentException if entity name is invalid
      */
-    private HashMap<Point2D, Entity> loadEntities(JsonNode node) throws IllegalArgumentException{
+    private HashMap<Point2D, Entity> loadEntities(JsonNode node) throws IllegalArgumentException {
         HashMap<Point2D, Entity> entities = new HashMap<>();
         for (JsonNode entityNode : node) {
             JsonNode value = entityNode.get("value");

@@ -13,6 +13,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+
 /**
  * Hero class to represent hero in game
  */
@@ -42,21 +43,24 @@ public class Hero extends Character {
     @JsonIgnore
     @Getter
     Stat levelUpStat = new Stat(10, 10, 2, 2, 2, 2, 2);
+
     public Hero(Point2D pos, String name, String fileName, double speed, Stat stat) {
         super(pos, name, fileName, speed, stat);
     }
+
     /**
      * Constructor for hero from json node
+     *
      * @param node json node
      */
-    public Hero(JsonNode node){
+    public Hero(JsonNode node) {
         super(node);
-        for(JsonNode questNode : node.get("quests")){
+        for (JsonNode questNode : node.get("quests")) {
             quests.add(new Quest(questNode));
         }
-        for(int i = 0; i < MAX_EQUIPMENT; i++){
+        for (int i = 0; i < MAX_EQUIPMENT; i++) {
             JsonNode equipmentNode = node.get("equipments").get(i);
-            if(!equipmentNode.isNull())
+            if (!equipmentNode.isNull())
                 equipments[i] = new Equipment(equipmentNode);
         }
         exp = node.get("exp").asInt();
@@ -66,17 +70,20 @@ public class Hero extends Character {
 
     /**
      * Set screen position for hero for displaying in the middle of canvas
-     * @param canvasWidth canvas width
+     *
+     * @param canvasWidth  canvas width
      * @param canvasHeight canvas height
      */
     public void setScreenPos(int canvasWidth, int canvasHeight) {
         // set screen position for hero to middle of canvas
-        double screenX = canvasWidth/2.0 - Entity.getWidth()/2.0;
-        double screenY = canvasHeight/2.0 - Entity.getHeight()/2.0;
+        double screenX = canvasWidth / 2.0 - Entity.getWidth() / 2.0;
+        double screenY = canvasHeight / 2.0 - Entity.getHeight() / 2.0;
         screenPos = new Point2D(screenX, screenY);
     }
+
     /**
      * Add ability to hero
+     *
      * @param ability ability to add
      */
     public void addAbility(Ability ability) {
@@ -84,9 +91,11 @@ public class Hero extends Character {
             abilities.add(ability);
         }
     }
+
     /**
      * Cast ability on monster
-     * @param index index of ability
+     *
+     * @param index  index of ability
      * @param target monster to cast ability on
      */
     public void castAbility(int index, Monster target) {
@@ -97,8 +106,10 @@ public class Hero extends Character {
             gameMsg = abilities.get(index).getGameMsg();
         }
     }
+
     /**
      * Equip equipment to hero
+     *
      * @param equipment equipment to equip
      * @return true if equipped
      */
@@ -119,15 +130,17 @@ public class Hero extends Character {
         }
         return false;
     }
+
     /**
      * Helper function to equip equipment to hero
-     * @param index index of equipment
+     *
+     * @param index     index of equipment
      * @param equipment equipment to equip
      * @return true if equipped
      */
     private boolean equip(int index, Equipment equipment) {
         if (equipments[index] == null) {
-            gameMsg = equipment.getName() + " equipped to " + equipment.getType().name() ;
+            gameMsg = equipment.getName() + " equipped to " + equipment.getType().name();
             stat.add(equipment.getStatIncrease());
             setCurrentHealth(currentHealth += equipment.getStatIncrease().getMaxHealth() / 2);
             setCurrentMana(currentMana += equipment.getStatIncrease().getMaxMana() / 2);
@@ -137,8 +150,10 @@ public class Hero extends Character {
         gameMsg = "Equipment slot is occupied!";
         return false;
     }
+
     /**
      * Unequip equipment from hero
+     *
      * @param index index of equipment
      * @return true if unequipped
      */
@@ -147,9 +162,9 @@ public class Hero extends Character {
             // subtract the stat increase from the equipment
             stat.subtract(equipments[index].getStatIncrease());
             // check if current health and mana is greater than max health and mana
-            if(currentHealth > stat.getMaxHealth())
+            if (currentHealth > stat.getMaxHealth())
                 currentHealth = stat.getMaxHealth();
-            if(currentMana > stat.getMaxMana())
+            if (currentMana > stat.getMaxMana())
                 currentMana = stat.getMaxMana();
             inventory.addItem(equipments[index]);
             gameMsg = equipments[index].getName() + " unequipped";
@@ -159,8 +174,10 @@ public class Hero extends Character {
         gameMsg = "Nothing to unequip!";
         return false;
     }
+
     /**
      * Unequip equipment from hero
+     *
      * @param type type of equipment
      * @return true if unequipped
      */
@@ -181,21 +198,25 @@ public class Hero extends Character {
         }
         return false;
     }
+
     /**
      * Add quest to the hero from npc
+     *
      * @param quest quest to add
      */
     public void addQuest(Quest quest) {
         quests.add(quest);
     }
+
     /**
      * Complete quest after killing monster
-     * @param index index of quest
+     *
+     * @param index         index of quest
      * @param monsterKilled monster killed
      */
     public boolean completeQuest(Monster monsterKilled) {
-        for(Quest quest : quests){
-            if(quest.complete(monsterKilled)){
+        for (Quest quest : quests) {
+            if (quest.complete(monsterKilled)) {
                 gameMsg = "Quest " + quest.getName() + " completed";
                 log.info(gameMsg);
                 return true;
@@ -203,20 +224,24 @@ public class Hero extends Character {
         }
         return false;
     }
+
     /**
      * Check if quest is completed
+     *
      * @param quest quest to check
      * @return true if quest is completed, false otherwise
      */
     public boolean isQuestCompleted(Quest quest) {
-        for(Quest q : quests){
-            if(q.equals(quest))
+        for (Quest q : quests) {
+            if (q.equals(quest))
                 return q.isCompleted();
         }
         return false;
     }
+
     /**
      * Gain exp after killing monster
+     *
      * @param exp exp gained
      * @return true if leveled up
      */
@@ -230,6 +255,7 @@ public class Hero extends Character {
         }
         return false;
     }
+
     /**
      * Level up hero increase stats by level coefficient
      */
@@ -242,11 +268,13 @@ public class Hero extends Character {
         exp = 0;
         stat.add(levelUpStat);
         // increase current health and mana by half of max health and mana
-        setCurrentHealth(currentHealth + levelUpStat.getMaxHealth()/2);
-        setCurrentMana(currentMana + levelUpStat.getMaxMana()/2);
+        setCurrentHealth(currentHealth + levelUpStat.getMaxHealth() / 2);
+        setCurrentMana(currentMana + levelUpStat.getMaxMana() / 2);
     }
+
     /**
      * Calculate the center of the hero
+     *
      * @return center point
      */
     public Point2D calculateCenter() {

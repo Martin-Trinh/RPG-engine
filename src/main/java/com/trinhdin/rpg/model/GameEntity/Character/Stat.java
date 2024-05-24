@@ -2,6 +2,7 @@ package com.trinhdin.rpg.model.GameEntity.Character;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Stat class to represent stat of character
  */
@@ -29,6 +30,7 @@ public class Stat {
         this.agility = agility;
         this.armor = armor;
         this.magicArmor = magicArmor;
+        negativeStatCheck();
     }
 
     public Stat add(Stat stat) {
@@ -42,27 +44,29 @@ public class Stat {
         negativeStatCheck();
         return this;
     }
-    private void negativeStatCheck(){
-        if(maxHealth < 0)
+
+    private void negativeStatCheck() {
+        if (maxHealth < 0)
             maxHealth = 0;
-        if(maxMana < 0)
+        if (maxMana < 0)
             maxMana = 0;
-        if(strength < 0)
+        if (strength < 0)
             strength = 0;
-        if(intelligence < 0)
+        if (intelligence < 0)
             intelligence = 0;
-        if(agility < 0)
+        if (agility < 0)
             agility = 0;
-        if(armor < 0)
+        if (armor < 0)
             armor = 0;
-        if(magicArmor < 0)
+        if (magicArmor < 0)
             magicArmor = 0;
     }
+
     public Stat subtract(Stat stat) {
-        if(stat.maxHealth >= 0) {
+        if (stat.maxHealth >= 0) {
             maxHealth -= stat.maxHealth;
         }
-        if(stat.maxMana >= 0) {
+        if (stat.maxMana >= 0) {
             maxMana -= stat.maxMana;
         }
         strength -= stat.strength;
@@ -73,6 +77,7 @@ public class Stat {
         negativeStatCheck();
         return this;
     }
+
     public Stat multiply(int num) {
         maxHealth *= num;
         maxMana *= num;
@@ -83,6 +88,7 @@ public class Stat {
         magicArmor *= num;
         return this;
     }
+
     public int getMaxHealth() {
         return maxHealth;
     }
@@ -106,9 +112,11 @@ public class Stat {
     public int getArmor() {
         return armor;
     }
+
     public int getMagicArmor() {
         return magicArmor;
     }
+
     public boolean equals(Stat other) {
         return maxHealth == other.maxHealth &&
                 maxMana == other.maxMana &&

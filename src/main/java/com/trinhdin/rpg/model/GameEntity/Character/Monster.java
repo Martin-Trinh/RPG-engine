@@ -2,11 +2,10 @@ package com.trinhdin.rpg.model.GameEntity.Character;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.trinhdin.rpg.model.GameEntity.Ability.Ability;
-import com.trinhdin.rpg.model.GameEntity.Item.Item;
-import com.trinhdin.rpg.model.GameEntity.Item.ObstacleItem;
 import javafx.geometry.Point2D;
 import lombok.Getter;
 import lombok.Setter;
+
 /**
  * Monster class to represent monster in game
  */
@@ -26,16 +25,19 @@ public class Monster extends Character {
         currentHealth = stat.getMaxHealth();
         currentMana = stat.getMaxMana();
     }
-    public Monster(JsonNode node){
+
+    public Monster(JsonNode node) {
         super(node);
         expWorth = node.get("expWorth").asInt();
         level = node.get("level").asInt();
     }
-    public void castAbility(Hero target){
+
+    public void castAbility(Hero target) {
         ability.use(this, target);
         gameMsg = ability.getGameMsg();
     }
-    public boolean equals(Monster monster){
+
+    public boolean equals(Monster monster) {
         return this.getName().equals(monster.getName());
     }
 

@@ -1,10 +1,8 @@
 package com.trinhdin.rpg.view;
 
-import com.trinhdin.rpg.controller.LogGameMsg;
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Entity;
 import com.trinhdin.rpg.model.GameEntity.Item.Equipment;
-import com.trinhdin.rpg.model.GameEntity.Item.Inventory;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -14,7 +12,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,7 +29,8 @@ public class EquipmentView {
     private InventoryView inventoryView;
     private GameLog gameLog;
     private SidePane sidePane;
-    public EquipmentView(Hero hero, GameLog gameLog, SidePane sidePane){
+
+    public EquipmentView(Hero hero, GameLog gameLog, SidePane sidePane) {
         this.hero = hero;
         this.gameLog = gameLog;
         this.sidePane = sidePane;
@@ -43,24 +41,24 @@ public class EquipmentView {
     /**
      * Add key handler for equipment pane
      */
-    private void addKeyHandler(){
+    private void addKeyHandler() {
         equipmentPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                switch (event.getCode()){
+                switch (event.getCode()) {
                     case UP:
-                        if(--index < 0){
+                        if (--index < 0) {
                             index = equipmentRowCnt - 1;
                         }
                         break;
                     case DOWN:
-                        if(++index > equipmentRowCnt - 1){
+                        if (++index > equipmentRowCnt - 1) {
                             index = 0;
                         }
                         break;
                     case E:
                         // unequip equipment
-                        if(hero.unequip(index)){
+                        if (hero.unequip(index)) {
                             gameLog.displayLogMsg(hero.getGameMsg());
                             refreshEquipmentPane();
                             inventoryView.refreshInventoryPane();
@@ -74,19 +72,20 @@ public class EquipmentView {
                         break;
                 }
                 // Unhighlight previous row
-                highlightRow(prevIndex,"black");
+                highlightRow(prevIndex, "black");
                 prevIndex = index;
                 // Highlight current row
-                highlightRow(index,"red");
+                highlightRow(index, "red");
                 // Prevent event from bubbling up
-                if(event.getCode() != KeyCode.I) {
+                if (event.getCode() != KeyCode.I) {
                     // Prevent event from bubbling up to main event handler
                     event.consume();
                 }
             }
         });
     }
-    private HBox createEquipmentRow(String equipmentName, Equipment equipment){
+
+    private HBox createEquipmentRow(String equipmentName, Equipment equipment) {
         HBox equipmentRow = new HBox();
         equipmentRow.setSpacing(10);
         Label label = new Label(equipmentName);
@@ -94,7 +93,7 @@ public class EquipmentView {
         StackPane itemPane = new StackPane();
         itemPane.getStyleClass().add("item-rectangle");
         itemPane.setPrefSize(Entity.getWidth(), Entity.getHeight());
-        if(equipment != null){
+        if (equipment != null) {
             ImageView itemView = new ImageView(equipment.getImage());
             itemPane.getChildren().add(itemView);
         }
@@ -106,11 +105,12 @@ public class EquipmentView {
     /**
      * Display equipment from hero model again
      */
-    public void refreshEquipmentPane(){
+    public void refreshEquipmentPane() {
         equipmentPane.getChildren().clear();
         createEquipmentPane();
     }
-    private void createEquipmentPane(){
+
+    private void createEquipmentPane() {
         Label text = new Label("Hero equipment");
         text.getStyleClass().add("heading");
         equipmentPane.setSpacing(10);
@@ -119,21 +119,24 @@ public class EquipmentView {
         equipmentPane.setLayoutX(300);
         equipmentPane.getChildren().addAll(
                 text,
-            createEquipmentRow("Weapon" , hero.getEquipments()[0]),
-            createEquipmentRow("Helmet", hero.getEquipments()[1]),
-            createEquipmentRow("Shield", hero.getEquipments()[2]),
-            createEquipmentRow("Boots", hero.getEquipments()[3]),
-            createEquipmentRow("Armor", hero.getEquipments()[4]),
-            createEquipmentRow("Accessory", hero.getEquipments()[5])
+                createEquipmentRow("Weapon", hero.getEquipments()[0]),
+                createEquipmentRow("Helmet", hero.getEquipments()[1]),
+                createEquipmentRow("Shield", hero.getEquipments()[2]),
+                createEquipmentRow("Boots", hero.getEquipments()[3]),
+                createEquipmentRow("Armor", hero.getEquipments()[4]),
+                createEquipmentRow("Accessory", hero.getEquipments()[5])
         );
     }
+
     /**
      * Highlight row at index
+     *
      * @param index index of row to highlight
      * @param color color to highlight
      */
-    private void highlightRow(int index, String color){
-        HBox row = (HBox) equipmentPane.getChildren().get(index+1);
-        row.getChildren().get(1).setStyle("-fx-border-color: " + color); ;
+    private void highlightRow(int index, String color) {
+        HBox row = (HBox) equipmentPane.getChildren().get(index + 1);
+        row.getChildren().get(1).setStyle("-fx-border-color: " + color);
+        ;
     }
 }

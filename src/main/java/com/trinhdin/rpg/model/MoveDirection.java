@@ -1,4 +1,5 @@
 package com.trinhdin.rpg.model;
+
 /**
  * Enum to represent move direction of character
  */

@@ -21,9 +21,16 @@ public class HeroTest {
     @Test
     public void testEquipUnEquipItem() {
         Stat stat = new Stat(10, 10, 10, 10, 10, 10, 10);
-        Equipment equipment = new Equipment(null, "item", "item.png","desc", stat,EquipmentType.WEAPON);
-        hero.equip(equipment);
-        assertEquals(equipment, hero.getEquipments()[0]);
+        // mock equipment
+        Equipment equipmentMock  = mock(Equipment.class);
+        when(equipmentMock.getStatIncrease()).thenReturn(stat);
+        when(equipmentMock.getType()).thenReturn(EquipmentType.WEAPON);
+        when(equipmentMock.getName()).thenReturn("item");
+        // equip item
+        hero.equip(equipmentMock);
+        // check if item is equipped
+        assertEquals(equipmentMock, hero.getEquipments()[0]);
+        // result stat after equip
         Stat statIncreased = new Stat(20, 20, 20, 20, 20, 20, 20);
         // check if stat of hero is increased by stat of equipment
         assertTrue(hero.getStat().equals(statIncreased));
@@ -43,6 +50,7 @@ public class HeroTest {
     @Test
     public void testAddQuestAndCompleteQuest(){
         Quest quest = new Quest("quest", "desc", "monster");
+        // add quest to hero
         hero.addQuest(quest);
         // check if quest is added to hero
         assertEquals(hero.getQuests().get(0), quest);
@@ -52,6 +60,7 @@ public class HeroTest {
         when(monsterMock.getName()).thenReturn("monster");
         // complete quest
         hero.getQuests().get(0).complete(monsterMock);
+        // check if quest is completed
         assertTrue(hero.isQuestCompleted(quest));
     }
     @Test
@@ -78,6 +87,7 @@ public class HeroTest {
         ModifyStat modifyStat = mock(ModifyStat.class);
         Heal heal1 = mock(Heal.class);
         Monster monster = mock(Monster.class);
+        // do nothing when ability is used
         doNothing().when(attack).use(any(), any());
         when(attack.getGameMsg()).thenReturn("attacked");
         when(attack.getName()).thenReturn("attack");
@@ -89,9 +99,11 @@ public class HeroTest {
         hero.addAbility(heal1);
         // check if abilities are added
         assertEquals(hero.getAbilities().size(), 3);
+        // cast attack ability
         hero.castAbility(0,monster);
         // cast none exists ability
         hero.castAbility(4,null);
+        // check if ability is used
         assertEquals("Ability not found", hero.getGameMsg());
     }
     @Test
