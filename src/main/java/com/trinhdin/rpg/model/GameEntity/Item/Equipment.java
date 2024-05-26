@@ -43,6 +43,8 @@ public class Equipment extends Item {
         gameMsg = "Cannot equip " + this.getName() + " unequip equipment first";
         return false;
     }
-
+    public boolean equals(Equipment equipment) {
+        return this.name.equals(equipment.getName()) && this.type.equals(equipment.getType()) && this.statIncrease.equals(equipment.getStatIncrease());
+    }
 
 }

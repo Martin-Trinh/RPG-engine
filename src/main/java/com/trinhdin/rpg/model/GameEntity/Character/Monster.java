@@ -15,7 +15,7 @@ public class Monster extends Character {
     @Getter
     private int level;
     @Setter
-    private Ability ability;
+    private Ability ability = null;
 
     public Monster(Point2D pos, String name, String fileName, double speed, Stat stat, int expWorth, int level) {
         super(pos, name, fileName, speed, stat);

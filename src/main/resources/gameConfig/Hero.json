@@ -14,7 +14,7 @@
     },
     "abilities": [
       {
-        "Attack": 1
+        "Attack": 0
       },
       {
         "ModifyStat": 1

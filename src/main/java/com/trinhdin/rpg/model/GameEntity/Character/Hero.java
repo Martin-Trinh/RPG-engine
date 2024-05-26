@@ -130,7 +130,6 @@ public class Hero extends Character {
         }
         return false;
     }
-
     /**
      * Helper function to equip equipment to hero
      *

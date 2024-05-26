@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class InventoryTest {
     @Test
@@ -37,6 +36,23 @@ public class InventoryTest {
         inventory.addItem(itemMock);
         // remove item from inventory using item name
         assertTrue(inventory.removeItem(itemMock));
+    }
+    @Test
+    public void testUseItem(){
+        Inventory inventory = new Inventory();
+        Equipment itemMock = mock(Equipment.class);
+        when(itemMock.use(any())).thenReturn(true);
+        when(itemMock.getGameMsg()).thenReturn("msg");
+        // add item to inventory
+        inventory.addItem(itemMock);
+        // use item not in inventory
+        assertFalse(inventory.useItem(1,null));
+        // use item from inventory
+        assertTrue(inventory.useItem(0,null));
+        verify(itemMock, times(1)).use(any());
+        verify(itemMock, times(1)).getGameMsg();
+        // check if item is removed from inventory
+        assertTrue(inventory.getItems().isEmpty());
     }
 
 }

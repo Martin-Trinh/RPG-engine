@@ -28,8 +28,9 @@ public class Attack extends Ability {
             gameMsg = "Not enough mana";
         } else {
             gameMsg = name + " used - ";
-            gameMsg += caster.getName() + " dealt " + calculateDamage(caster, target) + " damage to " + target.getName();
-            target.setCurrentHealth(target.getCurrentHealth() - calculateDamage(caster, target));
+            int damage = calculateDamage(caster, target);
+            gameMsg += caster.getName() + " dealt " + damage + " damage to " + target.getName();
+            target.setCurrentHealth(target.getCurrentHealth() - damage);
             caster.setCurrentMana(caster.getCurrentMana() - cost);
         }
     }

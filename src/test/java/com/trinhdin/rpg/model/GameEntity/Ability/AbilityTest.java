@@ -50,18 +50,19 @@ public class AbilityTest {
     }
     @Test
     public void testModifyStatAbility(){
-        Stat buffStat = new Stat(-1, -1, -1, -1, -1, -1, -1);
+        Stat buffStat = new Stat(1, 1, 1, 1, 1, 1, 1);
         ModifyStat buff = new ModifyStat("buff",1,1, buffStat,1);
         // test modify stat ability
         buff.use(hero, hero);
         // check if hero stat is increased by buff stat
-        assertEquals(9, hero.getStat().getMaxHealth());
-        assertEquals(9, hero.getStat().getMaxMana());
-        assertEquals(9, hero.getStat().getStrength());
-        assertEquals(9, hero.getStat().getIntelligence());
-        assertEquals(9, hero.getStat().getAgility());
-        assertEquals(9, hero.getStat().getArmor());
-        assertEquals(4, hero.getStat().getMagicArmor());
+        assertEquals(11, hero.getStat().getMaxHealth());
+        assertEquals(11, hero.getStat().getMaxMana());
+        assertEquals(11, hero.getStat().getStrength());
+        assertEquals(11, hero.getStat().getIntelligence());
+        assertEquals(11, hero.getStat().getAgility());
+        assertEquals(11, hero.getStat().getArmor());
+        assertEquals(6, hero.getStat().getMagicArmor());
+        // test mana decrease
         assertEquals(9, hero.getCurrentMana());
     }
     @Test

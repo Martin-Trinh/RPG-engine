@@ -2,6 +2,7 @@ package com.trinhdin.rpg.controller;
 
 import com.trinhdin.rpg.model.GameEntity.Character.Hero;
 import com.trinhdin.rpg.model.GameEntity.Character.Monster;
+import com.trinhdin.rpg.model.Map;
 import com.trinhdin.rpg.view.GameLog;
 import com.trinhdin.rpg.view.SidePane;
 import javafx.scene.input.KeyCode;
@@ -14,17 +15,17 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class Combat {
-    private Hero hero;
-    @Getter
-    private Monster killedMonster = null;
     private Pane pane;
     private SidePane sidePane;
     private GameLog gameLog;
+    private Map map;
+    private Hero hero;
     @Getter
     private boolean ended = false;
 
-    public Combat(Hero hero, Pane mainPane, SidePane sidePane, GameLog gameLog) {
-        this.hero = hero;
+    public Combat(Map map, Pane mainPane, SidePane sidePane, GameLog gameLog) {
+        this.map = map;
+        this.hero = map.getHero();
         this.pane = mainPane;
         this.sidePane = sidePane;
         this.gameLog = gameLog;
@@ -79,8 +80,8 @@ public class Combat {
             if (monster.isDead()) {
                 gameLog.displayLogMsg("You defeated " + monster.getName());
                 log.info("You defeated " + monster.getName());
-                // monster is dead for gamescreen to remove from map
-                killedMonster = monster;
+                // remove monster from map
+                map.removeMonster(monster);
                 // gain exp
                 gameLog.displayLogMsg("You gained " + monster.getExpWorth() + " exp");
                 // check if hero leveled up
@@ -88,7 +89,6 @@ public class Combat {
                     gameLog.displayLogMsg(hero.getGameMsg());
                 }
                 sidePane.displayHeroStat(hero);
-
                 // check killed monster complete any quest
                 if (hero.completeQuest(monster)) {
                     gameLog.displayLogMsg(monster.getGameMsg());

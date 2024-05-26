@@ -67,6 +67,8 @@ public class NPC extends Entity implements Interactable {
                 if (hero.isQuestCompleted(questForHero)) {
                     gameMsg = "NPC: Quest completed - " + itemForHero.getName() + " given to hero";
                     log.info(gameMsg);
+                    // remove quest from hero and give item to hero
+                    hero.getQuests().remove(questForHero);
                     hero.getInventory().addItem(itemForHero);
                     return true;
                 } else {
@@ -77,4 +79,5 @@ public class NPC extends Entity implements Interactable {
         }
         return false;
     }
+
 }

@@ -230,9 +230,10 @@ public class Map {
      * @param name hero name
      * @throws IllegalArgumentException if hero name is not found in configuration
      */
-    public void configureHero(String name) throws IllegalArgumentException {
+    public void configureHero(String name, int canvasWidth, int canvasHeight) throws IllegalArgumentException {
         log.info("Configuring hero: " + name);
         hero = GameConfig.getInstance().getHeroFromConfig(new Point2D(0, 0), name);
+        hero.setScreenPos(canvasWidth, canvasHeight);
     }
 
     /**

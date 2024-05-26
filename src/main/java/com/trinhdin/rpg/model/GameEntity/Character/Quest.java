@@ -50,7 +50,7 @@ public class Quest {
      * Complete quest base on killed monster
      *
      * @param monsterKilled
-     * @return
+     * @return bool true if quest is completed
      */
     public boolean complete(Monster monsterKilled) {
         isCompleted = monsterKilled.getName().equals(monsterToKill);
@@ -58,6 +58,8 @@ public class Quest {
     }
 
     public boolean equals(Quest quest) {
-        return this.name.equals(quest.name) && this.monsterToKill.equals(quest.monsterToKill);
+        return this.name.equals(quest.name)
+                && this.monsterToKill.equals(quest.monsterToKill)
+                && this.description.equals(quest.description);
     }
 }

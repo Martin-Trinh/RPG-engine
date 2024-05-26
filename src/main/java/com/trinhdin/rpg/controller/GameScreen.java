@@ -95,7 +95,7 @@ public class GameScreen {
     public void loadNewGame(String heroName) {
         log.info("Loading new game...");
         try {
-            map.configureHero(heroName);
+            map.configureHero(heroName, CANVAS_WIDTH, CANVAS_HEIGHT);
             initGame(true, 0);
             hero = map.getHero();
             start();
@@ -107,7 +107,6 @@ public class GameScreen {
     private void start() {
         log.info("Starting game...");
 
-        hero.setScreenPos(CANVAS_WIDTH, CANVAS_HEIGHT);
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         canvas.setId("canvas");
 
@@ -164,14 +163,10 @@ public class GameScreen {
     }
 
     private void combatController() {
+        // in Combat
         if (combat != null) {
-            // in Combat
+            // check if combat is ended
             if (combat.isEnded()) {
-                // check if combat is ended
-                Monster monster = combat.getKilledMonster();
-                if (monster != null) {
-                    map.removeMonster(monster);
-                }
                 if (hero.isDead()) {
                     // hero is dead
                     Platform.runLater(() -> {
@@ -330,7 +325,7 @@ public class GameScreen {
             gameLog.displayLogMsg("Entering combat with " + monster.getName());
             log.info("Entering combat with " + monster.getName());
 
-            combat = new Combat(hero, mainPane, sidePane, gameLog);
+            combat = new Combat(map, mainPane, sidePane, gameLog);
             combat.start(monster);
             sidePane.displayMonsterStat(monster);
         }
@@ -412,7 +407,7 @@ public class GameScreen {
             log.info("Saving game to: " + filename + ".json");
             GameSaveLoad gameSaveLoad = new GameSaveLoad();
             // convert attribute from map class to game data
-            GameData gameData = new GameData(map.getEntities(), map.getMonsters(), hero, map.getLevel());
+            GameData gameData = new GameData(map);
             gameSaveLoad.saveGame(gameData, filename + ".json");
             log.info("Game saved to " + filename + ".json");
             // return to menu after saving

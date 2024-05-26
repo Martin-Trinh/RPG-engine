@@ -24,23 +24,17 @@ public class GameData {
 
     /**
      * Constructor for GameData convert object to serializable format
-     *
-     * @param entities list of entities
-     * @param monsters list of monsters
-     * @param hero     hero
-     * @param level    level
+     * @param map map object
      */
-    public GameData(HashMap<Point2D, Entity> entities,
-                    HashMap<Point2D, Monster> monsters,
-                    Hero hero, int level) {
-        for (Entity entity : entities.values()) {
+    public GameData(Map map) {
+        for (Entity entity : map.getEntities().values()) {
             this.entities.add(new Pair<>(entity.getClass().getSimpleName(), entity));
         }
-        this.monsters = new ArrayList<>(monsters.values());
-        this.hero = hero;
+        this.monsters = new ArrayList<>(map.getMonsters().values());
+        this.hero = map.getHero();
         for (Item item : hero.getInventory().getItems()) {
             inventory.add(new Pair<>(item.getClass().getSimpleName(), item));
         }
-        this.level = level;
+        this.level = map.getLevel();
     }
 }
